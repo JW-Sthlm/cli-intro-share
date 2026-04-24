@@ -137,6 +137,13 @@
   </div>
   <p class="reassurance">You'll install a terminal tool, log in, and connect three data sources. Copy-paste commands — that's it.</p>
 
+  <div class="step" style="border-left: 4px solid var(--accent); background: var(--accent-light);">
+    <p style="margin: 0; font-size: 15px; line-height: 1.6;">
+      <strong>Already comfortable with CLI tools?</strong> Skim the steps and jump to <a href="#verify" style="color: var(--accent);">Step 5: Verify everything</a>. If all five checks pass, you're done.<br><br>
+      <strong>Never opened a terminal before?</strong> Perfect — that's exactly who this is for. Every step explains what's happening and why. Just follow along and copy-paste the commands.
+    </p>
+  </div>
+
   <!-- Progress -->
   <div class="progress" aria-hidden="true">
     <div class="progress-dot active"></div>
@@ -150,31 +157,37 @@
   <!-- Step 0 -->
   <div class="step">
     <span class="step-number">Step 0</span>
-    <h2>Connect your Copilot entitlement</h2>
-    <p>Microsoft pays for your GitHub Copilot access. You just need to make sure your account is connected to that entitlement.</p>
+    <h2>Get your GitHub account ready</h2>
+    <p>Copilot CLI runs on GitHub. To use it, you need a GitHub account with Copilot access. As a Microsoft employee, this is provided for you — but you may need to set it up.</p>
 
-    <p>You likely have <strong>two</strong> GitHub accounts:</p>
-    <table>
-      <tr><th>Account</th><th>What it is</th><th>Username</th></tr>
-      <tr><td>EMU</td><td>Corporate managed account on <code>github.com/ms-copilot</code></td><td><code>yourname_microsoft</code></td></tr>
-      <tr><td>Personal</td><td>Your own GitHub account</td><td>Whatever you chose</td></tr>
-    </table>
-
-    <p>The key step: connect your <strong>personal</strong> account to the Microsoft entitlement. This gives it full Copilot access — paid by Microsoft, not you.</p>
+    <h3>Do you have a GitHub account?</h3>
+    <p>If you're not sure, go to <a class="inline" href="https://github.com/login" target="_blank">github.com/login</a> and try signing in. If you can't, you need to create one.</p>
 
     <div class="tip">
-      <strong>👉 Action:</strong> Go to <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a> and verify your personal account is connected. Follow the on-screen steps if it's not.
+      <strong>📝 No GitHub account yet?</strong> Create a free personal account at <a class="inline" href="https://github.com/signup" target="_blank">github.com/signup</a>. Use any email you like — this is your personal account, not a Microsoft-managed one.
     </div>
 
+    <h3>You might end up with two GitHub accounts</h3>
+    <p>This is normal at Microsoft. Here's the difference:</p>
+    <table>
+      <tr><th>Account</th><th>What it is</th><th>How to tell</th></tr>
+      <tr><td><strong>Personal</strong></td><td>Your own GitHub account — you created it yourself</td><td>Username is whatever you chose (e.g., <code>johansen42</code>)</td></tr>
+      <tr><td><strong>EMU</strong></td><td>A corporate account Microsoft created for you</td><td>Username ends in <code>_microsoft</code> (e.g., <code>johansen_microsoft</code>)</td></tr>
+    </table>
+    <p>You might have both, just one, or neither yet. That's fine.</p>
+
     <h3>Which account for this session?</h3>
-    <ul>
-      <li><strong>Personal account</strong> — recommended. Works with public repos and your own repos.</li>
-      <li><strong>EMU account</strong> — only needed for Microsoft-internal repos (<code>ms-copilot</code> org).</li>
-      <li>You can switch anytime: <code>gh auth switch --user &lt;account&gt;</code></li>
-    </ul>
+    <p>We recommend your <strong>personal account</strong>. It's simpler to use and works with everything we'll do in the session.</p>
+
+    <h3>Connect your account to the Microsoft Copilot entitlement</h3>
+    <p>Microsoft pays for your Copilot access — you just need to connect your account to that entitlement. This is the most important step.</p>
 
     <div class="tip">
-      <strong>📚 Internal resources:</strong> <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">Copilot portal</a> · <a class="inline" href="https://eng.ms/docs/initiatives/ai-guidance-for-microsoft-developers/governance/github-copilot-guidelines" target="_blank">Copilot guidelines</a> · Search "GitHub Copilot QuickStart" on the R&amp;I SharePoint site for an automated verification tool.
+      <strong>👉 Action:</strong> Go to <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a>. Sign in, and follow the on-screen steps to verify your account is connected to the Microsoft Copilot license. If you see a green checkmark or confirmation — you're good.
+    </div>
+
+    <div class="warn">
+      <strong>⚠️ Can't access that portal?</strong> Search "GitHub Copilot QuickStart" on the R&amp;I SharePoint site — it has step-by-step instructions and an automated verification tool. Or ask your manager or a colleague who already uses Copilot CLI.
     </div>
   </div>
 
@@ -182,14 +195,25 @@
   <div class="step">
     <span class="step-number">Step 1</span>
     <h2>Install Copilot CLI</h2>
-    <p>Open <strong>PowerShell 7</strong> (search for "PowerShell" in Start — make sure it says "PowerShell 7" or "pwsh", not "Windows PowerShell").</p>
+
+    <h3>First: open PowerShell</h3>
+    <p>PowerShell is a text-based tool for talking to your computer — like File Explorer, but you type commands instead of clicking. It comes pre-installed on Windows.</p>
+    <p>Press the <strong>Windows key</strong>, type <strong>PowerShell</strong>, and open the one that says <strong>"PowerShell 7"</strong> or <strong>"pwsh"</strong>. Avoid the one called "Windows PowerShell" — it's an older version.</p>
+
+    <div class="warn"><strong>⚠️ Don't see PowerShell 7?</strong> You might only have the old version. Open "Windows PowerShell" instead — it will work for the install command. We'll sort out the version later.</div>
+
+    <h3>Then: install Copilot CLI</h3>
+    <p>Copy-paste this command into PowerShell and press Enter:</p>
     <pre><code>winget install GitHub.Copilot</code></pre>
-    <p>Wait for it to finish. Close and reopen PowerShell, then verify:</p>
+    <p>Wait for it to finish (takes about a minute). Then <strong>close and reopen PowerShell</strong> — this is important, the new command won't be available until you do.</p>
+
+    <h3>Verify it worked</h3>
     <pre><code>copilot --version</code></pre>
 
     <div class="tip"><strong>✅ Pass:</strong> You see a version number (e.g., <code>v1.0.x</code>).</div>
 
-    <div class="warn"><strong>⚠️ <code>winget</code> not found?</strong> Install "App Installer" from the Microsoft Store, then try again.</div>
+    <div class="warn"><strong>⚠️ <code>winget</code> not found?</strong> Open the Microsoft Store app, search for "App Installer", and install it. Then restart PowerShell and try again.</div>
+    <div class="warn"><strong>⚠️ <code>copilot</code> not found after install?</strong> Make sure you closed and reopened PowerShell. If still missing, restart your computer.</div>
   </div>
 
   <!-- Step 2 -->
@@ -251,7 +275,7 @@
   </div>
 
   <!-- Step 5 -->
-  <div class="step">
+  <div class="step" id="verify">
     <span class="step-number">Step 5</span>
     <h2>Verify everything</h2>
     <p>Run through these five checks. All should pass before the session.</p>
