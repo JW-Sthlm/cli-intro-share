@@ -255,25 +255,26 @@
   <!-- Step 4 -->
   <div class="step">
     <span class="step-number">Step 4</span>
-    <h2>Configure MCP servers</h2>
-    <p>MCP servers are connectors that let Copilot CLI talk to external tools. We're setting up three:</p>
+    <h2>Connect your tools</h2>
+    <p>MCP servers are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We need three:</p>
     <ol>
-      <li><strong>PMX</strong> — partner management data in Dynamics 365</li>
+      <li><strong>PMX</strong> — your partner management data in Dynamics 365</li>
       <li><strong>GitHub</strong> — repos, issues, pull requests</li>
       <li><strong>M365</strong> — email, calendar, Teams</li>
     </ol>
 
-    <h3>Option A: Config file (easiest)</h3>
-    <p>Your session facilitator will share a pre-made config file. Save it to:</p>
-    <pre><code>C:\Users\&lt;your-username&gt;\.copilot\mcp-config.json</code></pre>
-    <p>Replace <code>&lt;your-username&gt;</code> with your actual Windows username.</p>
+    <h3>How to set them up</h3>
+    <p>The good news: you can ask Copilot CLI to do this for you. Launch it and type:</p>
+    <pre><code>I need to set up MCP servers for PMX, GitHub, and M365. Help me configure them.</code></pre>
+    <p>Copilot will walk you through it step by step — finding the right servers, configuring them, and saving the setup. Just follow along and answer its questions.</p>
 
-    <h3>Option B: Use the /mcp command</h3>
-    <p>Inside Copilot CLI, type:</p>
+    <div class="tip"><strong>💡 This is a great first taste of how CLI works:</strong> you describe what you need in plain language, and it figures out the steps. No config files to edit manually.</div>
+
+    <p>You can also use the built-in command:</p>
     <pre><code>/mcp</code></pre>
-    <p>This opens an interactive menu for adding MCP servers. Your facilitator will walk through this if needed.</p>
+    <p>This opens an interactive menu for browsing and adding MCP servers.</p>
 
-    <div class="tip"><strong>💡 Tip:</strong> The config file approach is faster and less error-prone. Ask your facilitator for the file.</div>
+    <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If CLI can't find or configure a server, don't worry — we'll troubleshoot together at the start of the session. Just make sure Steps 0–3 are done.</div>
   </div>
 
   <!-- Step 5 -->
