@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setup Instructions — Copilot CLI for Partner Work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fg: #0b0b0d;
+    --fg-muted: #5a5a66;
+    --bg: #fafafa;
+    --card: #fff;
+    --accent: #2D6E6D;
+    --accent-light: #EEF4F4;
+    --border: #e5e7eb;
+    --warn: #c4700a;
+    --warn-bg: #FFF7ED;
+    --warn-border: #FDDCAB;
+    --success: #16803C;
+    --success-bg: #F0FDF4;
+    --success-border: #BBF7D0;
+    --code-bg: #1e1e2e;
+    --code-fg: #cdd6f4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  /* Header */
+  .header { margin-bottom: 48px; }
+  .tag { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px; }
+  .sub { color: var(--fg-muted); font-size: 17px; margin: 0 0 24px; }
+
+  /* Intro box */
+  .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 520px) { .intro-grid { grid-template-columns: 1fr; } }
+  .intro-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+  .intro-item .emoji { font-size: 24px; margin-bottom: 6px; }
+  .intro-item .label { font-size: 13px; color: var(--fg-muted); }
+  .intro-item .value { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 16px; }
+
+  .reassurance { font-size: 14px; color: var(--fg-muted); text-align: center; margin: 0 0 48px; }
+
+  /* Step sections */
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 32px; margin-bottom: 20px; position: relative; }
+  .step-number { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; color: var(--accent); background: var(--accent-light); display: inline-block; padding: 4px 12px; border-radius: 999px; margin-bottom: 12px; letter-spacing: .04em; text-transform: uppercase; }
+  .step h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 700; margin: 0 0 12px; }
+  .step h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
+  .step p, .step li { font-size: 15px; }
+  .step ul, .step ol { padding-left: 20px; }
+  .step li { margin-bottom: 6px; }
+
+  /* Code blocks */
+  pre { background: var(--code-bg); color: var(--code-fg); border-radius: 10px; padding: 16px 20px; overflow-x: auto; font-size: 14px; line-height: 1.5; margin: 12px 0; }
+  code { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 14px; }
+  p code, li code { background: #f0f0f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--fg); }
+
+  /* Callouts */
+  .tip, .warn { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.5; }
+  .tip { background: var(--accent-light); border-left: 4px solid var(--accent); }
+  .tip strong { color: var(--accent); }
+  .warn { background: var(--warn-bg); border-left: 4px solid var(--warn); }
+  .warn strong { color: var(--warn); }
+
+  /* Table */
+  .step table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .step th, .step td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .step th { font-weight: 600; background: var(--bg); font-size: 13px; text-transform: uppercase; letter-spacing: .03em; color: var(--fg-muted); }
+  .step td:first-child { font-weight: 500; white-space: nowrap; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { flex-shrink: 0; width: 26px; height: 26px; background: var(--accent-light); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+  .check-detail { flex: 1; }
+  .check-detail strong { display: block; margin-bottom: 2px; }
+  .check-cmd { font-size: 13px; color: var(--fg-muted); font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .check-pass { font-size: 13px; color: var(--success); font-weight: 500; }
+
+  /* Success */
+  .success { background: var(--success-bg); border: 2px solid var(--success-border); border-radius: 14px; padding: 32px; text-align: center; margin-bottom: 20px; }
+  .success .emoji { font-size: 48px; margin-bottom: 12px; }
+  .success h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; color: var(--success); margin: 0 0 8px; }
+  .success p { font-size: 15px; color: var(--fg-muted); margin: 4px 0; }
+  .success ul { list-style: none; padding: 0; margin: 16px 0 0; display: inline-flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .success li { font-size: 14px; }
+
+  /* Footer */
+  .footer { text-align: center; padding-top: 24px; }
+  .footer a { display: inline-block; color: var(--accent); font-weight: 600; font-size: 15px; text-decoration: none; padding: 10px 24px; border: 2px solid var(--accent); border-radius: 999px; transition: background .15s, color .15s; }
+  .footer a:hover { background: var(--accent); color: #fff; }
+
+  /* Links */
+  a.inline { color: var(--accent); text-decoration: none; }
+  a.inline:hover { text-decoration: underline; }
+
+  /* Progress bar */
+  .progress { display: flex; gap: 6px; margin-bottom: 48px; }
+  .progress-dot { flex: 1; height: 4px; background: var(--border); border-radius: 999px; }
+  .progress-dot.active { background: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="tag">Pre-work</span>
+    <h1>Setup Instructions</h1>
+    <p class="sub">Get your Copilot CLI environment ready before the session.</p>
+  </div>
+
+  <!-- Intro -->
+  <div class="intro-grid">
+    <div class="intro-item">
+      <div class="emoji">⏱️</div>
+      <div class="value">15 min</div>
+      <div class="label">Estimated time</div>
+    </div>
+    <div class="intro-item">
+      <div class="emoji">🔧</div>
+      <div class="value">CLI + 3 MCP servers</div>
+      <div class="label">What you'll set up</div>
+    </div>
+    <div class="intro-item">
+      <div class="emoji">💡</div>
+      <div class="value">No coding needed</div>
+      <div class="label">Just follow the steps</div>
+    </div>
+  </div>
+  <p class="reassurance">You'll install a terminal tool, log in, and connect three data sources. Copy-paste commands — that's it.</p>
+
+  <!-- Progress -->
+  <div class="progress" aria-hidden="true">
+    <div class="progress-dot active"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot active"></div>
+    <div class="progress-dot active"></div>
+  </div>
+
+  <!-- Step 0 -->
+  <div class="step">
+    <span class="step-number">Step 0</span>
+    <h2>Connect your Copilot entitlement</h2>
+    <p>Microsoft pays for your GitHub Copilot access. You just need to make sure your account is connected to that entitlement.</p>
+
+    <p>You likely have <strong>two</strong> GitHub accounts:</p>
+    <table>
+      <tr><th>Account</th><th>What it is</th><th>Username</th></tr>
+      <tr><td>EMU</td><td>Corporate managed account on <code>github.com/ms-copilot</code></td><td><code>yourname_microsoft</code></td></tr>
+      <tr><td>Personal</td><td>Your own GitHub account</td><td>Whatever you chose</td></tr>
+    </table>
+
+    <p>The key step: connect your <strong>personal</strong> account to the Microsoft entitlement. This gives it full Copilot access — paid by Microsoft, not you.</p>
+
+    <div class="tip">
+      <strong>👉 Action:</strong> Go to <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a> and verify your personal account is connected. Follow the on-screen steps if it's not.
+    </div>
+
+    <h3>Which account for this session?</h3>
+    <ul>
+      <li><strong>Personal account</strong> — recommended. Works with public repos and your own repos.</li>
+      <li><strong>EMU account</strong> — only needed for Microsoft-internal repos (<code>ms-copilot</code> org).</li>
+      <li>You can switch anytime: <code>gh auth switch --user &lt;account&gt;</code></li>
+    </ul>
+
+    <div class="tip">
+      <strong>📚 Internal resources:</strong> <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">Copilot portal</a> · <a class="inline" href="https://eng.ms/docs/initiatives/ai-guidance-for-microsoft-developers/governance/github-copilot-guidelines" target="_blank">Copilot guidelines</a> · Search "GitHub Copilot QuickStart" on the R&amp;I SharePoint site for an automated verification tool.
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <span class="step-number">Step 1</span>
+    <h2>Install Copilot CLI</h2>
+    <p>Open <strong>PowerShell 7</strong> (search for "PowerShell" in Start — make sure it says "PowerShell 7" or "pwsh", not "Windows PowerShell").</p>
+    <pre><code>winget install GitHub.Copilot</code></pre>
+    <p>Wait for it to finish. Close and reopen PowerShell, then verify:</p>
+    <pre><code>copilot --version</code></pre>
+
+    <div class="tip"><strong>✅ Pass:</strong> You see a version number (e.g., <code>v1.0.x</code>).</div>
+
+    <div class="warn"><strong>⚠️ <code>winget</code> not found?</strong> Install "App Installer" from the Microsoft Store, then try again.</div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <span class="step-number">Step 2</span>
+    <h2>Log in and test</h2>
+    <p>Launch Copilot CLI:</p>
+    <pre><code>copilot</code></pre>
+    <p>You'll see an animated banner. Type:</p>
+    <pre><code>/login</code></pre>
+    <p>A browser window opens — sign in with your <strong>personal</strong> GitHub account.</p>
+    <p>Once logged in, test with a simple prompt:</p>
+    <pre><code>What day is it today?</code></pre>
+
+    <div class="tip"><strong>✅ Pass:</strong> You get an answer back. Type <code>/exit</code> to leave for now.</div>
+
+    <div class="warn"><strong>⚠️ Login fails or times out?</strong> Make sure you're on the corporate network or VPN. Verify your Copilot subscription at <a class="inline" href="https://github.com/settings/copilot" target="_blank">github.com/settings/copilot</a>.</div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step">
+    <span class="step-number">Step 3</span>
+    <h2>Install Azure CLI (for PMX)</h2>
+    <p>The PMX MCP server needs an Azure login to talk to Dynamics 365.</p>
+
+    <h3>Install (if you don't have it)</h3>
+    <pre><code>winget install Microsoft.AzureCLI</code></pre>
+    <p>Close and reopen PowerShell after installing.</p>
+
+    <h3>Log in to the Microsoft tenant</h3>
+    <pre><code>az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47</code></pre>
+    <p>A browser window opens. Sign in with your Microsoft account. Done when it says "You have logged in."</p>
+
+    <div class="tip"><strong>✅ Pass:</strong> Run <code>az account show --query "{name:name, user:user.name}" -o table</code> — you see your account name.</div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <span class="step-number">Step 4</span>
+    <h2>Configure MCP servers</h2>
+    <p>MCP servers are connectors that let Copilot CLI talk to external tools. We're setting up three:</p>
+    <ol>
+      <li><strong>PMX</strong> — partner management data in Dynamics 365</li>
+      <li><strong>GitHub</strong> — repos, issues, pull requests</li>
+      <li><strong>M365</strong> — email, calendar, Teams</li>
+    </ol>
+
+    <h3>Option A: Config file (easiest)</h3>
+    <p>Your session facilitator will share a pre-made config file. Save it to:</p>
+    <pre><code>C:\Users\&lt;your-username&gt;\.copilot\mcp-config.json</code></pre>
+    <p>Replace <code>&lt;your-username&gt;</code> with your actual Windows username.</p>
+
+    <h3>Option B: Use the /mcp command</h3>
+    <p>Inside Copilot CLI, type:</p>
+    <pre><code>/mcp</code></pre>
+    <p>This opens an interactive menu for adding MCP servers. Your facilitator will walk through this if needed.</p>
+
+    <div class="tip"><strong>💡 Tip:</strong> The config file approach is faster and less error-prone. Ask your facilitator for the file.</div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step">
+    <span class="step-number">Step 5</span>
+    <h2>Verify everything</h2>
+    <p>Run through these five checks. All should pass before the session.</p>
+
+    <ul class="checklist">
+      <li>
+        <span class="check-icon">1</span>
+        <div class="check-detail">
+          <strong>Copilot CLI is installed</strong>
+          <span class="check-cmd">copilot --version</span><br>
+          <span class="check-pass">✅ You see a version number</span>
+        </div>
+      </li>
+      <li>
+        <span class="check-icon">2</span>
+        <div class="check-detail">
+          <strong>You can log in and chat</strong>
+          <span class="check-cmd">copilot → "Hello, what model are you using?"</span><br>
+          <span class="check-pass">✅ You get a response from the AI</span>
+        </div>
+      </li>
+      <li>
+        <span class="check-icon">3</span>
+        <div class="check-detail">
+          <strong>Azure CLI is logged in</strong>
+          <span class="check-cmd">az account show --query "{name:name, user:user.name}" -o table</span><br>
+          <span class="check-pass">✅ Shows your Microsoft account name</span>
+        </div>
+      </li>
+      <li>
+        <span class="check-icon">4</span>
+        <div class="check-detail">
+          <strong>MCP servers are configured</strong>
+          <span class="check-cmd">copilot → /env</span><br>
+          <span class="check-pass">✅ PMX, GitHub, and M365 listed under MCP servers</span>
+        </div>
+      </li>
+      <li>
+        <span class="check-icon">5</span>
+        <div class="check-detail">
+          <strong>PMX data is accessible</strong>
+          <span class="check-cmd">copilot → "Show me my PMX projects"</span><br>
+          <span class="check-pass">✅ You see project names from D365</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="warn"><strong>⚠️ Something not working?</strong> Don't stress. We'll have 5 minutes at the start of the session to troubleshoot. But the more you can get done now, the more hands-on time you'll have.</div>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="step">
+    <span class="step-number">Troubleshooting</span>
+    <h2>Common issues</h2>
+    <table>
+      <tr><th>Problem</th><th>Fix</th></tr>
+      <tr><td><code>winget</code> not found</td><td>Install "App Installer" from the Microsoft Store</td></tr>
+      <tr><td><code>copilot</code> not found</td><td>Close and reopen PowerShell. Still missing? Check your PATH.</td></tr>
+      <tr><td><code>/login</code> fails</td><td>Ensure corporate network / VPN. Check entitlement at <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a></td></tr>
+      <tr><td><code>az login</code> fails</td><td>Run <code>winget install Microsoft.AzureCLI</code> first, restart PowerShell</td></tr>
+      <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
+      <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
+    </table>
+  </div>
+
+  <!-- Success -->
+  <div class="success">
+    <div class="emoji">🎉</div>
+    <h2>You're ready!</h2>
+    <p>All set for the session. Here's what to bring:</p>
+    <ul>
+      <li>💻 Laptop with setup complete</li>
+      <li>⚡ PowerShell open and ready</li>
+      <li>🧠 Curiosity — no coding skills needed</li>
+    </ul>
+  </div>
+
+  <!-- Self-paced -->
+  <div class="step" style="text-align:center;">
+    <p style="margin:0 0 8px;"><strong>Want to go deeper after the session?</strong></p>
+    <p style="margin:0;font-size:14px;color:var(--fg-muted);">Official beginner course (~2 hours): <a class="inline" href="https://jamesmontemagno.github.io/copilot-cli-for-beginners/" target="_blank">Copilot CLI for Beginners</a></p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="index.html">← Back to session overview</a>
+  </div>
+
+</div>
+</body>
+</html>

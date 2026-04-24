@@ -16,7 +16,7 @@
   h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:40px;font-weight:800;letter-spacing:-.02em;margin:0 0 8px;}
   .sub{color:var(--fg-muted);font-size:17px;margin:0 0 40px;}
   .tag{display:inline-block;background:#EEF4F4;color:#2D6E6D;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 32px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 32px;}
   @media (max-width:640px){.cards{grid-template-columns:1fr;}}
   .card{display:block;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;}
   .card:hover{border-color:var(--accent);transform:translateY(-2px);}
@@ -45,6 +45,11 @@
       <span class="icon">🎤</span>
       <h2>Presenter deck</h2>
       <p>The 10-slide deck as it will be delivered. Arrow keys or scroll to navigate.</p>
+    </a>
+    <a class="card" href="setup.html">
+      <span class="icon">⚙️</span>
+      <h2>Setup instructions</h2>
+      <p>15-minute pre-work. Install CLI, connect your account, configure MCP servers. Do this before the session.</p>
     </a>
   </div>
 
