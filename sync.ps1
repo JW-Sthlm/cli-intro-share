@@ -33,7 +33,23 @@ foreach ($f in $map) {
   $dst = Join-Path $repo   $f.To
   if (-not (Test-Path $src)) { throw "Missing source file: $src" }
   Copy-Item $src $dst -Force
+  # Fix image paths — source deck uses ../images/, share repo uses images/
+  if ($f.To -match '\.html$') {
+    (Get-Content $dst -Raw) -replace '\.\./images/', 'images/' | Set-Content $dst -NoNewline
+  }
   Write-Host "  ✓ $($f.From) -> $($f.To)" -ForegroundColor Green
+}
+
+# Sync images (deck references ../images/ relative path)
+$imgSource = Join-Path (Split-Path $source) "images"
+$imgTarget = Join-Path $repo "images"
+if (Test-Path $imgSource) {
+  if (-not (Test-Path $imgTarget)) { New-Item $imgTarget -ItemType Directory | Out-Null }
+  $imgs = Get-ChildItem $imgSource -File -Include "*.png","*.jpg","*.jpeg","*.svg","*.webp" -Recurse
+  foreach ($img in $imgs) {
+    Copy-Item $img.FullName (Join-Path $imgTarget $img.Name) -Force
+    Write-Host "  ✓ images/$($img.Name)" -ForegroundColor Green
+  }
 }
 
 Push-Location $repo
