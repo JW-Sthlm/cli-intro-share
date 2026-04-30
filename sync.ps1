@@ -20,7 +20,6 @@ $repo   = $PSScriptRoot
 $source = Resolve-Path (Join-Path $repo "..\cli-intro\v2\deck")
 
 $map = @(
-  @{ From = "cli-intro-v3-storyboard.html"; To = "storyboard.html" }
   @{ From = "cli-intro-v3.html";            To = "deck.html"       }
   @{ From = "cli-intro-v3-print.html";      To = "print.html"      }
 )
