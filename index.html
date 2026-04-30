@@ -3,59 +3,113 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Copilot CLI for Partner Work — Session Preview</title>
+<title>Your Operational Copilot — CLI Intro Session</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{ --fg:#0b0b0d; --fg-muted:#5a5a66; --bg:#fafafa; --card:#fff; --accent:#2D6E6D; --border:#e5e7eb; }
+  :root{ --bg:#0D1117; --bg-2:#010409; --panel:#161B22; --border:#30363D; --text:#E6EDF3; --muted:#7D8590; --purple:#8957E5; --green:#3FB950; --amber:#D29922; --pink:#F778BA; --teal:#39D2C0; }
   *{box-sizing:border-box}
-  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;}
-  .wrap{max-width:760px;margin:0 auto;padding:64px 24px 96px;}
-  h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:40px;font-weight:800;letter-spacing:-.02em;margin:0 0 8px;}
-  .sub{color:var(--fg-muted);font-size:17px;margin:0 0 40px;}
-  .tag{display:inline-block;background:#EEF4F4;color:#2D6E6D;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 32px;}
-  @media (max-width:640px){.cards{grid-template-columns:1fr;}}
-  .card{display:block;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;}
-  .card:hover{border-color:var(--accent);transform:translateY(-2px);}
-  .card h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin:0 0 6px;}
-  .card p{font-size:14px;color:var(--fg-muted);margin:0;}
-  .card .icon{font-size:28px;margin-bottom:12px;display:block;}
-  .meta{font-size:13px;color:var(--fg-muted);border-top:1px solid var(--border);padding-top:20px;margin-top:32px;}
-  .meta strong{color:var(--fg);}
-  a.inline{color:var(--accent);text-decoration:none;}
+  body{margin:0;font-family:'Mona Sans',system-ui,sans-serif;background:var(--bg-2);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:800px;margin:0 auto;padding:64px 24px 96px;}
+  h1{font-size:44px;font-weight:900;letter-spacing:-.03em;margin:0 0 8px;line-height:1.05;}
+  h1 .accent{color:var(--purple);}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 40px;max-width:54ch;line-height:1.55;}
+  .tag{display:inline-block;background:rgba(137,87,229,.1);color:var(--purple);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(137,87,229,.3);}
+  .section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:32px 0 12px;font-weight:600;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:0 0 12px;}
+  @media(max-width:640px){.cards{grid-template-columns:1fr;}}
+  .card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;}
+  .card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .card h2{font-size:18px;font-weight:700;margin:0 0 6px;color:var(--text);}
+  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5;}
+  .card .icon{font-size:24px;margin-bottom:10px;display:block;}
+  .card .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:10px;}
+  .card .card-tag.green{color:var(--green);background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);}
+  .card .card-tag.amber{color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);}
+  .card .card-tag.purple{color:var(--purple);background:rgba(137,87,229,.1);border:1px solid rgba(137,87,229,.25);}
+  .card .card-tag.pink{color:var(--pink);background:rgba(247,120,186,.1);border:1px solid rgba(247,120,186,.25);}
+  .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:36px;}
+  .meta strong{color:var(--text);}
+  a.inline{color:var(--purple);text-decoration:none;}
   a.inline:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <span class="tag">Preview · feedback welcome</span>
-  <h1>Copilot CLI for Partner Work</h1>
-  <p class="sub">60-min hands-on intro session for partner-facing roles. From M365 help to repeatable, tool-connected workflows.</p>
+  <span class="tag">60 min · hands-on workshop</span>
+  <h1>Your Operational <span class="accent">Copilot</span></h1>
+  <p class="sub">From M365 help to repeatable, tool-connected partner workflows. Everything you need for the session is here.</p>
 
+  <div class="section-label">Session materials</div>
   <div class="cards">
+    <a class="card" href="deck.html">
+      <span class="icon">🎤</span>
+      <h2>Slide deck</h2>
+      <p>The 10-slide deck. Arrow keys to navigate, P for presenter notes.</p>
+      <span class="card-tag purple">present</span>
+    </a>
     <a class="card" href="storyboard.html">
       <span class="icon">📝</span>
       <h2>Storyboard</h2>
-      <p>Full session script. TL;DR, positioning, slide-by-slide with DO / SAY notes and demo cards. Start here.</p>
-    </a>
-    <a class="card" href="presenter.html">
-      <span class="icon">🎤</span>
-      <h2>Presenter deck</h2>
-      <p>The 10-slide deck as it will be delivered. Arrow keys or scroll to navigate.</p>
+      <p>Full facilitator playbook. Slide-by-slide with demos, exercises, timing.</p>
+      <span class="card-tag pink">prep</span>
     </a>
     <a class="card" href="setup.html">
       <span class="icon">⚙️</span>
-      <h2>Setup instructions</h2>
-      <p>15-minute pre-work. Install CLI, connect your account, configure MCP servers. Do this before the session.</p>
+      <h2>Setup guide</h2>
+      <p>15-minute pre-work. Install CLI, connect your account, add MCP servers.</p>
+      <span class="card-tag green">before session</span>
+    </a>
+    <a class="card" href="print.html">
+      <span class="icon">🖨</span>
+      <h2>Print version</h2>
+      <p>Ctrl+P → Margins: None → Background graphics ON → Save as PDF.</p>
+      <span class="card-tag purple">export</span>
+    </a>
+  </div>
+
+  <div class="section-label">Exercises</div>
+  <div class="cards">
+    <a class="card" href="https://github.com/JW-Sthlm/cli-intro/blob/main/v2/exercises/exercise-01-build-your-briefing.md" target="_blank">
+      <span class="icon">📋</span>
+      <h2>Exercise 1: Partner Briefing</h2>
+      <p>Build a real briefing using your own partner data. Copy-paste prompts ready.</p>
+      <span class="card-tag amber">hands-on</span>
+    </a>
+    <a class="card" href="https://github.com/JW-Sthlm/cli-intro/blob/main/v2/exercises/exercise-02-pick-your-scenario.md" target="_blank">
+      <span class="icon">🎯</span>
+      <h2>Exercise 2: Pick Your Scenario</h2>
+      <p>Four scenarios — workshop plan, opportunity gaps, partner email, research roadmap.</p>
+      <span class="card-tag amber">hands-on</span>
+    </a>
+    <a class="card" href="https://github.com/JW-Sthlm/cli-intro/blob/main/v2/exercises/exercise-03-your-copilot-passport.md" target="_blank">
+      <span class="icon">🛂</span>
+      <h2>Exercise 3: Copilot Passport</h2>
+      <p>Generate an HTML dashboard of your full Copilot environment.</p>
+      <span class="card-tag amber">bonus</span>
+    </a>
+  </div>
+
+  <div class="section-label">Reference</div>
+  <div class="cards">
+    <a class="card" href="https://github.com/JW-Sthlm/cli-intro/blob/main/v2/reference/cheat-sheet.md" target="_blank">
+      <span class="icon">📎</span>
+      <h2>Cheat sheet</h2>
+      <p>Commands, workflows, kitchen analogy, Copilot Ladder — all on one page.</p>
+    </a>
+    <a class="card" href="https://gh.io/copilot-cli-course" target="_blank">
+      <span class="icon">🎓</span>
+      <h2>Beginner course</h2>
+      <p>2-hour self-paced deep-dive by GitHub. Take this after the session.</p>
     </a>
   </div>
 
   <div class="meta">
-    <p><strong>Feedback:</strong> reply to the share message or comment directly in the thread. Content is iterated — <strong>hard-refresh (Ctrl+F5)</strong> to see the latest version.</p>
-    <p><strong>Owner:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://linkedin.com/in/johanwallquist" target="_blank">LinkedIn</a></p>
+    <p><strong>Feedback:</strong> reply to the share message or comment in the thread. Hard-refresh (Ctrl+F5) to see the latest.</p>
+    <p><strong>Owner:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank">LinkedIn</a></p>
+    <p><strong>Source:</strong> <a class="inline" href="https://github.com/JW-Sthlm/cli-intro" target="_blank">github.com/JW-Sthlm/cli-intro</a></p>
   </div>
 </div>
 </body>
