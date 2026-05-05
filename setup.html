@@ -65,10 +65,13 @@
   .cmd-wrap { margin: 14px 0; }
   .cmd-wrap pre { margin: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
   .cmd-header { display: flex; align-items: center; justify-content: space-between; background: #2a2a3e; color: var(--code-fg); padding: 7px 14px; border-radius: 10px 10px 0 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'Inter', sans-serif; }
-  .cmd-label { font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 11px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
-  .cmd-label::before { font-family: 'Cascadia Code', monospace; font-size: 12px; opacity: 1; }
-  .shell-ps .cmd-label::before { content: ">_"; color: #5DA9D9; }
-  .shell-copilot .cmd-label::before { content: "✦"; color: #C7A8FF; }
+  .cmd-label { font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; gap: 6px; }
+  .cmd-label::before { font-family: 'Cascadia Code', monospace; font-size: 12px; }
+  .shell-ps .cmd-label { opacity: 0.78; }
+  .shell-ps .cmd-label::before { content: ">_"; color: #5DA9D9; opacity: 1; }
+  .shell-copilot .cmd-header { background: linear-gradient(180deg, #3a2e5c 0%, #2d2444 100%); border-bottom-color: rgba(199, 168, 255, 0.22); }
+  .shell-copilot .cmd-label { color: #D9C2FF; opacity: 1; }
+  .shell-copilot .cmd-label::before { content: "✦"; color: #C7A8FF; font-size: 14px; }
   .cmd-copy { background: transparent; color: inherit; border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 3px 11px; font-size: 11px; font-weight: 500; cursor: pointer; transition: background .12s, border-color .12s; font-family: 'Inter', sans-serif; }
   .cmd-copy:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.32); }
   .cmd-copy.copied { background: var(--success); color: #fff; border-color: var(--success); }
