@@ -371,7 +371,10 @@
     <pre><code>az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47</code></pre>
     <p>A browser window opens. Sign in with your Microsoft account. Done when it says "You have logged in."</p>
 
-    <div class="tip"><strong>✅ Pass:</strong> Run <code>az account show --query "{name:name, user:user.name}" -o table</code> — you see your account name.</div>
+    <div class="tip"><strong>📝 Subscription picker:</strong> After signing in, the terminal lists your Azure subscriptions and asks you to pick one. Just press <strong>Enter</strong> to accept the default — PMX doesn't care which subscription you pick.</div>
+
+    <p><strong>✅ Pass:</strong> Run this — you should see your account name:</p>
+    <pre><code>az account show --query "{name:name, user:user.name}" -o table</code></pre>
   </div>
 
   <!-- Step 4 -->
