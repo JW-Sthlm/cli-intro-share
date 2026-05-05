@@ -506,6 +506,8 @@
       <tr><td><code>/login</code> fails</td><td>Ensure corporate network / VPN. Check entitlement at <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a></td></tr>
       <tr><td><code>az login</code> fails</td><td>Run <code>winget install Microsoft.AzureCLI</code> first, restart PowerShell</td></tr>
       <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
+      <tr><td><em>"Single sign-on to your organization"</em> after device code</td><td>Your personal GitHub is in a SAML-SSO-enforced org. Click <strong>Authorize</strong>, then sign in with the Microsoft account tied to that org. Safe — just one-time SSO authorization for the new token.</td></tr>
+      <tr><td><code>/login/device/failure?reason=not_found</code></td><td>You pasted a stale code. Each <code>gh auth login</code> invalidates all previous codes. Use the <strong>most recent</strong> code from your terminal at <a class="inline" href="https://github.com/login/device" target="_blank">github.com/login/device</a>. Don't re-run <code>gh auth login</code>.</td></tr>
       <tr><td>PMX install: <em>"repo not found"</em></td><td>EMU not logged in or not active. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 4b</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
