@@ -323,8 +323,10 @@
       <li><em>Authenticate Git with your GitHub credentials?</em> → <strong>Yes</strong></li>
       <li><em>How would you like to authenticate GitHub CLI?</em> → <strong>Login with a web browser</strong></li>
     </ul>
-    <p>It shows a one-time code and offers to open a browser. Press Enter — your browser opens. Paste the code, sign in with your <strong>personal</strong> GitHub account, and authorize.</p>
+    <p>It shows a one-time code and offers to open a browser. Press Enter — your browser opens. If GitHub asks you to sign in first, do so with your <strong>personal</strong> GitHub account (this happens when the browser isn't already signed in — it's normal). Then paste the code and authorize.</p>
     <p>When the page says <em>"Congratulations, you're all set,"</em> come back to PowerShell.</p>
+
+    <div class="tip"><strong>💡 Got redirected to <code>github.com/login</code> instead of <code>/login/device</code>?</strong> That's GitHub's pre-auth redirect — sign in on that page and GitHub will send you to the device-code page automatically. If you re-ran <code>gh auth login</code>, only the <strong>latest</strong> code in your terminal is valid; older ones are invalidated.</div>
 
     <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-username&gt;</code>. Confirm anytime with <code>gh auth status</code>.</div>
 
