@@ -463,12 +463,28 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
     <details class="explainer">
       <summary>Manual fallback — if the Copilot prompt fails</summary>
       <div class="body">
-        <p>If Copilot can't run shell commands or the prompt misfires, do the four commands yourself in PowerShell. Run them <strong>one at a time</strong>:</p>
-        <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft</code></pre>
+        <p>If Copilot can't run shell commands or the prompt misfires, do it yourself. Run them <strong>one at a time</strong>.</p>
+
+        <p><strong>1. Find your EMU username.</strong> Run:</p>
+        <pre><code>gh auth status</code></pre>
+        <p>Look at both account lines. Your EMU username is the one ending in <code>_microsoft</code> (e.g. <code>jeghammer_microsoft</code>). Copy that exact name — you'll need it next.</p>
+
+        <p><strong>2. Switch the active account to your EMU.</strong> Replace <code>YOUR_EMU_USERNAME</code> with the name you copied above:</p>
+        <pre><code>gh auth switch --user YOUR_EMU_USERNAME</code></pre>
+
+        <p><strong>3. Confirm the switch worked.</strong> Run <code>gh auth status</code> again and check that the line marked <em>"Active account: true"</em> is on your <code>_microsoft</code> entry. If it's still on your personal account, step 2 didn't take — re-run it.</p>
+        <pre><code>gh auth status</code></pre>
+
+        <p><strong>4. Install PMX.</strong> With the EMU active, run these in order:</p>
         <pre><code>copilot plugin marketplace add gim-home/pmx-mcp</code></pre>
         <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
-        <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
-        <p>Same end state. The EMU must be active when <code>marketplace add</code> runs — that command fetches the manifest using your active <code>gh</code> credentials. Personal account → 404, no auto-recovery.</p>
+
+        <p><strong>5. Switch back to your personal account.</strong> Replace <code>YOUR_PERSONAL_USERNAME</code> with your personal GitHub username:</p>
+        <pre><code>gh auth switch --user YOUR_PERSONAL_USERNAME</code></pre>
+
+        <div class="warn" style="margin-top: 14px;"><strong>⚠️ Got <code>403 Write access to repository not granted</code>?</strong> Your personal account is still active. The <code>marketplace add</code> command is using personal creds against a Microsoft-internal repo. Re-run step 2 (the <code>gh auth switch</code>), verify with <code>gh auth status</code> that the EMU is active, then re-run the marketplace command.</div>
+
+        <p style="margin-top: 12px;">Same end state as the prompt path. The EMU must be the active account when <code>marketplace add</code> runs — that command fetches the manifest using your active <code>gh</code> credentials. Personal account → 403 or 404, no auto-recovery.</p>
       </div>
     </details>
 
@@ -545,7 +561,8 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
       <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
       <tr><td><em>"Single sign-on to your organization"</em> after device code</td><td>Your personal GitHub is in a SAML-SSO-enforced org. Click <strong>Authorize</strong>, then sign in with the Microsoft account tied to that org. Safe — just one-time SSO authorization for the new token.</td></tr>
       <tr><td><code>/login/device/failure?reason=not_found</code></td><td>You pasted a stale code. Each <code>gh auth login</code> invalidates all previous codes. Use the <strong>most recent</strong> code from your terminal at <a class="inline" href="https://github.com/login/device" target="_blank">github.com/login/device</a>. Don't re-run <code>gh auth login</code>.</td></tr>
-      <tr><td>PMX install: <em>"repo not found"</em></td><td>EMU not logged in or not active. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 4b</td></tr>
+      <tr><td>PMX install: <em>"repo not found"</em> (404)</td><td>EMU not logged in. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 4b</td></tr>
+      <tr><td>PMX install: <em>"403 Write access to repository not granted"</em></td><td>EMU is logged in but personal is still active. Run <code>gh auth status</code>, find your <code>_microsoft</code> username, then <code>gh auth switch --user YOUR_EMU_USERNAME</code>. Verify with <code>gh auth status</code> that the EMU line shows <em>"Active account: true"</em>, then re-run the marketplace commands.</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
   </div>
