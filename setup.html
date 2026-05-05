@@ -166,6 +166,7 @@
   <details class="explainer">
     <summary>Why bother with a CLI at all? Don't I already have M365 Copilot?</summary>
     <div class="body">
+      <p>Quick analogy: M365 Copilot is the librarian — you ask, it finds, it reads back. CLI Copilot is the contractor — you give it a job, it goes off and does it.</p>
       <p>M365 Copilot is great at what it sees: your email, calendar, Office files. Ask it about a thread, it summarizes. Ask it to draft a reply, it does. But it lives inside the M365 surface and stays there.</p>
       <p>CLI Copilot is a different shape. It runs on your machine, in your terminal, and it actually does things. Runs commands. Edits files. Calls APIs. Ties tools together.</p>
       <p>What the CLI gives you that M365 Copilot doesn't:</p>
@@ -176,6 +177,7 @@
         <li><strong>Live where your real work happens.</strong> Your repos, your scripts, your files, your terminal. No tab-switching, no re-uploading.</li>
       </ol>
       <p>Set up once. Use it for real work after.</p>
+      <div style="margin-top: 14px; padding: 12px 14px; background: var(--accent-light); border-radius: 8px; font-size: 14px;"><strong>A taste of what's possible:</strong> <em>"Find my last three meetings with Contoso, summarize what we discussed, check their PMX project status, then draft a follow-up email for me to review before sending."</em> Calendar + PMX + Outlook + Copilot reasoning, chained in one prompt. That's the CLI.</div>
     </div>
   </details>
 
@@ -374,8 +376,8 @@
 
     <div class="tip"><strong>📝 Subscription picker:</strong> After signing in, the terminal lists your Azure subscriptions and asks you to pick one. Just press <strong>Enter</strong> to accept the default — PMX doesn't care which subscription you pick.</div>
 
-    <p><strong>✅ Pass:</strong> Run this — you should see your account name:</p>
-    <pre><code>az account show --query "{name:name, user:user.name}" -o table</code></pre>
+    <p><strong>✅ Pass:</strong> Run this — you should see your account name in the output:</p>
+    <pre><code>az account show</code></pre>
   </div>
 
   <!-- Step 4 -->
@@ -484,7 +486,7 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
         <span class="check-icon">1</span>
         <div class="check-detail">
           <strong>Copilot CLI is installed</strong>
-          <span class="check-cmd">copilot --version</span><br>
+          <pre><code>copilot --version</code></pre>
           <span class="check-pass">✅ You see a version number</span>
         </div>
       </li>
@@ -492,7 +494,10 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
         <span class="check-icon">2</span>
         <div class="check-detail">
           <strong>You can log in and chat</strong>
-          <span class="check-cmd">copilot → "Hello, what model are you using?"</span><br>
+          <p style="margin: 4px 0 0; font-size: 13px; color: var(--fg-muted);">Launch Copilot:</p>
+          <pre><code>copilot</code></pre>
+          <p style="margin: 4px 0 0; font-size: 13px; color: var(--fg-muted);">Inside, type:</p>
+          <pre data-shell="copilot"><code>Hello, what model are you using?</code></pre>
           <span class="check-pass">✅ You get a response from the AI</span>
         </div>
       </li>
@@ -500,15 +505,16 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
         <span class="check-icon">3</span>
         <div class="check-detail">
           <strong>Azure CLI is logged in</strong>
-          <span class="check-cmd">az account show --query "{name:name, user:user.name}" -o table</span><br>
-          <span class="check-pass">✅ Shows your Microsoft account name</span>
+          <pre><code>az account show</code></pre>
+          <span class="check-pass">✅ Output shows your Microsoft account name</span>
         </div>
       </li>
       <li>
         <span class="check-icon">4</span>
         <div class="check-detail">
           <strong>MCP servers and plugins are loaded</strong>
-          <span class="check-cmd">copilot → /env</span><br>
+          <p style="margin: 4px 0 0; font-size: 13px; color: var(--fg-muted);">Inside Copilot CLI, type:</p>
+          <pre data-shell="copilot"><code>/env</code></pre>
           <span class="check-pass">✅ PMX listed under MCP servers; Outlook / Teams / Calendar listed under plugins (GitHub MCP is built-in)</span>
         </div>
       </li>
@@ -516,7 +522,8 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
         <span class="check-icon">5</span>
         <div class="check-detail">
           <strong>PMX data is accessible</strong>
-          <span class="check-cmd">copilot → "Show me my PMX projects"</span><br>
+          <p style="margin: 4px 0 0; font-size: 13px; color: var(--fg-muted);">Inside Copilot CLI, type:</p>
+          <pre data-shell="copilot"><code>Show me my PMX projects</code></pre>
           <span class="check-pass">✅ You see project names from D365</span>
         </div>
       </li>
