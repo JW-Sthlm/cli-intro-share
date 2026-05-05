@@ -97,6 +97,17 @@
   .footer a { display: inline-block; color: var(--accent); font-weight: 600; font-size: 15px; text-decoration: none; padding: 10px 24px; border: 2px solid var(--accent); border-radius: 999px; transition: background .15s, color .15s; }
   .footer a:hover { background: var(--accent); color: #fff; }
 
+  /* Foldout explainers */
+  details.explainer { margin: 14px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--card); transition: border-color .15s; }
+  details.explainer[open] { border-color: var(--accent); }
+  details.explainer summary { padding: 12px 16px; font-size: 14px; font-weight: 600; color: var(--accent); cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; }
+  details.explainer summary::-webkit-details-marker { display: none; }
+  details.explainer summary::before { content: "▶"; font-size: 9px; transition: transform .15s; flex-shrink: 0; }
+  details.explainer[open] summary::before { transform: rotate(90deg); }
+  details.explainer .body { padding: 0 16px 14px; font-size: 14px; line-height: 1.6; color: var(--fg); border-top: 1px solid var(--border); padding-top: 12px; margin-top: 2px; }
+  details.explainer .body p { margin: 0 0 8px; }
+  details.explainer .body p:last-child { margin-bottom: 0; }
+
   /* Links */
   a.inline { color: var(--accent); text-decoration: none; }
   a.inline:hover { text-decoration: underline; }
@@ -206,6 +217,14 @@
 
     <div class="warn"><strong>⚠️ Don't see PowerShell 7?</strong> You might only have the old version. Open "Windows PowerShell" instead — it will work for the install commands. We'll sort out the version later.</div>
 
+    <details class="explainer">
+      <summary>What's the difference between PowerShell 7 and Windows PowerShell?</summary>
+      <div class="body">
+        <p>Both are command-line tools that come with Windows. <strong>"Windows PowerShell"</strong> is the older version (5.x) — shipped with the OS for years. <strong>"PowerShell 7"</strong> (sometimes called "pwsh") is the newer cross-platform version Microsoft ships separately.</p>
+        <p>They look almost identical but PowerShell 7 has better tab completion, better error messages, and supports modern command patterns. For this workshop either one works — but if you have PowerShell 7, use it.</p>
+      </div>
+    </details>
+
     <h3>Then: install five small tools</h3>
     <p>Copilot CLI doesn't work alone. It calls four other tools behind the scenes — Node.js (its runtime), Git (for source control), GitHub CLI (for account switching), and Azure CLI (for PMX login). None of them have buttons or windows of their own; they sit underneath, ready to be called from your command line.</p>
     <p><strong>Run these one at a time</strong>, waiting for each to finish before pasting the next. (Pasting them all in one go can break — PowerShell handles single-line pastes most reliably.) Each takes 30–60 seconds.</p>
@@ -216,6 +235,14 @@
     <pre><code>winget install GitHub.Copilot</code></pre>
 
     <div class="tip"><strong>💡 Pop-ups are normal.</strong> Windows will ask <em>"Do you want to allow this app to make changes?"</em> — click <strong>Yes</strong>. Git's installer also opens a wizard with several screens — click <strong>Next</strong> through all defaults. This is expected.</div>
+
+    <details class="explainer">
+      <summary>What is winget, anyway?</summary>
+      <div class="body">
+        <p>It's Windows' built-in app installer — like the Microsoft Store, but you control it from PowerShell. Type <code>winget install &lt;tool&gt;</code> and it downloads and installs the official version straight from the publisher (Microsoft, GitHub, Git, etc.).</p>
+        <p>Microsoft ships it pre-installed on Windows 11. Think of it as the same idea as <code>apt-get</code> on Ubuntu or <code>brew</code> on Mac, if those names mean anything to you.</p>
+      </div>
+    </details>
 
     <p>When all five are done, <strong>close and reopen PowerShell</strong> — this is important. The new commands won't be available until you do.</p>
 
@@ -238,13 +265,46 @@
   <!-- Step 2 -->
   <div class="step">
     <span class="step-number">Step 2</span>
-    <h2>Log in and test</h2>
-    <p>Launch Copilot CLI:</p>
+    <h2>Log in to GitHub and Copilot</h2>
+    <p>Two separate tools both need a GitHub login: GitHub CLI (so you can switch accounts later) and Copilot CLI (so the AI knows who you are). We'll do them in order.</p>
+
+    <h3>2a. Log into GitHub CLI</h3>
+    <p>Start the login flow:</p>
+    <pre><code>gh auth login</code></pre>
+    <p>It asks four questions, one at a time. Use the arrow keys to highlight the right answer, then press Enter:</p>
+    <ul>
+      <li><em>What account do you want to log into?</em> → <strong>GitHub.com</strong></li>
+      <li><em>What is your preferred protocol for Git operations?</em> → <strong>HTTPS</strong></li>
+      <li><em>Authenticate Git with your GitHub credentials?</em> → <strong>Yes</strong></li>
+      <li><em>How would you like to authenticate GitHub CLI?</em> → <strong>Login with a web browser</strong></li>
+    </ul>
+    <p>It shows a one-time code and offers to open a browser. Press Enter — your browser opens. Paste the code, sign in with your <strong>personal</strong> GitHub account, and authorize.</p>
+    <p>When the page says <em>"Congratulations, you're all set,"</em> come back to PowerShell.</p>
+
+    <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-username&gt;</code>. Confirm anytime with <code>gh auth status</code>.</div>
+
+    <details class="explainer">
+      <summary>Why HTTPS and not SSH?</summary>
+      <div class="body">
+        <p>Both are ways for your computer to talk securely to GitHub when pushing or pulling code. <strong>HTTPS</strong> uses your username and the token you just authenticated with — simple, works through corporate proxies, no setup needed.</p>
+        <p><strong>SSH</strong> uses cryptographic keys you'd have to generate and add to your GitHub account first — more powerful, more steps. For this workshop, HTTPS is the easy answer. You can switch later if you ever want to.</p>
+      </div>
+    </details>
+
+    <details class="explainer">
+      <summary>Why am I logging in twice — gh AND copilot?</summary>
+      <div class="body">
+        <p>They're two separate tools that both need to know who you are. <strong>GitHub CLI</strong> (<code>gh</code>) is for talking to GitHub from PowerShell — switching accounts, cloning repos, opening pull requests. <strong>Copilot CLI</strong> (<code>copilot</code>) is the AI assistant.</p>
+        <p>Same GitHub account, but each tool keeps its own login session. Logging into <code>gh</code> first also means Copilot CLI can use it later for things like installing the PMX plugin in Step 4.</p>
+      </div>
+    </details>
+
+    <h3>2b. Log into Copilot CLI</h3>
+    <p>Now launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
-    <p>You'll see an animated banner. Type:</p>
+    <p>You'll see an animated banner. Inside Copilot CLI, type:</p>
     <pre><code>/login</code></pre>
-    <p>A browser window opens — sign in with your <strong>personal</strong> GitHub account.</p>
-    <p>Once logged in, test with a simple prompt:</p>
+    <p>A browser window opens — sign in with your <strong>personal</strong> GitHub account again. Once logged in, test with a simple prompt:</p>
     <pre><code>What day is it today?</code></pre>
 
     <div class="tip"><strong>✅ Pass:</strong> You get an answer back. Type <code>/exit</code> to leave for now.</div>
@@ -277,6 +337,14 @@
     </ol>
 
     <p>We do this in two passes because <strong>PMX requires your Microsoft EMU account</strong> to install — its repo is internal to Microsoft. GitHub and M365 work fine with your personal account.</p>
+
+    <details class="explainer">
+      <summary>What is MCP, in plain language?</summary>
+      <div class="body">
+        <p>MCP stands for "Model Context Protocol" — but ignore the name. Think of it as <strong>adapters that plug Copilot CLI into your other tools</strong>. Each adapter lets Copilot read and act on a specific system: PMX for partner data, GitHub for repos, M365 for email/calendar/Teams.</p>
+        <p>Without adapters, Copilot is a smart chatbot that can only talk. With adapters, it can actually look up your projects, send emails, post in Teams. Same Copilot — just with hands.</p>
+      </div>
+    </details>
 
     <h3>4a. Install GitHub and M365 (personal account)</h3>
     <p>First, confirm your personal account is the active GitHub account:</p>
