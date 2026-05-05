@@ -61,6 +61,18 @@
   code { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 14px; }
   p code, li code { background: #f0f0f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--fg); }
 
+  /* Command blocks with shell label + copy button (JS-injected wrapper) */
+  .cmd-wrap { margin: 14px 0; }
+  .cmd-wrap pre { margin: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+  .cmd-header { display: flex; align-items: center; justify-content: space-between; background: #2a2a3e; color: var(--code-fg); padding: 7px 14px; border-radius: 10px 10px 0 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'Inter', sans-serif; }
+  .cmd-label { font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 11px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
+  .cmd-label::before { font-family: 'Cascadia Code', monospace; font-size: 12px; opacity: 1; }
+  .shell-ps .cmd-label::before { content: ">_"; color: #5DA9D9; }
+  .shell-copilot .cmd-label::before { content: "✦"; color: #C7A8FF; }
+  .cmd-copy { background: transparent; color: inherit; border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; padding: 3px 11px; font-size: 11px; font-weight: 500; cursor: pointer; transition: background .12s, border-color .12s; font-family: 'Inter', sans-serif; }
+  .cmd-copy:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.32); }
+  .cmd-copy.copied { background: var(--success); color: #fff; border-color: var(--success); }
+
   /* Callouts */
   .tip, .warn { border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.5; }
   .tip { background: var(--accent-light); border-left: 4px solid var(--accent); }
@@ -148,6 +160,21 @@
   </div>
   <p class="reassurance">You'll install a terminal tool, log in, and connect three data sources. Copy-paste commands — that's it.</p>
 
+  <details class="explainer">
+    <summary>Why bother with a CLI at all? What can it do that the browser can't?</summary>
+    <div class="body">
+      <p>Browser Copilot is like a librarian — you ask, it finds, it reads back. CLI Copilot is more like a contractor. You give it a job, it goes off and does it, end-to-end.</p>
+      <p>Four things you can do here that you can't do in a browser:</p>
+      <ol>
+        <li><strong>Reach your real data.</strong> Through MCP connectors, Copilot reads your actual partner records, opportunities, calendar, email, repos. Not abstract examples — your work.</li>
+        <li><strong>Chain steps without you in the loop.</strong> <em>"Pull last week's PMX projects, draft a one-pager for each, save to OneDrive"</em> — ask once, it runs the whole sequence.</li>
+        <li><strong>Speak every other command-line tool for you.</strong> Azure CLI, GitHub CLI, git, npm. You don't need to remember the syntax. Tell Copilot what you want; it picks the tool and runs it.</li>
+        <li><strong>Stay in your environment.</strong> No tab-switching, no re-uploading files. Everything is local, on your machine, where you actually work.</li>
+      </ol>
+      <p>Set up once. Use it for real work after.</p>
+    </div>
+  </details>
+
   <div class="step" style="border-left: 4px solid var(--accent); background: var(--accent-light);">
     <p style="margin: 0; font-size: 15px; line-height: 1.6;">
       <strong>Already comfortable with CLI tools?</strong> Skim the steps and jump to <a href="#verify" style="color: var(--accent);">Step 5: Verify everything</a>. If all five checks pass, you're done.<br><br>
@@ -190,6 +217,21 @@
       <tr><td><strong>EMU</strong></td><td>A corporate account Microsoft created for you</td><td>Username ends in <code>_microsoft</code> (e.g., <code>johansen_microsoft</code>)</td></tr>
     </table>
     <p>You might have both, just one, or neither yet. That's fine.</p>
+
+    <details class="explainer">
+      <summary>What's an EMU and why do we need two GitHub accounts?</summary>
+      <div class="body">
+        <p><strong>EMU = Enterprise Managed User.</strong> A corporate GitHub account Microsoft created and manages for you. The username always ends in <code>_microsoft</code>.</p>
+        <p>Why does this exist? Microsoft has a lot of internal code, tools, and partner data sitting in private GitHub repos. EMU accounts are the security boundary — only <code>_microsoft</code> users can see those repos. Personal accounts can't.</p>
+        <p>Your personal account is yours. Your email, your career identity, your open-source work, your side projects. Microsoft doesn't manage it.</p>
+        <p>For the workshop:</p>
+        <ul>
+          <li><strong>Personal account</strong> is your default. Almost everything we do today uses it.</li>
+          <li><strong>EMU account</strong> only comes out when you install something from a Microsoft-internal repo (PMX is the example).</li>
+        </ul>
+        <p>The pattern is: switch to EMU → install → switch back to personal. Both stay logged in; you just toggle which one is active.</p>
+      </div>
+    </details>
 
     <h3>Which account for this session?</h3>
     <p>We recommend your <strong>personal account</strong>. It's simpler to use and works with everything we'll do in the session.</p>
@@ -303,9 +345,9 @@
     <p>Now launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>You'll see an animated banner. Inside Copilot CLI, type:</p>
-    <pre><code>/login</code></pre>
+    <pre data-shell="copilot"><code>/login</code></pre>
     <p>A browser window opens — sign in with your <strong>personal</strong> GitHub account again. Once logged in, test with a simple prompt:</p>
-    <pre><code>What day is it today?</code></pre>
+    <pre data-shell="copilot"><code>What day is it today?</code></pre>
 
     <div class="tip"><strong>✅ Pass:</strong> You get an answer back. Type <code>/exit</code> to leave for now.</div>
 
@@ -355,11 +397,12 @@
     <p>Then launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>Inside Copilot CLI, paste this prompt:</p>
-    <pre><code>Set up the official GitHub and M365 MCP servers in my Copilot CLI config. Walk me through it step by step.</code></pre>
+    <pre data-shell="copilot"><code>Set up the official GitHub and M365 MCP servers in my Copilot CLI config. Walk me through it step by step.</code></pre>
 
     <div class="warn"><strong>⚠️ Common trap.</strong> Copilot will ask <em>"Where do you want to configure these MCP servers?"</em> Pick <strong>2. Copilot CLI</strong>. The other options configure MCP for VS Code's Copilot Chat or other tools — not your local CLI session.</div>
 
-    <p>When done, type <code>/exit</code> to return to PowerShell.</p>
+    <p>When done, leave Copilot CLI:</p>
+    <pre data-shell="copilot"><code>/exit</code></pre>
 
     <h3>4b. Install PMX (Microsoft EMU account)</h3>
     <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. You'll log in as the EMU, install PMX, then switch back to your personal account as the everyday default.</p>
@@ -379,7 +422,12 @@
     <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
     <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
 
-    <p>The last command flips back so your personal account is default for everyday work. Then relaunch Copilot CLI so the new tools register — type <code>/exit</code> and run <code>copilot</code> again.</p>
+    <p>The last command flips back so your personal account is default for everyday work.</p>
+
+    <p>Now relaunch Copilot CLI so the new tools register. If you're still inside Copilot CLI from earlier, exit first:</p>
+    <pre data-shell="copilot"><code>/exit</code></pre>
+    <p>Then start it again:</p>
+    <pre><code>copilot</code></pre>
 
     <div class="warn"><strong>⚠️ The EMU must be the active account when you run <code>marketplace add</code>.</strong> That command fetches the manifest using whichever <code>gh</code> account is active. Personal account → 404, no auto-recovery.</div>
 
@@ -480,5 +528,61 @@
   </div>
 
 </div>
+
+<script>
+(function() {
+  var SHELL_LABELS = { 'ps': 'PowerShell', 'copilot': 'Copilot CLI' };
+  document.querySelectorAll('pre').forEach(function(pre) {
+    if (pre.closest('.cmd-wrap')) return;
+    var shell = pre.getAttribute('data-shell') || 'ps';
+    var label = SHELL_LABELS[shell] || 'PowerShell';
+    var wrap = document.createElement('div');
+    wrap.className = 'cmd-wrap shell-' + shell;
+    var header = document.createElement('div');
+    header.className = 'cmd-header';
+    var labelSpan = document.createElement('span');
+    labelSpan.className = 'cmd-label';
+    labelSpan.textContent = label;
+    var btn = document.createElement('button');
+    btn.className = 'cmd-copy';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy command');
+    btn.addEventListener('click', function() {
+      var code = pre.querySelector('code');
+      var text = code ? code.textContent : pre.textContent;
+      var done = function() {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1400);
+      };
+      var fail = function() {
+        btn.textContent = 'Failed';
+        setTimeout(function() { btn.textContent = 'Copy'; }, 1400);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fail);
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          done();
+        } catch (e) { fail(); }
+      }
+    });
+    header.appendChild(labelSpan);
+    header.appendChild(btn);
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(header);
+    wrap.appendChild(pre);
+  });
+})();
+</script>
 </body>
 </html>
