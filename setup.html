@@ -326,7 +326,9 @@
     <p>It shows a one-time code and offers to open a browser. Press Enter — your browser opens. If GitHub asks you to sign in first, do so with your <strong>personal</strong> GitHub account (this happens when the browser isn't already signed in — it's normal). Then paste the code and authorize.</p>
     <p>When the page says <em>"Congratulations, you're all set,"</em> come back to PowerShell.</p>
 
-    <div class="tip"><strong>💡 Got redirected to <code>github.com/login</code> instead of <code>/login/device</code>?</strong> That's GitHub's pre-auth redirect — sign in on that page and GitHub will send you to the device-code page automatically. If you re-ran <code>gh auth login</code>, only the <strong>latest</strong> code in your terminal is valid; older ones are invalidated.</div>
+    <div class="warn"><strong>⚠️ Don't re-run <code>gh auth login</code> if you hit a snag.</strong> Every new run invalidates all previous codes. If the browser is stuck, looks wrong, or shows <em>"Uh oh, we couldn't find anything"</em>, just go to <a class="inline" href="https://github.com/login/device" target="_blank">github.com/login/device</a> and paste the code from your terminal — the existing one is still valid. Only the <strong>most recent</strong> code in your terminal works; older ones are dead.</div>
+
+    <div class="tip"><strong>💡 Got redirected to <code>github.com/login</code> instead of <code>/login/device</code>?</strong> That's GitHub's pre-auth redirect — sign in on that page and GitHub will send you to the device-code page automatically.</div>
 
     <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-username&gt;</code>. Confirm anytime with <code>gh auth status</code>.</div>
 
