@@ -419,33 +419,55 @@
     <pre data-shell="copilot"><code>/exit</code></pre>
 
     <h3>4b. Install PMX (Microsoft EMU account)</h3>
-    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. You'll log in as the EMU, install PMX, then switch back to your personal account as the everyday default.</p>
+    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. The flow: log in to <code>gh</code> as your EMU (you already logged in as personal in Step 2a), then let Copilot CLI orchestrate the install for you.</p>
 
-    <p><strong>First, log in as your EMU.</strong> If this is your first time, run <code>gh auth login</code> again — same four answers as in Step 2a (<strong>GitHub.com</strong>, <strong>HTTPS</strong>, <strong>Yes</strong>, <strong>Login with a web browser</strong>). When the browser opens, sign in as your <code>_microsoft</code> EMU (you'll go through Microsoft sign-in this time, not your personal GitHub).</p>
+    <h4>First: log in as your EMU</h4>
+    <p>Run <code>gh auth login</code> again — same four answers as Step 2a (<strong>GitHub.com</strong>, <strong>HTTPS</strong>, <strong>Yes</strong>, <strong>Login with a web browser</strong>). When the browser opens, sign in as your <code>_microsoft</code> EMU this time (Microsoft sign-in, not your personal GitHub).</p>
 
     <pre><code>gh auth login</code></pre>
 
-    <p>Verify both accounts are now known to <code>gh</code>, with the EMU active:</p>
+    <p>Then verify both accounts are now known to <code>gh</code>:</p>
     <pre><code>gh auth status</code></pre>
-    <p>You should see two accounts listed. The <code>_microsoft</code> one should show <code>Active account: true</code>. If your personal account is still active, switch:</p>
-    <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft</code></pre>
+    <p>You should see <strong>two</strong> entries — your personal account and your <code>_microsoft</code> EMU. Both must be present before continuing. (Either one can be active; the prompt below will set it.)</p>
 
-    <p><strong>Now install PMX.</strong> <strong>Run these one at a time</strong>, waiting for each to finish:</p>
-
-    <pre><code>copilot plugin marketplace add gim-home/pmx-mcp</code></pre>
-    <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
-    <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
-
-    <p>The last command flips back so your personal account is default for everyday work.</p>
-
-    <p>Now relaunch Copilot CLI so the new tools register. If you're still inside Copilot CLI from earlier, exit first:</p>
-    <pre data-shell="copilot"><code>/exit</code></pre>
-    <p>Then start it again:</p>
+    <h4>Now: let Copilot install PMX</h4>
+    <p>Launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
 
-    <div class="warn"><strong>⚠️ The EMU must be the active account when you run <code>marketplace add</code>.</strong> That command fetches the manifest using whichever <code>gh</code> account is active. Personal account → 404, no auto-recovery.</div>
+    <p>Inside Copilot CLI, paste this prompt:</p>
+    <pre data-shell="copilot"><code>Install the PMX MCP server for me. I have two GitHub accounts known to `gh` — my personal one and my Microsoft EMU (username ends in `_microsoft`).
+
+1. Run `gh auth status` to confirm both accounts are present and note their usernames.
+2. Switch the active gh account to the `_microsoft` EMU.
+3. Run `copilot plugin marketplace add gim-home/pmx-mcp`.
+4. Run `copilot plugin install pmx-mcp@pmx-mcp`.
+5. Switch the active gh account back to my personal one.
+6. Run `gh auth status` again to confirm my personal account is now active.
+
+If any step fails, stop and tell me what went wrong — don't continue. When everything succeeds, tell me to type `/exit` and run `copilot` again so the new MCP server registers.</code></pre>
+
+    <p>Copilot will run each shell command, switching the active <code>gh</code> account as it goes. When it finishes, it will tell you to relaunch.</p>
+
+    <p>Exit Copilot CLI:</p>
+    <pre data-shell="copilot"><code>/exit</code></pre>
+    <p>And start it again so the new MCP server registers:</p>
+    <pre><code>copilot</code></pre>
+
+    <div class="warn"><strong>⚠️ Both accounts must be logged in before you paste the prompt.</strong> The prompt switches between them — it does not create them. If <code>gh auth status</code> only shows one account, run <code>gh auth login</code> for the missing one first.</div>
 
     <div class="tip"><strong>💡 No <code>_microsoft</code> EMU account?</strong> Skip 4b — only PMX needs it, and we can demo PMX together at the session. Steps 0–4a are enough to participate.</div>
+
+    <details class="explainer">
+      <summary>Manual fallback — if the Copilot prompt fails</summary>
+      <div class="body">
+        <p>If Copilot can't run shell commands or the prompt misfires, do the four commands yourself in PowerShell. Run them <strong>one at a time</strong>:</p>
+        <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft</code></pre>
+        <pre><code>copilot plugin marketplace add gim-home/pmx-mcp</code></pre>
+        <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
+        <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
+        <p>Same end state. The EMU must be active when <code>marketplace add</code> runs — that command fetches the manifest using your active <code>gh</code> credentials. Personal account → 404, no auto-recovery.</p>
+      </div>
+    </details>
 
     <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If something fails, don't stress — we'll troubleshoot together at the start of the session. Just make sure Steps 0–3 are done.</div>
   </div>
