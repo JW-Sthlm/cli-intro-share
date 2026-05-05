@@ -260,25 +260,49 @@
   <div class="step">
     <span class="step-number">Step 4</span>
     <h2>Connect your tools</h2>
-    <p>MCP servers are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We need three:</p>
+    <p>MCP servers are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We'll connect three:</p>
     <ol>
-      <li><strong>PMX</strong> — your partner management data in Dynamics 365</li>
       <li><strong>GitHub</strong> — repos, issues, pull requests</li>
       <li><strong>M365</strong> — email, calendar, Teams</li>
+      <li><strong>PMX</strong> — your partner management data in Dynamics 365</li>
     </ol>
 
-    <h3>How to set them up</h3>
-    <p>The good news: you can ask Copilot CLI to do this for you. Launch it and type:</p>
-    <pre><code>I need to set up MCP servers for PMX, GitHub, and M365. Help me configure them.</code></pre>
-    <p>Copilot will walk you through it step by step — finding the right servers, configuring them, and saving the setup. Just follow along and answer its questions.</p>
+    <p>We do this in two passes because <strong>PMX requires your Microsoft EMU account</strong> to install — its repo is internal to Microsoft. GitHub and M365 work fine with your personal account.</p>
 
-    <div class="tip"><strong>💡 This is a great first taste of how CLI works:</strong> you describe what you need in plain language, and it figures out the steps. No config files to edit manually.</div>
+    <h3>4a. Install GitHub and M365 (personal account)</h3>
+    <p>First, confirm your personal account is the active GitHub account:</p>
+    <pre><code>gh auth status</code></pre>
+    <p>You should see <code>Active account: true</code> next to your personal username. If a different account is active, switch:</p>
+    <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
+
+    <p>Then launch Copilot CLI:</p>
+    <pre><code>copilot</code></pre>
+    <p>Inside Copilot CLI, paste this prompt:</p>
+    <pre><code>Set up the official GitHub and M365 MCP servers in my Copilot CLI config. Walk me through it step by step.</code></pre>
+
+    <div class="warn"><strong>⚠️ Common trap.</strong> Copilot will ask <em>"Where do you want to configure these MCP servers?"</em> Pick <strong>2. Copilot CLI</strong>. The other options configure MCP for VS Code's Copilot Chat or other tools — not your local CLI session.</div>
+
+    <p>When done, type <code>/exit</code> to return to PowerShell.</p>
+
+    <h3>4b. Install PMX (Microsoft EMU account)</h3>
+    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. Pattern: switch accounts, install, switch back. Four commands:</p>
+
+    <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft
+copilot plugin marketplace add gim-home/pmx-mcp
+copilot plugin install pmx-mcp@pmx-mcp
+gh auth switch --user &lt;your-personal-username&gt;</code></pre>
+
+    <p>Then relaunch Copilot CLI so the new tools register — type <code>/exit</code> and run <code>copilot</code> again.</p>
+
+    <div class="warn"><strong>⚠️ Switch the EMU account FIRST.</strong> The <code>marketplace add</code> command fetches the manifest using your active <code>gh</code> credentials. If you skip the switch, it 404s with no auto-recovery.</div>
+
+    <div class="tip"><strong>💡 No <code>_microsoft</code> EMU account?</strong> Skip 4b — only PMX needs it, and we can demo PMX together at the session. Steps 0–4a are enough to participate.</div>
 
     <p>You can also use the built-in command:</p>
     <pre><code>/mcp</code></pre>
-    <p>This opens an interactive menu for browsing and adding MCP servers.</p>
+    <p>This opens an interactive menu for browsing and adding MCP servers — useful for exploring later, but the four commands above are the fastest path today.</p>
 
-    <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If CLI can't find or configure a server, don't worry — we'll troubleshoot together at the start of the session. Just make sure Steps 0–3 are done.</div>
+    <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If something fails, don't stress — we'll troubleshoot together at the start of the session. Just make sure Steps 0–3 are done.</div>
   </div>
 
   <!-- Step 5 -->
@@ -344,6 +368,7 @@
       <tr><td><code>/login</code> fails</td><td>Ensure corporate network / VPN. Check entitlement at <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a></td></tr>
       <tr><td><code>az login</code> fails</td><td>Run <code>winget install Microsoft.AzureCLI</code> first, restart PowerShell</td></tr>
       <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
+      <tr><td>PMX install: <em>"repo not found"</em></td><td>Wrong GitHub account active. Switch to EMU: <code>gh auth switch --user yourname_microsoft</code>, then re-run the four marketplace commands in 4b</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
   </div>
