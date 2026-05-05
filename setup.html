@@ -381,14 +381,14 @@
   <div class="step">
     <span class="step-number">Step 4</span>
     <h2>Connect your tools</h2>
-    <p>MCP servers are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We'll connect three:</p>
+    <p>MCP servers and plugins are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We'll connect three:</p>
     <ol>
-      <li><strong>GitHub</strong> — repos, issues, pull requests <em>(usually built-in)</em></li>
-      <li><strong>M365</strong> — email, calendar, Teams <em>(usually built-in)</em></li>
+      <li><strong>GitHub</strong> — repos, issues, pull requests <em>(built into Copilot CLI)</em></li>
+      <li><strong>M365</strong> — email, calendar, Teams <em>(install in 4a)</em></li>
       <li><strong>PMX</strong> — your partner management data in Dynamics 365 <em>(install in 4b)</em></li>
     </ol>
 
-    <p>Recent Copilot CLI versions ship with GitHub and M365 already wired up. Step 4a verifies they work and only sets them up if missing. <strong>Step 4b installs PMX</strong>, which needs your Microsoft EMU account because the repo is internal to Microsoft.</p>
+    <p>Copilot CLI ships with GitHub's MCP server already built in — no setup needed. <strong>Step 4a installs M365</strong> as plugins for your personal account. <strong>Step 4b installs PMX</strong>, which needs your Microsoft EMU account because the repo is internal to Microsoft.</p>
 
     <details class="explainer">
       <summary>What is MCP, in plain language?</summary>
@@ -398,7 +398,7 @@
       </div>
     </details>
 
-    <h3>4a. Verify GitHub and M365 (personal account)</h3>
+    <h3>4a. Set up M365 (personal account)</h3>
     <p>First, confirm your personal account is the active GitHub account:</p>
     <pre><code>gh auth status</code></pre>
     <p>You should see <code>Active account: true</code> next to your personal username. If a different account is active, switch:</p>
@@ -407,9 +407,9 @@
     <p>Then launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>Inside Copilot CLI, paste this prompt:</p>
-    <pre data-shell="copilot"><code>Check what GitHub and M365 capabilities I have in my Copilot CLI. If anything is missing, set it up. Then run a quick test — fetch my next calendar meeting and one of my recent GitHub repos.</code></pre>
+    <pre data-shell="copilot"><code>Set up M365 capabilities (Outlook, Teams, Calendar, SharePoint) in my Copilot CLI. If anything is already installed, just confirm it. Then run a quick test — fetch my next calendar meeting and one of my recent GitHub repos.</code></pre>
 
-    <p>On recent Copilot CLI versions, GitHub and M365 are already built in — Copilot will just verify and run the tests. On older versions, it may set them up first.</p>
+    <p>Copilot will install whatever's missing, then run the tests. The GitHub test confirms the built-in GitHub MCP server is working too.</p>
 
     <div class="warn"><strong>⚠️ If Copilot asks <em>"Where do you want to configure these MCP servers?"</em></strong> — pick <strong>2. Copilot CLI</strong>. The other options configure MCP for VS Code's Copilot Chat or other tools, not your local CLI.</div>
 
@@ -484,9 +484,9 @@
       <li>
         <span class="check-icon">4</span>
         <div class="check-detail">
-          <strong>MCP servers are loaded</strong>
+          <strong>MCP servers and plugins are loaded</strong>
           <span class="check-cmd">copilot → /env</span><br>
-          <span class="check-pass">✅ PMX listed under MCP servers (GitHub and M365 are built into Copilot CLI)</span>
+          <span class="check-pass">✅ PMX listed under MCP servers; Outlook / Teams / Calendar listed under plugins (GitHub MCP is built-in)</span>
         </div>
       </li>
       <li>
