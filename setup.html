@@ -198,28 +198,41 @@
   <!-- Step 1 -->
   <div class="step">
     <span class="step-number">Step 1</span>
-    <h2>Install Copilot CLI</h2>
+    <h2>Install command-line tools</h2>
 
     <h3>First: open PowerShell</h3>
     <p>PowerShell is a text-based tool for talking to your computer — like File Explorer, but you type commands instead of clicking. It comes pre-installed on Windows.</p>
     <p>Press the <strong>Windows key</strong>, type <strong>PowerShell</strong>, and open the one that says <strong>"PowerShell 7"</strong> or <strong>"pwsh"</strong>. Avoid the one called "Windows PowerShell" — it's an older version.</p>
 
-    <div class="warn"><strong>⚠️ Don't see PowerShell 7?</strong> You might only have the old version. Open "Windows PowerShell" instead — it will work for the install command. We'll sort out the version later.</div>
+    <div class="warn"><strong>⚠️ Don't see PowerShell 7?</strong> You might only have the old version. Open "Windows PowerShell" instead — it will work for the install commands. We'll sort out the version later.</div>
 
-    <h3>Then: install Copilot CLI</h3>
-    <p>Copy-paste this command into PowerShell and press Enter:</p>
-    <pre><code>winget install GitHub.Copilot</code></pre>
-    <p>Wait for it to finish (takes about a minute). Then <strong>close and reopen PowerShell</strong> — this is important, the new command won't be available until you do.</p>
+    <h3>Then: install five small tools</h3>
+    <p>Copilot CLI doesn't work alone. It calls four other tools behind the scenes — Node.js (its runtime), Git (for source control), GitHub CLI (for account switching), and Azure CLI (for PMX login). None of them have buttons or windows of their own; they sit underneath, ready to be called from your command line.</p>
+    <p>Copy-paste these five commands into PowerShell, one at a time. Each takes 30–60 seconds.</p>
+    <pre><code>winget install OpenJS.NodeJS.LTS
+winget install Git.Git
+winget install GitHub.cli
+winget install Microsoft.AzureCLI
+winget install GitHub.Copilot</code></pre>
 
-    <h3>Verify it worked</h3>
-    <pre><code>copilot --version</code></pre>
+    <div class="tip"><strong>💡 Pop-ups are normal.</strong> Windows will ask <em>"Do you want to allow this app to make changes?"</em> — click <strong>Yes</strong>. Git's installer also opens a wizard with several screens — click <strong>Next</strong> through all defaults. This is expected.</div>
 
-    <div class="tip"><strong>✅ Pass:</strong> You see a version number (e.g., <code>v1.0.x</code>).</div>
+    <p>When all five are done, <strong>close and reopen PowerShell</strong> — this is important. The new commands won't be available until you do.</p>
+
+    <h3>Verify they all worked</h3>
+    <p>In the fresh PowerShell window, run these one at a time:</p>
+    <pre><code>node --version
+git --version
+gh --version
+az --version
+copilot --version</code></pre>
+
+    <div class="tip"><strong>✅ Pass:</strong> Each command prints a version number. The exact numbers don't matter — what matters is that none of them say <em>"not recognized"</em>.</div>
 
     <div class="warn"><strong>⚠️ <code>winget</code> not found?</strong> Open the Microsoft Store app, search for "App Installer", and install it. Then restart PowerShell and try again.</div>
-    <div class="warn"><strong>⚠️ <code>copilot</code> not found after install?</strong> Make sure you closed and reopened PowerShell. If still missing, restart your computer.</div>
+    <div class="warn"><strong>⚠️ Something says "not recognized" after the verify step?</strong> Make sure you closed and reopened PowerShell. If still missing, restart your computer and try the verify commands again.</div>
 
-    <div class="tip"><strong>💡 Can't install at all?</strong> Corporate policies blocking the install? You can use <a class="inline" href="https://github.com/github/copilot-cli-for-beginners" target="_blank">GitHub Codespaces</a> as a backup — it runs in your browser with Copilot CLI pre-installed. Open the repo, click <strong>Code → Codespaces → Create codespace</strong>. No local install needed. Tell the facilitator if you need this option.</div>
+    <div class="tip"><strong>💡 Can't install at all?</strong> Corporate policies blocking the install? You can use <a class="inline" href="https://github.com/github/copilot-cli-for-beginners" target="_blank">GitHub Codespaces</a> as a backup — it runs in your browser with most tools pre-installed. Tell the facilitator if you need this option.</div>
   </div>
 
   <!-- Step 2 -->
@@ -242,12 +255,8 @@
   <!-- Step 3 -->
   <div class="step">
     <span class="step-number">Step 3</span>
-    <h2>Install Azure CLI (for PMX)</h2>
-    <p>The PMX MCP server needs an Azure login to talk to Dynamics 365.</p>
-
-    <h3>Install (if you don't have it)</h3>
-    <pre><code>winget install Microsoft.AzureCLI</code></pre>
-    <p>Close and reopen PowerShell after installing.</p>
+    <h2>Log in to Azure (for PMX)</h2>
+    <p>The PMX MCP server needs an Azure login to talk to Dynamics 365. Azure CLI was already installed in Step 1 — this is just the sign-in.</p>
 
     <h3>Log in to the Microsoft tenant</h3>
     <pre><code>az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47</code></pre>
