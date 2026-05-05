@@ -208,24 +208,24 @@
 
     <h3>Then: install five small tools</h3>
     <p>Copilot CLI doesn't work alone. It calls four other tools behind the scenes — Node.js (its runtime), Git (for source control), GitHub CLI (for account switching), and Azure CLI (for PMX login). None of them have buttons or windows of their own; they sit underneath, ready to be called from your command line.</p>
-    <p>Copy-paste these five commands into PowerShell, one at a time. Each takes 30–60 seconds.</p>
-    <pre><code>winget install OpenJS.NodeJS.LTS
-winget install Git.Git
-winget install GitHub.cli
-winget install Microsoft.AzureCLI
-winget install GitHub.Copilot</code></pre>
+    <p><strong>Run these one at a time</strong>, waiting for each to finish before pasting the next. (Pasting them all in one go can break — PowerShell handles single-line pastes most reliably.) Each takes 30–60 seconds.</p>
+    <pre><code>winget install OpenJS.NodeJS.LTS</code></pre>
+    <pre><code>winget install Git.Git</code></pre>
+    <pre><code>winget install GitHub.cli</code></pre>
+    <pre><code>winget install Microsoft.AzureCLI</code></pre>
+    <pre><code>winget install GitHub.Copilot</code></pre>
 
     <div class="tip"><strong>💡 Pop-ups are normal.</strong> Windows will ask <em>"Do you want to allow this app to make changes?"</em> — click <strong>Yes</strong>. Git's installer also opens a wizard with several screens — click <strong>Next</strong> through all defaults. This is expected.</div>
 
     <p>When all five are done, <strong>close and reopen PowerShell</strong> — this is important. The new commands won't be available until you do.</p>
 
     <h3>Verify they all worked</h3>
-    <p>In the fresh PowerShell window, run these one at a time:</p>
-    <pre><code>node --version
-git --version
-gh --version
-az --version
-copilot --version</code></pre>
+    <p>In the fresh PowerShell window, run these <strong>one at a time</strong>:</p>
+    <pre><code>node --version</code></pre>
+    <pre><code>git --version</code></pre>
+    <pre><code>gh --version</code></pre>
+    <pre><code>az --version</code></pre>
+    <pre><code>copilot --version</code></pre>
 
     <div class="tip"><strong>✅ Pass:</strong> Each command prints a version number. The exact numbers don't matter — what matters is that none of them say <em>"not recognized"</em>.</div>
 
@@ -294,12 +294,12 @@ copilot --version</code></pre>
     <p>When done, type <code>/exit</code> to return to PowerShell.</p>
 
     <h3>4b. Install PMX (Microsoft EMU account)</h3>
-    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. Pattern: switch accounts, install, switch back. Four commands:</p>
+    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. Pattern: switch accounts, install, switch back. Four commands — <strong>run them one at a time</strong>, waiting for each to finish:</p>
 
-    <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft
-copilot plugin marketplace add gim-home/pmx-mcp
-copilot plugin install pmx-mcp@pmx-mcp
-gh auth switch --user &lt;your-personal-username&gt;</code></pre>
+    <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft</code></pre>
+    <pre><code>copilot plugin marketplace add gim-home/pmx-mcp</code></pre>
+    <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
+    <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
 
     <p>Then relaunch Copilot CLI so the new tools register — type <code>/exit</code> and run <code>copilot</code> again.</p>
 
