@@ -362,16 +362,26 @@
     <p>When done, type <code>/exit</code> to return to PowerShell.</p>
 
     <h3>4b. Install PMX (Microsoft EMU account)</h3>
-    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. Pattern: switch accounts, install, switch back. Four commands — <strong>run them one at a time</strong>, waiting for each to finish:</p>
+    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. You'll log in as the EMU, install PMX, then switch back to your personal account as the everyday default.</p>
 
+    <p><strong>First, log in as your EMU.</strong> If this is your first time, run <code>gh auth login</code> again — same four answers as in Step 2a (<strong>GitHub.com</strong>, <strong>HTTPS</strong>, <strong>Yes</strong>, <strong>Login with a web browser</strong>). When the browser opens, sign in as your <code>_microsoft</code> EMU (you'll go through Microsoft sign-in this time, not your personal GitHub).</p>
+
+    <pre><code>gh auth login</code></pre>
+
+    <p>Verify both accounts are now known to <code>gh</code>, with the EMU active:</p>
+    <pre><code>gh auth status</code></pre>
+    <p>You should see two accounts listed. The <code>_microsoft</code> one should show <code>Active account: true</code>. If your personal account is still active, switch:</p>
     <pre><code>gh auth switch --user &lt;yourname&gt;_microsoft</code></pre>
+
+    <p><strong>Now install PMX.</strong> <strong>Run these one at a time</strong>, waiting for each to finish:</p>
+
     <pre><code>copilot plugin marketplace add gim-home/pmx-mcp</code></pre>
     <pre><code>copilot plugin install pmx-mcp@pmx-mcp</code></pre>
     <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
 
-    <p>Then relaunch Copilot CLI so the new tools register — type <code>/exit</code> and run <code>copilot</code> again.</p>
+    <p>The last command flips back so your personal account is default for everyday work. Then relaunch Copilot CLI so the new tools register — type <code>/exit</code> and run <code>copilot</code> again.</p>
 
-    <div class="warn"><strong>⚠️ Switch the EMU account FIRST.</strong> The <code>marketplace add</code> command fetches the manifest using your active <code>gh</code> credentials. If you skip the switch, it 404s with no auto-recovery.</div>
+    <div class="warn"><strong>⚠️ The EMU must be the active account when you run <code>marketplace add</code>.</strong> That command fetches the manifest using whichever <code>gh</code> account is active. Personal account → 404, no auto-recovery.</div>
 
     <div class="tip"><strong>💡 No <code>_microsoft</code> EMU account?</strong> Skip 4b — only PMX needs it, and we can demo PMX together at the session. Steps 0–4a are enough to participate.</div>
 
@@ -445,7 +455,7 @@
       <tr><td><code>/login</code> fails</td><td>Ensure corporate network / VPN. Check entitlement at <a class="inline" href="https://copilot.github.microsoft.com/" target="_blank">copilot.github.microsoft.com</a></td></tr>
       <tr><td><code>az login</code> fails</td><td>Run <code>winget install Microsoft.AzureCLI</code> first, restart PowerShell</td></tr>
       <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
-      <tr><td>PMX install: <em>"repo not found"</em></td><td>Wrong GitHub account active. Switch to EMU: <code>gh auth switch --user yourname_microsoft</code>, then re-run the four marketplace commands in 4b</td></tr>
+      <tr><td>PMX install: <em>"repo not found"</em></td><td>EMU not logged in or not active. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 4b</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
   </div>
