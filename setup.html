@@ -183,7 +183,7 @@
 
   <div class="step" style="border-left: 4px solid var(--accent); background: var(--accent-light);">
     <p style="margin: 0; font-size: 15px; line-height: 1.6;">
-      <strong>Already comfortable with CLI tools?</strong> Skim the steps and jump to <a href="#verify" style="color: var(--accent);">Step 5: Verify everything</a>. If all five checks pass, you're done.<br><br>
+      <strong>Already comfortable with CLI tools?</strong> Skim the steps and jump to <a href="#verify" style="color: var(--accent);">Step 4: Verify everything</a>. If all five checks pass, you're done.<br><br>
       <strong>Never opened a terminal before?</strong> Perfect — that's exactly who this is for. Every step explains what's happening and why. Just follow along and copy-paste the commands.
     </p>
   </div>
@@ -313,10 +313,10 @@
   <!-- Step 2 -->
   <div class="step">
     <span class="step-number">Step 2</span>
-    <h2>Log in to GitHub and Copilot</h2>
-    <p>Two separate tools both need a GitHub login: GitHub CLI (so you can switch accounts later) and Copilot CLI (so the AI knows who you are). We'll do them in order.</p>
+    <h2>Log in to all your accounts</h2>
+    <p>You'll log in to four things back-to-back: <strong>GitHub CLI</strong> (twice — personal and EMU), <strong>Copilot CLI</strong>, and <strong>Azure CLI</strong>. Doing them all here means later steps can just install and use what's already authenticated.</p>
 
-    <h3>2a. Log into GitHub CLI</h3>
+    <h3>2a. GitHub CLI — personal account</h3>
     <p>Start the login flow:</p>
     <pre><code>gh auth login</code></pre>
     <p>It asks four questions, one at a time. Use the arrow keys to highlight the right answer, then press Enter:</p>
@@ -333,7 +333,7 @@
 
     <div class="tip"><strong>💡 Got redirected to <code>github.com/login</code> instead of <code>/login/device</code>?</strong> That's GitHub's pre-auth redirect — sign in on that page and GitHub will send you to the device-code page automatically.</div>
 
-    <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-username&gt;</code>. Confirm anytime with <code>gh auth status</code>.</div>
+    <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-personal-username&gt;</code>. Confirm anytime with <code>gh auth status</code>.</div>
 
     <details class="explainer">
       <summary>Why HTTPS and not SSH?</summary>
@@ -343,15 +343,30 @@
       </div>
     </details>
 
+    <h3>2b. GitHub CLI — Microsoft EMU account</h3>
+    <p>Run the same command again. This time you'll sign in with your <code>_microsoft</code> EMU account so Copilot can install the PMX MCP server later (the PMX repo is internal to Microsoft and only your EMU can see it).</p>
+    <pre><code>gh auth login</code></pre>
+    <p>Same four answers as 2a (<strong>GitHub.com</strong>, <strong>HTTPS</strong>, <strong>Yes</strong>, <strong>Login with a web browser</strong>). When the browser opens, sign in as your <strong>Microsoft EMU</strong> this time — Microsoft sign-in, not your personal GitHub.</p>
+
+    <div class="tip"><strong>💡 No <code>_microsoft</code> EMU account?</strong> Skip 2b and 2d (Azure). Only the PMX MCP install in Step 3b needs them — and we can demo PMX together at the session.</div>
+
+    <div class="tip"><strong>✅ Pass:</strong> PowerShell prints <code>✓ Logged in as &lt;your-emu-username&gt;</code>. Run <code>gh auth status</code> — you should now see <strong>two</strong> entries: your personal account and your <code>_microsoft</code> EMU.</div>
+
+    <h4>Switch the active account back to personal</h4>
+    <p>After logging in twice, your EMU is the active account. Switch back to personal so the rest of the workshop defaults to it. Replace <code>YOUR_PERSONAL_USERNAME</code> with the personal username from 2a:</p>
+    <pre><code>gh auth switch --user YOUR_PERSONAL_USERNAME</code></pre>
+
+    <div class="tip"><strong>✅ Pass:</strong> Run <code>gh auth status</code> — the line marked <em>"Active account: true"</em> should be on your personal entry, not the <code>_microsoft</code> one. Step 3b will switch to EMU temporarily and back again.</div>
+
     <details class="explainer">
-      <summary>Why am I logging in twice — gh AND copilot?</summary>
+      <summary>Why two GitHub accounts?</summary>
       <div class="body">
-        <p>They're two separate tools that both need to know who you are. <strong>GitHub CLI</strong> (<code>gh</code>) is for talking to GitHub from PowerShell — switching accounts, cloning repos, opening pull requests. <strong>Copilot CLI</strong> (<code>copilot</code>) is the AI assistant.</p>
-        <p>Same GitHub account, but each tool keeps its own login session. Logging into <code>gh</code> first also means Copilot CLI can use it later for things like installing the PMX plugin in Step 4.</p>
+        <p>Your <strong>personal account</strong> holds your Copilot entitlement and is what most of the workshop uses. Your <strong>EMU account</strong> (<code>_microsoft</code> suffix) is what Microsoft-internal repos like <code>gim-home/pmx-mcp</code> can see — your personal account usually can't reach those.</p>
+        <p>The pattern across the rest of this guide: stay on personal by default, switch to EMU only for the PMX install, switch back. Logging both in upfront means later steps don't need to detour.</p>
       </div>
     </details>
 
-    <h3>2b. Log into Copilot CLI</h3>
+    <h3>2c. Copilot CLI</h3>
     <p>Now launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>You'll see an animated banner. Inside Copilot CLI, type:</p>
@@ -362,15 +377,17 @@
     <div class="tip"><strong>✅ Pass:</strong> You get an answer back. Type <code>/exit</code> to leave for now.</div>
 
     <div class="warn"><strong>⚠️ Login fails or times out?</strong> Make sure you're on the corporate network or VPN. Verify your Copilot subscription at <a class="inline" href="https://github.com/settings/copilot" target="_blank">github.com/settings/copilot</a>.</div>
-  </div>
 
-  <!-- Step 3 -->
-  <div class="step">
-    <span class="step-number">Step 3</span>
-    <h2>Log in to Azure (for PMX)</h2>
-    <p>The PMX MCP server needs an Azure login to talk to Dynamics 365. Azure CLI was already installed in Step 1 — this is just the sign-in.</p>
+    <details class="explainer">
+      <summary>Why am I logging in twice — gh AND copilot?</summary>
+      <div class="body">
+        <p>They're two separate tools that both need to know who you are. <strong>GitHub CLI</strong> (<code>gh</code>) is for talking to GitHub from PowerShell — switching accounts, cloning repos, opening pull requests. <strong>Copilot CLI</strong> (<code>copilot</code>) is the AI assistant.</p>
+        <p>Same GitHub account, but each tool keeps its own login session. With <code>gh</code> already logged in for both accounts (2a and 2b), Step 3 can install MCP servers without any account-juggling detour.</p>
+      </div>
+    </details>
 
-    <h3>Log in to the Microsoft tenant</h3>
+    <h3>2d. Azure CLI (for PMX)</h3>
+    <p>The PMX MCP server you'll install in Step 3b needs an Azure login to talk to Dynamics 365. Sign in to the Microsoft tenant:</p>
     <pre><code>az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47</code></pre>
     <p>A browser window opens. Sign in with your Microsoft account. Done when it says "You have logged in."</p>
 
@@ -378,20 +395,22 @@
 
     <p><strong>✅ Pass:</strong> Run this — you should see your account name in the output:</p>
     <pre><code>az account show</code></pre>
+
+    <div class="tip"><strong>💡 Skipped 2b?</strong> Skip 2d as well. Without the EMU account you can't install PMX, so the Azure login isn't needed.</div>
   </div>
 
-  <!-- Step 4 -->
+  <!-- Step 3 -->
   <div class="step">
-    <span class="step-number">Step 4</span>
+    <span class="step-number">Step 3</span>
     <h2>Connect your tools</h2>
     <p>MCP servers and plugins are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We'll connect three:</p>
     <ol>
       <li><strong>GitHub</strong> — repos, issues, pull requests <em>(built into Copilot CLI)</em></li>
-      <li><strong>M365</strong> — email, calendar, Teams <em>(install in 4a)</em></li>
-      <li><strong>PMX</strong> — your partner management data in Dynamics 365 <em>(install in 4b)</em></li>
+      <li><strong>M365</strong> — email, calendar, Teams <em>(install in 3a)</em></li>
+      <li><strong>PMX</strong> — your partner management data in Dynamics 365 <em>(install in 3b)</em></li>
     </ol>
 
-    <p>Copilot CLI ships with GitHub's MCP server already built in — no setup needed. <strong>Step 4a installs M365</strong> as plugins for your personal account. <strong>Step 4b installs PMX</strong>, which needs your Microsoft EMU account because the repo is internal to Microsoft.</p>
+    <p>Copilot CLI ships with GitHub's MCP server already built in — no setup needed. <strong>Step 3a installs M365</strong> as plugins, using the personal account you left active at the end of Step 2. <strong>Step 3b installs PMX</strong> by orchestrating an account switch to your EMU and back — both accounts are already logged in from Step 2.</p>
 
     <details class="explainer">
       <summary>What is MCP, in plain language?</summary>
@@ -401,13 +420,8 @@
       </div>
     </details>
 
-    <h3>4a. Set up M365 (personal account)</h3>
-    <p>First, confirm your personal account is the active GitHub account:</p>
-    <pre><code>gh auth status</code></pre>
-    <p>You should see <code>Active account: true</code> next to your personal username. If a different account is active, switch:</p>
-    <pre><code>gh auth switch --user &lt;your-personal-username&gt;</code></pre>
-
-    <p>Then launch Copilot CLI:</p>
+    <h3>3a. Set up M365</h3>
+    <p>Launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>Inside Copilot CLI, paste this prompt:</p>
     <pre data-shell="copilot"><code>Set up M365 capabilities (Outlook, Teams, Calendar, SharePoint) in my Copilot CLI. If anything is already installed, just confirm it. Then run a quick test — fetch my next calendar meeting and one of my recent GitHub repos.</code></pre>
@@ -421,19 +435,9 @@
     <p>When done, leave Copilot CLI:</p>
     <pre data-shell="copilot"><code>/exit</code></pre>
 
-    <h3>4b. Install PMX (Microsoft EMU account)</h3>
-    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see. The flow: log in to <code>gh</code> as your EMU (you already logged in as personal in Step 2a), then let Copilot CLI orchestrate the install for you.</p>
+    <h3>3b. Install PMX</h3>
+    <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see — that's why we logged that account in too back in Step 2b. Now Copilot CLI will orchestrate the install: switch the active <code>gh</code> account to your EMU, install PMX, switch back to personal.</p>
 
-    <h4>First: log in as your EMU</h4>
-    <p>Run <code>gh auth login</code> again — same four answers as Step 2a (<strong>GitHub.com</strong>, <strong>HTTPS</strong>, <strong>Yes</strong>, <strong>Login with a web browser</strong>). When the browser opens, sign in as your <code>_microsoft</code> EMU this time (Microsoft sign-in, not your personal GitHub).</p>
-
-    <pre><code>gh auth login</code></pre>
-
-    <p>Then verify both accounts are now known to <code>gh</code>:</p>
-    <pre><code>gh auth status</code></pre>
-    <p>You should see <strong>two</strong> entries — your personal account and your <code>_microsoft</code> EMU. Both must be present before continuing. (Either one can be active; the prompt below will set it.)</p>
-
-    <h4>Now: let Copilot install PMX</h4>
     <p>Launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
 
@@ -456,9 +460,7 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
     <p>And start it again so the new MCP server registers:</p>
     <pre><code>copilot</code></pre>
 
-    <div class="warn"><strong>⚠️ Both accounts must be logged in before you paste the prompt.</strong> The prompt switches between them — it does not create them. If <code>gh auth status</code> only shows one account, run <code>gh auth login</code> for the missing one first.</div>
-
-    <div class="tip"><strong>💡 No <code>_microsoft</code> EMU account?</strong> Skip 4b — only PMX needs it, and we can demo PMX together at the session. Steps 0–4a are enough to participate.</div>
+    <div class="warn"><strong>⚠️ Skipped 2b (no EMU account)?</strong> Skip 3b too. Only PMX needs the EMU account, and we can demo PMX together at the session.</div>
 
     <details class="explainer">
       <summary>Manual fallback — if the Copilot prompt fails</summary>
@@ -488,12 +490,12 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
       </div>
     </details>
 
-    <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If something fails, don't stress — we'll troubleshoot together at the start of the session. Just make sure Steps 0–3 are done.</div>
+    <div class="warn"><strong>⚠️ Having trouble?</strong> MCP setup depends on your environment and permissions. If something fails, don't stress — we'll troubleshoot together at the start of the session. Just make sure Steps 0–2 are done.</div>
   </div>
 
-  <!-- Step 5 -->
+  <!-- Step 4 -->
   <div class="step" id="verify">
-    <span class="step-number">Step 5</span>
+    <span class="step-number">Step 4</span>
     <h2>Verify everything</h2>
     <p>Run through these five checks. All should pass before the session.</p>
 
@@ -561,7 +563,7 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
       <tr><td>PMX returns errors</td><td>Re-run <code>az login --tenant 72f988bf-...</code></td></tr>
       <tr><td><em>"Single sign-on to your organization"</em> after device code</td><td>Your personal GitHub is in a SAML-SSO-enforced org. Click <strong>Authorize</strong>, then sign in with the Microsoft account tied to that org. Safe — just one-time SSO authorization for the new token.</td></tr>
       <tr><td><code>/login/device/failure?reason=not_found</code></td><td>You pasted a stale code. Each <code>gh auth login</code> invalidates all previous codes. Use the <strong>most recent</strong> code from your terminal at <a class="inline" href="https://github.com/login/device" target="_blank">github.com/login/device</a>. Don't re-run <code>gh auth login</code>.</td></tr>
-      <tr><td>PMX install: <em>"repo not found"</em> (404)</td><td>EMU not logged in. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 4b</td></tr>
+      <tr><td>PMX install: <em>"repo not found"</em> (404)</td><td>EMU not logged in. Run <code>gh auth login</code> again, sign in as your <code>_microsoft</code> account, then re-run the marketplace commands in 3b</td></tr>
       <tr><td>PMX install: <em>"403 Write access to repository not granted"</em></td><td>EMU is logged in but personal is still active. Run <code>gh auth status</code>, find your <code>_microsoft</code> username, then <code>gh auth switch --user YOUR_EMU_USERNAME</code>. Verify with <code>gh auth status</code> that the EMU line shows <em>"Active account: true"</em>, then re-run the marketplace commands.</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
