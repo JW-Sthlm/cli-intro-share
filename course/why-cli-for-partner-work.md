@@ -11,7 +11,7 @@ You can talk to GitHub Copilot from your terminal, and it can read files, search
 
 That's the whole pitch. The rest of this module is "is that actually useful for *your* job?"
 
-<details>
+<details markdown="1">
 <summary><strong>Why bother with a CLI at all? Don't I already have M365 Copilot?</strong></summary>
 
 Quick analogy: M365 Copilot is the librarian. You ask, it finds, it reads back. CLI Copilot is the contractor. You give it a job, it goes off and does it.
