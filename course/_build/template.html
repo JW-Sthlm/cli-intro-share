@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{LESSON_TITLE}} · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Cascadia+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">
+      <span class="brand-mark">&gt;_</span>
+      <span>Copilot CLI · Partner course</span>
+    </a>
+    <div class="topnav-links">
+      <a href="../setup.html">Setup guide</a>
+      <a href="../deck.html">Slides</a>
+      <a href="../" class="always-visible">All resources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="lesson-shell">
+  <aside class="sidebar">
+    <p class="sidebar-h">Lessons</p>
+    <ol>
+      {{SIDEBAR_ITEMS}}
+    </ol>
+    <div class="sidebar-foot">
+      <a href="index.html">← Course home</a>
+      <a href="../setup.html">Setup guide</a>
+      <a href="../reference/cheat-sheet.md" target="_blank">Cheat sheet</a>
+      <a href="../reference/troubleshooting.md" target="_blank">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="index.html">Course</a> &nbsp;›&nbsp; {{LESSON_TITLE}}
+    </div>
+
+    <header class="lesson-head">
+      <p class="lesson-eyebrow {{EYEBROW_CLASS}}">{{LESSON_EYEBROW}}</p>
+      <h1 class="lesson-title">{{LESSON_TITLE}}</h1>
+      <div class="lesson-meta-row">
+        <span class="meta-item">⏱️ <strong>{{TIME}}</strong></span>
+        <span class="meta-item">🎯 <strong>{{OUTCOME}}</strong></span>
+      </div>
+    </header>
+
+    <div class="body">
+      {{BODY}}
+    </div>
+
+    <nav class="lesson-nav">
+      {{PREV}}
+      {{NEXT}}
+    </nav>
+  </main>
+</div>
+
+<footer class="site-foot">
+  Adapted from <a href="https://github.com/jamesmontemagno/copilot-cli-for-beginners" target="_blank" rel="noopener">GitHub Copilot CLI for Beginners</a> (MIT). Partner-specific content © Microsoft, internal use.
+</footer>
+
+</body>
+</html>

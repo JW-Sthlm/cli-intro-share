@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Custom AI agents · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Cascadia+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">
+      <span class="brand-mark">&gt;_</span>
+      <span>Copilot CLI · Partner course</span>
+    </a>
+    <div class="topnav-links">
+      <a href="../setup.html">Setup guide</a>
+      <a href="../deck.html">Slides</a>
+      <a href="../" class="always-visible">All resources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="lesson-shell">
+  <aside class="sidebar">
+    <p class="sidebar-h">Lessons</p>
+    <ol>
+      <li class=""><a class="" href="why-cli-for-partner-work.html">Why CLI for partner work</a></li>
+      <li class=""><a class="" href="setup-the-lazy-way.html">Setup, the lazy way</a></li>
+      <li class=""><a class="" href="your-first-conversations.html">Your first conversations</a></li>
+      <li class=""><a class="" href="files-as-context.html">Drop a file in, get insight out</a></li>
+      <li class=""><a class="" href="mcp-power-ups.html">MCP power-ups: PMX, M365, GitHub</a></li>
+      <li class="is-optional"><a class="is-current" href="custom-ai-agents.html">Custom AI agents</a></li>
+      <li class="is-optional"><a class="" href="skills.html">Skills</a></li>
+      <li class="is-optional"><a class="" href="putting-it-all-together.html">Putting it all together</a></li>
+    </ol>
+    <div class="sidebar-foot">
+      <a href="index.html">← Course home</a>
+      <a href="../setup.html">Setup guide</a>
+      <a href="../reference/cheat-sheet.md" target="_blank">Cheat sheet</a>
+      <a href="../reference/troubleshooting.md" target="_blank">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="index.html">Course</a> &nbsp;›&nbsp; Custom AI agents
+    </div>
+
+    <header class="lesson-head">
+      <p class="lesson-eyebrow is-optional">Optional · More technical</p>
+      <h1 class="lesson-title">Custom AI agents</h1>
+      <div class="lesson-meta-row">
+        <span class="meta-item">⏱️ <strong>25 min</strong></span>
+        <span class="meta-item">🎯 <strong>Build a reusable 'partner-briefing' agent.</strong></span>
+      </div>
+    </header>
+
+    <div class="body">
+      <h2 id="why-agents">Why agents</h2>
+<p>You've seen by now that you can ask Copilot to draft a partner brief. You probably noticed:</p>
+<ul>
+<li>The first draft is OK, then you edit</li>
+<li>Next time you do the same task, you re-explain the structure</li>
+<li>Two weeks in you're tired of re-typing "use 5 bullets, exec audience, end with one ask"</li>
+</ul>
+<p>An <strong>agent</strong> is a saved set of instructions that runs every time you invoke it. Same structure, same voice, same standards, no re-explaining.</p>
+<p>Compare:</p>
+<pre><code># Without agent, you type this every time
+&gt; You are a partner solution architect. Answer in 5 bullets max, exec
+&gt; audience, plain language, no buzzwords, end with a single specific ask.
+&gt; Now: &lt;actual question&gt;
+
+# With agent, you create the agent once, then:
+&gt; /agent partner-briefing
+&gt; &lt;actual question&gt;
+</code></pre>
+<p>The agent already knows the rules. You just give it the question.</p>
+<hr>
+<details>
+<summary><strong>🔧 "What an agent is, technically"</strong>: anatomy of an agent file, click to expand</summary>
+
+🔧 An agent is a Markdown file with a name and a system prompt. That's the whole abstraction.
+
+Agents live at `~/.copilot/agents/<agent-name>.md` (Windows: `C:\Users\<you>\.copilot\agents\`). The CLI scans this folder on startup and registers anything it finds.
+
+A minimal agent file:
+
+
+<pre><code class="language-markdown">---
+name: partner-briefing
+description: Generates partner pre-call briefings in our standard format.
+---
+
+You are a Microsoft Partner Solution Architect helping prepare for partner meetings.
+
+Output rules:
+- Maximum 6 bullets
+- Plain language, no buzzwords (&quot;synergy&quot;, &quot;leverage&quot;, &quot;ecosystem&quot;, banned)
+- Exec audience: assume your reader has 30 seconds
+- Always end with one specific question to ask the partner
+- If you don't know something, say so. Don't make it up.
+
+Format:
+**Background:** 2 bullets on who they are
+**Their angle:** 2 bullets on what they care about
+**The conversation:** 1 bullet on what to surface
+**The ask:** 1 question to leave them with
+</code></pre>
+
+
+Save that file as `~/.copilot/agents/partner-briefing.md`. Restart copilot. Now `partner-briefing` is a real agent.
+
+</details>
+
+<hr>
+<h2 id="hands-on-build-the-partner-briefing-agent">🚀 Hands-on: build the partner-briefing agent</h2>
+<h3 id="step-1-create-the-agent-folder-if-it-doesnt-exist">Step 1: create the agent folder if it doesn't exist</h3>
+<pre><code class="language-powershell">New-Item -ItemType Directory -Force -Path &quot;$env:USERPROFILE\.copilot\agents&quot;
+</code></pre>
+<h3 id="step-2-create-the-agent-file">Step 2: create the agent file</h3>
+<p>Open VS Code (or any editor):</p>
+<pre><code class="language-powershell">code &quot;$env:USERPROFILE\.copilot\agents\partner-briefing.md&quot;
+</code></pre>
+<p>Paste the agent content from above. Save.</p>
+<h3 id="step-3-use-it">Step 3: use it</h3>
+<pre><code class="language-powershell">copilot
+</code></pre>
+<p>Inside copilot:</p>
+<pre><code class="language-text">&gt; /agents
+
+Available agents:
+  default            (built-in)
+  partner-briefing   ~/.copilot/agents/partner-briefing.md
+
+&gt; /agent partner-briefing
+✦ Switched to agent: partner-briefing
+
+&gt; Brief me on Contoso for tomorrow's call. They're a 50-person Power Platform consultancy in Stockholm wanting to add an AI practice.
+
+  Background
+  • 50-person consultancy, Stockholm-based, strong Power Platform delivery
+  • Customer base skews mid-market enterprise in Nordic financial services
+
+  Their angle
+  • AI practice as a margin play, not a cost center
+  • Already building on Copilot Studio; want the next layer up
+
+  The conversation
+  • Surface Foundry agents + AI Discovery Cards as the on-ramp
+
+  The ask
+  • Who on their side owns the AI P&amp;L next year?
+</code></pre>
+<p>The agent will reply in your defined format. Every time. Until you change the agent.</p>
+<hr>
+<details>
+<summary><strong>🔧 "When to build an agent"</strong>: decision rules, click to expand</summary>
+
+🔧 Build an agent when:
+
+- You catch yourself repeating the same setup prompt
+- You want to enforce a team standard (consistent format across the vTeam)
+- You have a task where structure matters more than creativity
+
+**Don't build an agent when:**
+
+- You'll only do the task once
+- The task is genuinely creative (let the model be free)
+- You're still figuring out what good output looks like (build the prompt first, agent-ify later)
+
+</details>
+
+<hr>
+<details>
+<summary><strong>📖 "Common partner-work agents"</strong>: what's worth building, click to expand</summary>
+
+📖 / 🔧 Real candidates from our team:
+
+| Agent | What it does |
+|-------|-------------|
+| `partner-briefing` | Pre-call briefings, fixed format |
+| `vteam-update` | Weekly vTeam updates from raw notes |
+| `qbr-prep` | QBR talk-track from PMX data |
+| `partner-email` | First-draft partner outreach |
+| `meeting-summary` | Standard meeting summary format |
+| `decision-doc` | One-pager for "should we do X with this partner?" |
+
+You'll see overlap with [`extras/copilot-overview/`](../extras/copilot-overview/README.md) and other reusable assets the team is building.
+
+</details>
+
+<hr>
+<details>
+<summary><strong>🔧 "Bonus: per-project agents"</strong>: agents scoped to a folder, click to expand</summary>
+
+🔧 Agents can also live in a project folder, at `<project>/.copilot/agents/`. Useful when an agent only makes sense in the context of one project.
+
+Example: in your `partner-briefings/` folder, create `.copilot/agents/contoso-specialist.md` with Contoso-specific knowledge. It's only available when you're in that folder.
+
+User-level agents apply everywhere. Project-level agents apply only when you `cd` into the project. Both can coexist.
+
+</details>
+
+<hr>
+<h2 id="real-work-pick-up">🎯 Real-work pick-up</h2>
+<p>🔧 Build one agent this week for a recurring task you actually do. Use it for two real partner interactions. If it saved you time, share it with the vTeam in Teams.</p>
+<p>If after two uses you're still editing the agent rules, keep iterating. That's the actual work of building good agents.</p>
+<hr>
+<h2 id="youre-ready-for-skills-if">✅ You're ready for Skills if</h2>
+<ul>
+<li>You've created an agent file and verified it shows up in <code>/agents</code></li>
+<li>You've used it for at least one real (or test) prompt</li>
+<li>You can articulate when an agent is helpful vs when it's overhead</li>
+</ul>
+<hr>
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="prev" href="mcp-power-ups.html"><div class="nav-dir">Previous</div><div class="nav-title">MCP power-ups: PMX, M365, GitHub</div></a>
+      <a class="next" href="skills.html"><div class="nav-dir">Next</div><div class="nav-title">Skills</div></a>
+    </nav>
+  </main>
+</div>
+
+<footer class="site-foot">
+  Adapted from <a href="https://github.com/jamesmontemagno/copilot-cli-for-beginners" target="_blank" rel="noopener">GitHub Copilot CLI for Beginners</a> (MIT). Partner-specific content © Microsoft, internal use.
+</footer>
+
+</body>
+</html>

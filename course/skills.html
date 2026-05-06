@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skills · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Cascadia+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">
+      <span class="brand-mark">&gt;_</span>
+      <span>Copilot CLI · Partner course</span>
+    </a>
+    <div class="topnav-links">
+      <a href="../setup.html">Setup guide</a>
+      <a href="../deck.html">Slides</a>
+      <a href="../" class="always-visible">All resources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="lesson-shell">
+  <aside class="sidebar">
+    <p class="sidebar-h">Lessons</p>
+    <ol>
+      <li class=""><a class="" href="why-cli-for-partner-work.html">Why CLI for partner work</a></li>
+      <li class=""><a class="" href="setup-the-lazy-way.html">Setup, the lazy way</a></li>
+      <li class=""><a class="" href="your-first-conversations.html">Your first conversations</a></li>
+      <li class=""><a class="" href="files-as-context.html">Drop a file in, get insight out</a></li>
+      <li class=""><a class="" href="mcp-power-ups.html">MCP power-ups: PMX, M365, GitHub</a></li>
+      <li class="is-optional"><a class="" href="custom-ai-agents.html">Custom AI agents</a></li>
+      <li class="is-optional"><a class="is-current" href="skills.html">Skills</a></li>
+      <li class="is-optional"><a class="" href="putting-it-all-together.html">Putting it all together</a></li>
+    </ol>
+    <div class="sidebar-foot">
+      <a href="index.html">← Course home</a>
+      <a href="../setup.html">Setup guide</a>
+      <a href="../reference/cheat-sheet.md" target="_blank">Cheat sheet</a>
+      <a href="../reference/troubleshooting.md" target="_blank">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="index.html">Course</a> &nbsp;›&nbsp; Skills
+    </div>
+
+    <header class="lesson-head">
+      <p class="lesson-eyebrow is-optional">Optional · More technical</p>
+      <h1 class="lesson-title">Skills</h1>
+      <div class="lesson-meta-row">
+        <span class="meta-item">⏱️ <strong>25 min</strong></span>
+        <span class="meta-item">🎯 <strong>Package a workflow once. The whole vTeam reuses it.</strong></span>
+      </div>
+    </header>
+
+    <div class="body">
+      <h2 id="skills-vs-agents-the-difference">Skills vs agents, the difference</h2>
+<p>It's confusing because they both customize Copilot. The simple distinction:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Agent</th>
+<th>Skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What it is</strong></td>
+<td>A way to start a conversation in a specific style</td>
+<td>A reusable capability that loads on demand</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Conversation-level</td>
+<td>Specific task within a conversation</td>
+</tr>
+<tr>
+<td><strong>When it fires</strong></td>
+<td>When you say <code>/agent &lt;name&gt;</code></td>
+<td>When the model decides "this would help"</td>
+</tr>
+<tr>
+<td><strong>Best for</strong></td>
+<td>Tone, format, structure</td>
+<td>A workflow with steps, references, or scripts</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>Analogy:</strong> an agent is a person you're talking to (with a personality and rules). A skill is a tool that person can pull out of their toolbox when needed.</p>
+<p>A <strong>partner-briefing agent</strong> sets the conversation tone.
+A <strong>content-humanizer skill</strong> is a procedure with steps and references the agent (or any session) can invoke when the output needs cleaning up.</p>
+<hr>
+<h2 id="what-a-skill-looks-like">What a skill looks like</h2>
+<p>A skill is a folder with at minimum:</p>
+<pre><code>my-skill/
+├── SKILL.md          # The skill definition
+├── references/       # (optional) reference docs the skill uses
+└── scripts/          # (optional) helper scripts
+</code></pre>
+<p>The <code>SKILL.md</code> has frontmatter that tells Copilot when to fire the skill, and prose telling the skill what to do.</p>
+<p>Here's a tiny illustrative skill (<code>qbr-prep</code>) showing the minimum structure:</p>
+<pre><code class="language-markdown">---
+name: &quot;qbr-prep&quot;
+description: &quot;Generates a partner QBR talk track from PMX project data and recent emails. Triggers: 'prep my QBR', 'QBR prep', 'partner QBR'.&quot;
+---
+
+# QBR Prep
+
+You help prepare partner Quarterly Business Reviews.
+
+## Steps
+
+1. Ask the user which partner the QBR is for
+2. Use PMX MCP to pull all projects for that partner
+3. Use M365 MCP to find emails with that partner's domain in the last 90 days
+4. Generate a talk track in this format:
+   - Last 90 days: 3 wins, 1 challenge
+   - Open projects: list with status
+   - Next quarter: 2 priorities to align on
+   - Open question to surface: 1 specific ask
+
+Always be specific. Reference real project names. If data is missing, say so.
+</code></pre>
+<p>That's a working skill. Drop the folder in <code>~/.copilot/skills/</code>. The CLI auto-loads it. Real shipped skills are richer, often with <code>references/</code> (reference docs) and <code>scripts/</code> (helper scripts) folders alongside <code>SKILL.md</code>. Let's install a real one next.</p>
+<hr>
+<h2 id="hands-on-install-a-real-skill-content-humanizer">🚀 Hands-on: install a real skill (<code>content-humanizer</code>)</h2>
+<p>🔧 We'll install the <code>content-humanizer</code> skill. It's a real, shipped skill that strips AI tells out of drafts and rebuilds the rhythm. Useful for partner emails, LinkedIn posts, vTeam updates, and (yes) cleaning up Copilot's own output.</p>
+<p>Skills are Git repos. Clone the source bundle into your skills folder:</p>
+<pre><code class="language-powershell">cd &quot;$env:USERPROFILE\.copilot\skills&quot;
+git clone https://github.com/olivomarco/vbd-copilot.git
+</code></pre>
+<p>The <code>vbd-copilot</code> repo bundles <code>content-humanizer</code> along with a few other skills. Once cloned, restart Copilot CLI so it picks up the new skill:</p>
+<pre><code class="language-text">&gt; /skills
+
+Loaded skills:
+  content-humanizer       ~/.copilot/skills/vbd-copilot/skills/content-humanizer/SKILL.md
+  vteam-update-formatter  ~/.copilot/skills/vteam-update-formatter/SKILL.md
+</code></pre>
+<p>To trigger it, just say what you want. The skill's description tells Copilot when to fire:</p>
+<pre><code class="language-text">&gt; This draft sounds like AI. Humanize it:
+&gt; &quot;It is crucial to leverage robust, comprehensive solutions to navigate the
+&gt; competitive partner landscape and unlock synergistic value.&quot;
+
+  ✦ Activating skill: content-humanizer
+  ✦ Auditing for AI tells...
+
+  AI tells found:
+  • &quot;crucial&quot; / &quot;robust&quot; / &quot;comprehensive&quot;: filler words, no signal
+  • &quot;leverage&quot;: replace with &quot;use&quot;
+  • &quot;navigate the landscape&quot;: AI metaphor
+  • &quot;unlock synergistic value&quot;: empty buzzword stack
+
+  Rewritten:
+  &quot;Most partners know what good looks like. They just keep buying tools that
+  sound impressive instead of using the data they already have.&quot;
+
+  Want a sharper pass with more personality?
+</code></pre>
+<p>Copilot recognized "humanize" + "AI" matches the skill description, and ran it. No <code>/skill</code> command needed. The trigger phrasing is part of the skill itself.</p>
+<hr>
+<h2 id="hands-on-build-a-tiny-skill">🚀 Hands-on: build a tiny skill</h2>
+<p>🔧 Build a "vteam-update-formatter" skill that turns raw bullets into our team's standard weekly format.</p>
+<h3 id="step-1-create-the-folder">Step 1: create the folder</h3>
+<pre><code class="language-powershell">$skillsRoot = &quot;$env:USERPROFILE\.copilot\skills&quot;
+New-Item -ItemType Directory -Force -Path &quot;$skillsRoot\vteam-update-formatter&quot;
+</code></pre>
+<h3 id="step-2-write-the-skillmd">Step 2: write the SKILL.md</h3>
+<pre><code class="language-powershell">code &quot;$skillsRoot\vteam-update-formatter\SKILL.md&quot;
+</code></pre>
+<p>Paste:</p>
+<pre><code class="language-markdown">---
+name: &quot;vteam-update-formatter&quot;
+description: &quot;Formats raw activity bullets into the EMEA Agentic AI vTeam weekly update format. Triggers: 'format my vteam update', 'vteam weekly', 'team update format'.&quot;
+---
+
+# vTeam Update Formatter
+
+You take raw bullets describing the user's week and format them into the EMEA Agentic AI vTeam weekly update template.
+
+## Input
+
+The user will paste raw bullets, possibly messy.
+
+## Output format
+
+</code></pre>
+<h2 id="week-of">Week of <date range></h2>
+<h3 id="done">Done</h3>
+<ul>
+<li><up to 5 items, one line each, action verb first></li>
+</ul>
+<h3 id="doing">Doing</h3>
+<ul>
+<li><up to 3 items in flight, with expected completion></li>
+</ul>
+<h3 id="asks-blockers">Asks / blockers</h3>
+<ul>
+<li><up to 2 items, or "none"></li>
+</ul>
+<h3 id="highlight">Highlight</h3>
+<p><one paragraph, 3 sentences max, on the most strategically important thing this week></p>
+<pre><code>
+## Rules
+
+- Action verbs first (&quot;Shipped X&quot;, not &quot;X was shipped&quot;)
+- One line per item
+- &quot;Highlight&quot; is the single most important thing, pick wisely, prune the rest
+- If the user gave you fewer than 3 items, ask for more before producing output
+</code></pre>
+<h3 id="step-3-use-it">Step 3: use it</h3>
+<pre><code>copilot
+&gt; Format my vteam update:
+&gt; - Ran a workshop with 12 partners
+&gt; - Started building a self-service course
+&gt; - Got stuck setting up Windows Sandbox
+&gt; - Pivoted to using Dev Box
+&gt; - Built a validation kit for the partner setup guide
+</code></pre>
+<p>You should get output in the expected format.</p>
+<hr>
+<details>
+<summary><strong>🔧 "When to build a skill vs an agent vs nothing"</strong>: decision tree, click to expand</summary>
+
+🔧 Decision tree:
+
+- **One-off task:** just ask. Don't build anything.
+- **Repeatable tone/format:** agent (Custom AI agents).
+- **Multi-step workflow with references/scripts/templates:** skill.
+- **Workflow that needs to coordinate multiple MCPs and produce a structured artefact:** skill, definitely.
+
+A good test: "could a colleague replace me by reading this and following it?" If yes, it's a skill.
+
+</details>
+
+<hr>
+<details>
+<summary><strong>🔧 "Sharing skills"</strong>: push to a Git repo for the team, click to expand</summary>
+
+🔧 Once your skill works for you, **make it a Git repo** and share with the vTeam:
+
+
+<pre><code class="language-powershell">cd &quot;$skillsRoot\vteam-update-formatter&quot;
+git init
+git add .
+git commit -m &quot;Initial skill&quot;
+gh repo create &lt;org&gt;/&lt;skill-name&gt; --public --push
+</code></pre>
+
+
+Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
+
+⚠️ **Don't put NDA partner content, customer data, or internal-only references in shared skills.** Skills travel. Treat them as if they'll be open-sourced eventually.
+
+</details>
+
+<hr>
+<details>
+<summary><strong>⚠️ "Skill gotchas"</strong>: known traps, click to expand</summary>
+
+- **Skills don't auto-update.** If the team upgrades a shared skill, you `git pull` to get it.
+- **Activation is best-effort.** The CLI decides when to fire a skill based on the description and the user's prompt. Be specific in the description (`Triggers: ...`) to make activation reliable.
+- **Skills can stack.** Two skills can fire in one conversation if both are relevant. This is usually fine; sometimes confusing.
+
+</details>
+
+<hr>
+<h2 id="real-work-pick-up">🎯 Real-work pick-up</h2>
+<p>🔧 Pick <strong>one</strong> repeatable workflow you do for partners that has 4+ steps. Build it as a skill. Use it for one real instance. If it works, ship to the team.</p>
+<hr>
+<h2 id="youre-ready-for-putting-it-all-together-if">✅ You're ready for Putting it all together if</h2>
+<ul>
+<li>You've installed <code>content-humanizer</code> (or another real skill) and triggered it successfully</li>
+<li>You've built one tiny skill of your own (<code>vteam-update-formatter</code> or your own) and triggered it</li>
+<li>You understand the agent/skill/nothing decision tree</li>
+</ul>
+<hr>
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="prev" href="custom-ai-agents.html"><div class="nav-dir">Previous</div><div class="nav-title">Custom AI agents</div></a>
+      <a class="next" href="putting-it-all-together.html"><div class="nav-dir">Next</div><div class="nav-title">Putting it all together</div></a>
+    </nav>
+  </main>
+</div>
+
+<footer class="site-foot">
+  Adapted from <a href="https://github.com/jamesmontemagno/copilot-cli-for-beginners" target="_blank" rel="noopener">GitHub Copilot CLI for Beginners</a> (MIT). Partner-specific content © Microsoft, internal use.
+</footer>
+
+</body>
+</html>

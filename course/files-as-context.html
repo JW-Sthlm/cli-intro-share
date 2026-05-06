@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drop a file in, get insight out · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Cascadia+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">
+      <span class="brand-mark">&gt;_</span>
+      <span>Copilot CLI · Partner course</span>
+    </a>
+    <div class="topnav-links">
+      <a href="../setup.html">Setup guide</a>
+      <a href="../deck.html">Slides</a>
+      <a href="../" class="always-visible">All resources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="lesson-shell">
+  <aside class="sidebar">
+    <p class="sidebar-h">Lessons</p>
+    <ol>
+      <li class=""><a class="" href="why-cli-for-partner-work.html">Why CLI for partner work</a></li>
+      <li class=""><a class="" href="setup-the-lazy-way.html">Setup, the lazy way</a></li>
+      <li class=""><a class="" href="your-first-conversations.html">Your first conversations</a></li>
+      <li class=""><a class="is-current" href="files-as-context.html">Drop a file in, get insight out</a></li>
+      <li class=""><a class="" href="mcp-power-ups.html">MCP power-ups: PMX, M365, GitHub</a></li>
+      <li class="is-optional"><a class="" href="custom-ai-agents.html">Custom AI agents</a></li>
+      <li class="is-optional"><a class="" href="skills.html">Skills</a></li>
+      <li class="is-optional"><a class="" href="putting-it-all-together.html">Putting it all together</a></li>
+    </ol>
+    <div class="sidebar-foot">
+      <a href="index.html">← Course home</a>
+      <a href="../setup.html">Setup guide</a>
+      <a href="../reference/cheat-sheet.md" target="_blank">Cheat sheet</a>
+      <a href="../reference/troubleshooting.md" target="_blank">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="index.html">Course</a> &nbsp;›&nbsp; Drop a file in, get insight out
+    </div>
+
+    <header class="lesson-head">
+      <p class="lesson-eyebrow ">Foundations</p>
+      <h1 class="lesson-title">Drop a file in, get insight out</h1>
+      <div class="lesson-meta-row">
+        <span class="meta-item">⏱️ <strong>20 min</strong></span>
+        <span class="meta-item">🎯 <strong>Analyze RFPs, partner decks, transcripts, and customer docs.</strong></span>
+      </div>
+    </header>
+
+    <div class="body">
+      <h2 id="the-big-unlock">The big unlock</h2>
+<p>📖 In Your first conversations you typed prompts. That's chat. The actual win happens when you give the CLI <strong>a real file</strong> to work with.</p>
+<p>A 30-page partner RFP. A transcript from a call. A pitch deck. A folder of customer technical docs. The CLI can read all of that, and produce something useful.</p>
+<hr>
+<h2 id="how-context-works">How "context" works</h2>
+<p>When you run <code>copilot</code> from a folder, that folder becomes its working directory. The CLI can read files in that folder by filename. You don't paste content, you reference it.</p>
+<p>Example:</p>
+<pre><code class="language-text">PS C:\Users\you\downloads&gt; copilot
+✦ Copilot CLI · gpt-5 · ready
+&gt; Read partner-rfp.pdf and summarize the customer's top 3 asks for an exec audience.
+
+  Reading partner-rfp.pdf (28 pages)...
+
+  Top 3 asks:
+  • Migrate 200 SQL Server instances to Azure SQL by Q3
+  • Establish a 24/7 managed service tier for the production estate
+  • Co-fund a $50K POC against the Fabric platform
+
+&gt; _
+</code></pre>
+<p>The CLI sees <code>partner-rfp.pdf</code> is in its working dir, reads it, summarizes.</p>
+<p>⚠️ <strong>Forgetting which folder you're in is the #1 source of "it can't see my file".</strong> Type <code>pwd</code> (or look at the prompt) before you start. If your file is on your Desktop and you opened copilot from <code>C:\Users\you</code>, the CLI can't find it.</p>
+<hr>
+<h2 id="hands-on-3-partner-exercises">🚀 Hands-on: 3 partner exercises</h2>
+<h3 id="exercise-1-summarize-a-real-file">Exercise 1: summarize a real file</h3>
+<p>📖 Pick a file you'd analyze this week. Anything: a partner deck, an analyst report, a long email thread you exported, a meeting transcript. Just put it in a folder.</p>
+<pre><code class="language-powershell">cd &lt;folder containing the file&gt;
+copilot
+</code></pre>
+<p>Inside copilot:</p>
+<pre><code>&gt; What's in &lt;filename&gt;? Give me a 5-bullet summary.
+</code></pre>
+<p><strong>Tweak:</strong></p>
+<pre><code>&gt; Now identify three things the partner cares about that they didn't say out loud. What's the subtext?
+</code></pre>
+<p>This is where the CLI earns its keep, pattern-matching across the whole document. Faster than you reading it.</p>
+<h3 id="exercise-2-structured-extraction">Exercise 2: structured extraction</h3>
+<p>📖 Drop in a partner's website "About" page (save the HTML, or paste the URL, depending on your setup).</p>
+<p>Ask:</p>
+<pre><code>&gt; From this content, extract:
+&gt; - Company size (employees, geography)
+&gt; - Practice areas
+&gt; - Customer logos mentioned
+&gt; - Microsoft technologies they reference
+&gt; - 3 things they're clearly proud of
+&gt; Format as a Markdown table.
+</code></pre>
+<p><strong>Why this matters:</strong> that's a partner pre-call brief, generated in 30 seconds. You used to do this by hand for every meeting.</p>
+<h3 id="exercise-3-comparing-files">Exercise 3: comparing files</h3>
+<p>📖 Drop two partner RFPs (or two customer briefs) in the same folder.</p>
+<pre><code>&gt; Compare partner-a-rfp.pdf and partner-b-rfp.pdf. What are 3 themes they have in common? What's unique to each?
+</code></pre>
+<p>If you don't have two partner RFPs, use any two long documents you have.</p>
+<hr>
+<h2 id="data-boundary-reminder">⚠️ Data boundary reminder</h2>
+<p>When you drop files in:</p>
+<ul>
+<li>The file content is sent to the Copilot endpoint as part of the conversation.</li>
+<li>Treat this the same way you'd treat M365 Copilot.</li>
+<li><strong>Public, internal-only, partner-NDA → usually fine for analysis you keep internal.</strong></li>
+<li><strong>Customer PII, credentials, anything labelled Highly Confidential → don't.</strong></li>
+</ul>
+<p>If in doubt, ask the CLI to read a redacted version.</p>
+<hr>
+<details>
+<summary><strong>🔧 "Multi-file projects"</strong>: point at a whole folder, click to expand</summary>
+
+🔧 You can also point at a whole folder. Copilot will scan its file tree.
+
+
+<pre><code class="language-text">&gt; What does this folder contain? Categorize the files and tell me what kind of project this is.
+</code></pre>
+
+
+Useful for partner asset libraries, repo dumps, document archives.
+
+⚠️ Big folders eat context budget fast. If your folder has 1000+ files, narrow it: `What's in the /docs subfolder?`
+
+</details>
+
+<hr>
+<details>
+<summary><strong>📖 "Outputs you can ask for"</strong>: quick reference, click to expand</summary>
+
+📖
+
+| You want... | Ask for... |
+|-------------|------------|
+| A 1-pager for an exec | "Summarize for a non-technical exec, 6 bullets max" |
+| A talk track for a meeting | "Give me a 3-minute talking script with 3 questions to ask the partner" |
+| A spreadsheet | "Output as CSV with columns: ..." |
+| A briefing doc | "Output as Markdown, sections: Background, Key asks, Risks, Recommended next step" |
+| A status update | "Output as 3 bullets in the format: Done / Doing / Blocked" |
+
+The CLI cares about the format you ask for. Be specific.
+
+</details>
+
+<hr>
+<details>
+<summary><strong>⚠️ "What this is NOT good at"</strong>: guardrails, click to expand</summary>
+
+⚠️ The CLI is great at extracting and structuring. It's mediocre at:
+
+- **Math.** It will quote numbers from the doc, but don't trust it to add things up. Verify.
+- **Specifics it can't see.** It won't know "what did this partner do last quarter" unless that info is in the doc you gave it.
+- **Knowing when it's wrong.** It will sound confident even when it's hallucinating. Spot-check.
+
+</details>
+
+<hr>
+<h2 id="real-work-pick-up">🎯 Real-work pick-up</h2>
+<p>📖 Pick the next partner meeting on your calendar. Find one document related to that partner (their website, a past email, an old deck). Drop it in a folder, ask Copilot for a 4-bullet pre-call brief. See if it saves you the prep time.</p>
+<p>That's the test that matters.</p>
+<hr>
+<h2 id="youre-ready-for-mcp-power-ups-if">✅ You're ready for MCP power-ups if</h2>
+<ul>
+<li>You've successfully fed at least one real file to Copilot and gotten useful output</li>
+<li>You know how to set the working directory before starting</li>
+<li>You're comfortable asking for a specific output format</li>
+</ul>
+<hr>
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="prev" href="your-first-conversations.html"><div class="nav-dir">Previous</div><div class="nav-title">Your first conversations</div></a>
+      <a class="next" href="mcp-power-ups.html"><div class="nav-dir">Next</div><div class="nav-title">MCP power-ups: PMX, M365, GitHub</div></a>
+    </nav>
+  </main>
+</div>
+
+<footer class="site-foot">
+  Adapted from <a href="https://github.com/jamesmontemagno/copilot-cli-for-beginners" target="_blank" rel="noopener">GitHub Copilot CLI for Beginners</a> (MIT). Partner-specific content © Microsoft, internal use.
+</footer>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Module 5: Custom AI agents 🔧
+# Custom AI agents 🔧
 
 > ⏱️ **Estimated time:** 25 min
 > 🎯 **You'll be able to:** build a reusable agent that handles a recurring partner task with consistent voice, structure, and context.
@@ -159,7 +159,7 @@ The agent will reply in your defined format. Every time. Until you change the ag
 | `meeting-summary` | Standard meeting summary format |
 | `decision-doc` | One-pager for "should we do X with this partner?" |
 
-You'll see overlap with [`v2/extras/copilot-overview/`](../../../extras/copilot-overview/README.md) and other reusable assets the team is building.
+You'll see overlap with [`extras/copilot-overview/`](../extras/copilot-overview/README.md) and other reusable assets the team is building.
 
 </details>
 
@@ -186,7 +186,7 @@ If after two uses you're still editing the agent rules, keep iterating. That's t
 
 ---
 
-## ✅ You're ready for M6 if
+## ✅ You're ready for Skills if
 
 - You've created an agent file and verified it shows up in `/agents`
 - You've used it for at least one real (or test) prompt
@@ -194,4 +194,3 @@ If after two uses you're still editing the agent rules, keep iterating. That's t
 
 ---
 
-## 👉 Next: [Module 6: Skills](../m6-skills/README.md)

@@ -1,4 +1,4 @@
-# Module 2: Your first conversations
+# Your first conversations
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** drive the CLI confidently for summarize, rewrite, and draft tasks. Know when to start a new session and when to keep going.
@@ -104,7 +104,7 @@ Type `/` inside copilot to see the menu. The ones you'll actually use:
 | `/exit` | Leaves the session |
 | `/login` / `/logout` | Auth |
 | `/help` | Lists everything |
-| `/env` | Shows what MCP servers are connected (for M4) |
+| `/env` | Shows what MCP servers are connected (for MCP power-ups) |
 
 ⬆️ at the prompt brings back your previous prompts. Good for tweaking the same prompt with small variations.
 
@@ -147,7 +147,7 @@ Compare the time. Compare the quality. That's the only validation that matters.
 
 ---
 
-## ✅ You're ready for M3 if
+## ✅ You're ready for Drop a file in, get insight out if
 
 - You've had at least one useful conversation
 - You know how to `/exit` and start fresh
@@ -155,4 +155,3 @@ Compare the time. Compare the quality. That's the only validation that matters.
 
 ---
 
-## 👉 Next: [Module 3: Drop a file in, get insight out](../m3-files-as-context/README.md)

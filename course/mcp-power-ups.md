@@ -1,4 +1,4 @@
-# Module 4: MCP power-ups: PMX, M365, GitHub
+# MCP power-ups: PMX, M365, GitHub
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** install MCP servers, connect Copilot CLI to your inbox, calendar, projects, and repos, and have it pull real data into your work.
@@ -87,7 +87,7 @@ Real data. From your real GitHub. No copy-paste.
 
 🔧 / 📖 PMX is Microsoft's Partner Management Experience, your projects, opportunities, partner accounts. Lives in Dataverse.
 
-**Prereq:** you must be logged into your `*_microsoft` EMU account (see M1).
+**Prereq:** you must be logged into your `*_microsoft` EMU account (see Setup, the lazy way).
 
 There are two ways to install it.
 
@@ -208,7 +208,7 @@ That's three systems queried, one prompt, one draft output. Try it. It feels lik
 | Slow / hangs | First-time auth bouncing through browser | Be patient, ~10 sec on slow networks |
 | "Tool not available" | MCP not running | Restart Copilot CLI |
 
-For deeper issues: [troubleshooting.md](../../../reference/troubleshooting.md).
+For deeper issues: [troubleshooting.md](../reference/troubleshooting.md).
 
 </details>
 
@@ -226,7 +226,7 @@ If this works (and it should), you just compressed 30 minutes of clicking into o
 
 ---
 
-## ✅ You're done with Track A 📖
+## ✅ You've cleared the value bar 📖
 
 If you can:
 
@@ -236,11 +236,9 @@ If you can:
 
 **…then you've achieved the productivity bar.** You can drive Copilot CLI for partner work end-to-end.
 
-**Track A graduates: stop here, ship some real work, come back if you want more.**
+**This is a clean stopping point.** Stop here, ship some real work, come back if you want more.
 
-🔧 **Track B continues with:** custom AI agents, reusable skills, and end-to-end pipelines.
+🔧 **The optional lessons keep going with:** custom AI agents, reusable skills, and end-to-end pipelines.
 
 ---
 
-## 👉 Track A: [Back to course home](../../README.md)
-## 👉 Track B continues: [Module 5: Custom AI agents](../../track-technical/m5-custom-agents/README.md)

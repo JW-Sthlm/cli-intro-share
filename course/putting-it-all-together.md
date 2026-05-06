@@ -1,4 +1,4 @@
-# Module 7: Putting it all together 🔧
+# Putting it all together 🔧
 
 > ⏱️ **Estimated time:** 30 min (or longer, this is the capstone)
 > 🎯 **You'll be able to:** combine MCP + agents + skills into one end-to-end pipeline that handles a recurring partner task. You ship one reusable asset.
@@ -9,11 +9,11 @@
 
 You now have the four building blocks:
 
-1. 📖 **Conversations** (M2)
-2. 📖 **Files as context** (M3)
-3. 📖 **MCP servers** (M4)
-4. 🔧 **Agents** (M5)
-5. 🔧 **Skills** (M6)
+1. 📖 **Conversations** (Your first conversations)
+2. 📖 **Files as context** (Drop a file in, get insight out)
+3. 📖 **MCP servers** (MCP power-ups)
+4. 🔧 **Agents** (Custom AI agents)
+5. 🔧 **Skills** (Skills)
 
 Real productivity comes from **combining them**. Not 5 separate tools, one workflow that uses all 5.
 
@@ -68,7 +68,7 @@ OUTPUT:  PMX records updated in place
          + clipboard-ready Teams messages for project owners
 ```
 
-Two MCPs aren't always needed. This one uses just PMX, plus an agent that does the triage. The skill from M6 isn't required here. The bonus pipeline below uses both.
+Two MCPs aren't always needed. This one uses just PMX, plus an agent that does the triage. The skill from Skills isn't required here. The bonus pipeline below uses both.
 
 ---
 
@@ -78,7 +78,7 @@ We'll do this one. Adapt for your real task.
 
 ### Step 1: confirm `/hygiene` works
 
-The `/hygiene` slash command ships with the PMX MCP server (you installed it in M4). It runs `pmx-project_hygiene_check` against your in-progress projects and reports findings across 10 categories (no outcome linked, overdue, missing business objective, stale, duplicate opportunity, and so on).
+The `/hygiene` slash command ships with the PMX MCP server (you installed it in MCP power-ups). It runs `pmx-project_hygiene_check` against your in-progress projects and reports findings across 10 categories (no outcome linked, overdue, missing business objective, stale, duplicate opportunity, and so on).
 
 ```text
 PS C:\Users\you> copilot
@@ -366,10 +366,9 @@ When new MCP servers ship (and they will), the playbook is the same: install, sk
 
 ## ✅ Course graduate 🎓
 
-You've completed Track B. You now know more about Copilot CLI than 95% of people in the org. The remaining 5% are the people you're going to teach.
+You've completed all eight lessons. You now know more about Copilot CLI than 95% of people in the org. The remaining 5% are the people you're going to teach.
 
 Find someone on your team who hasn't done this yet. Send them this course.
 
 ---
 
-## 👉 Back to [course home](../../README.md)

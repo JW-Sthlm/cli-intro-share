@@ -1,4 +1,4 @@
-# Module 3: Drop a file in, get insight out
+# Drop a file in, get insight out
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** point Copilot at a file or folder, get a structured analysis, and use the result in your work.
@@ -7,7 +7,7 @@
 
 ## The big unlock
 
-📖 In M2 you typed prompts. That's chat. The actual win happens when you give the CLI **a real file** to work with.
+📖 In Your first conversations you typed prompts. That's chat. The actual win happens when you give the CLI **a real file** to work with.
 
 A 30-page partner RFP. A transcript from a call. A pitch deck. A folder of customer technical docs. The CLI can read all of that, and produce something useful.
 
@@ -165,7 +165,7 @@ That's the test that matters.
 
 ---
 
-## ✅ You're ready for M4 if
+## ✅ You're ready for MCP power-ups if
 
 - You've successfully fed at least one real file to Copilot and gotten useful output
 - You know how to set the working directory before starting
@@ -173,4 +173,3 @@ That's the test that matters.
 
 ---
 
-## 👉 Next: [Module 4: MCP power-ups: PMX, M365, GitHub](../m4-mcp-power-ups/README.md)

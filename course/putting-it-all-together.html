@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Putting it all together · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Cascadia+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">
+      <span class="brand-mark">&gt;_</span>
+      <span>Copilot CLI · Partner course</span>
+    </a>
+    <div class="topnav-links">
+      <a href="../setup.html">Setup guide</a>
+      <a href="../deck.html">Slides</a>
+      <a href="../" class="always-visible">All resources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="lesson-shell">
+  <aside class="sidebar">
+    <p class="sidebar-h">Lessons</p>
+    <ol>
+      <li class=""><a class="" href="why-cli-for-partner-work.html">Why CLI for partner work</a></li>
+      <li class=""><a class="" href="setup-the-lazy-way.html">Setup, the lazy way</a></li>
+      <li class=""><a class="" href="your-first-conversations.html">Your first conversations</a></li>
+      <li class=""><a class="" href="files-as-context.html">Drop a file in, get insight out</a></li>
+      <li class=""><a class="" href="mcp-power-ups.html">MCP power-ups: PMX, M365, GitHub</a></li>
+      <li class="is-optional"><a class="" href="custom-ai-agents.html">Custom AI agents</a></li>
+      <li class="is-optional"><a class="" href="skills.html">Skills</a></li>
+      <li class="is-optional"><a class="is-current" href="putting-it-all-together.html">Putting it all together</a></li>
+    </ol>
+    <div class="sidebar-foot">
+      <a href="index.html">← Course home</a>
+      <a href="../setup.html">Setup guide</a>
+      <a href="../reference/cheat-sheet.md" target="_blank">Cheat sheet</a>
+      <a href="../reference/troubleshooting.md" target="_blank">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="index.html">Course</a> &nbsp;›&nbsp; Putting it all together
+    </div>
+
+    <header class="lesson-head">
+      <p class="lesson-eyebrow is-optional">Optional · More technical</p>
+      <h1 class="lesson-title">Putting it all together</h1>
+      <div class="lesson-meta-row">
+        <span class="meta-item">⏱️ <strong>30 min</strong></span>
+        <span class="meta-item">🎯 <strong>Ship one reusable asset that combines MCP + agents + skills.</strong></span>
+      </div>
+    </header>
+
+    <div class="body">
+      <h2 id="what-putting-it-together-means">What "putting it together" means</h2>
+<p>You now have the four building blocks:</p>
+<ol>
+<li>📖 <strong>Conversations</strong> (Your first conversations)</li>
+<li>📖 <strong>Files as context</strong> (Drop a file in, get insight out)</li>
+<li>📖 <strong>MCP servers</strong> (MCP power-ups)</li>
+<li>🔧 <strong>Agents</strong> (Custom AI agents)</li>
+<li>🔧 <strong>Skills</strong> (Skills)</li>
+</ol>
+<p>Real productivity comes from <strong>combining them</strong>. Not 5 separate tools, one workflow that uses all 5.</p>
+<hr>
+<h2 id="the-capstone-build-one-real-pipeline">The capstone: build one real pipeline</h2>
+<p>🔧 Pick <strong>one recurring partner task</strong> that takes you 30+ min today, and that you do at least monthly. Build a pipeline that does most of the work.</p>
+<p>We'll do <strong>the PMX <code>/hygiene</code> weekly check</strong> as the worked example. It's real, it's weekly, and you'll use it. After that there's a <strong>bonus pipeline</strong> (Friday partner portfolio sweep) for when you want to push further.</p>
+<p>Other examples worth picking for your own capstone:</p>
+<ul>
+<li><strong>Pre-meeting partner brief:</strong> takes a partner name, pulls projects from PMX, recent emails from M365, generates a 1-pager via the <code>partner-briefing</code> agent.</li>
+<li><strong>Partner technical assessment doc:</strong> takes a partner's URL, pulls their public web content, asks Copilot to assess against a Microsoft technology fit framework, outputs a structured doc.</li>
+<li><strong>Workshop attendee follow-up:</strong> for each attendee in a CSV, drafts a personalized follow-up email.</li>
+</ul>
+<p>Pick one that's real for you. Don't pick the most ambitious, pick the most boring recurring one. That's where the time savings compound.</p>
+<hr>
+<h2 id="designing-your-pipeline">Designing your pipeline</h2>
+<p>🔧 Before building anything, sketch this on paper:</p>
+<pre><code>INPUTS  -- what you start with (partner name, date range, project ID)
+   |
+   v
+SOURCES -- which MCP servers fetch which data
+   |
+   v
+TRANSFORM -- which agent or skill processes the raw data
+   |
+   v
+OUTPUT  -- what you end with (PMX updates, Markdown doc, Teams drafts)
+</code></pre>
+<p>For the <strong>PMX <code>/hygiene</code> weekly check</strong>, that looks like:</p>
+<pre><code>INPUTS:  none (the slash command knows &quot;this week&quot;)
+   |
+SOURCES: PMX MCP (pmx-project_hygiene_check, built into /hygiene)
+   |
+TRANSFORM: pmx-fixer agent
+           - groups findings by ownership
+           - walks me through the ones I can fix in PMX directly
+           - drafts Teams pings for findings owned by others
+   |
+OUTPUT:  PMX records updated in place
+         + clipboard-ready Teams messages for project owners
+</code></pre>
+<p>Two MCPs aren't always needed. This one uses just PMX, plus an agent that does the triage. The skill from Skills isn't required here. The bonus pipeline below uses both.</p>
+<hr>
+<h2 id="hands-on-build-the-pmx-hygiene-weekly-check">🚀 Hands-on: build the PMX <code>/hygiene</code> weekly check</h2>
+<p>We'll do this one. Adapt for your real task.</p>
+<h3 id="step-1-confirm-hygiene-works">Step 1: confirm <code>/hygiene</code> works</h3>
+<p>The <code>/hygiene</code> slash command ships with the PMX MCP server (you installed it in MCP power-ups). It runs <code>pmx-project_hygiene_check</code> against your in-progress projects and reports findings across 10 categories (no outcome linked, overdue, missing business objective, stale, duplicate opportunity, and so on).</p>
+<pre><code class="language-text">PS C:\Users\you&gt; copilot
+✦ Copilot CLI · gpt-5 · ready
+&gt; /hygiene
+
+  ✦ Running pmx-project_hygiene_check on your in-progress projects...
+
+  43 projects audited
+    12 you own (actionable)
+    4  you created but no longer own (informational)
+    27 you're a team contact on (informational)
+
+  Findings on projects YOU OWN (12 actionable):
+  • Fabric POC, Contoso              overdue (end date 2026-04-15)
+  • AI Discovery Cards, Acme         no_outcome (no MSX opp / solution / referral linked)
+  • Foundry Pilot, Globex            missing_business_objective
+  • Azure Migration Wave 2, Initech  stale (no update in 47 days)
+  ... 8 more
+
+  Findings on projects OTHERS OWN (9 informational):
+  • Azure Migration, Initech       overdue (owner: jane@microsoft.com)
+  ... 8 more
+</code></pre>
+<p>This is your raw input. By itself it's a list. The triage agent turns it into action.</p>
+<h3 id="step-2-write-the-pmx-fixer-agent">Step 2: write the pmx-fixer agent</h3>
+<p>The agent walks you through the actionable findings one at a time, calls PMX MCP write tools to make the fixes, and drafts Teams pings for findings owned by others.</p>
+<pre><code class="language-powershell">code &quot;$env:USERPROFILE\.copilot\agents\pmx-fixer.md&quot;
+</code></pre>
+<p>Paste:</p>
+<pre><code class="language-markdown">---
+name: pmx-fixer
+description: Triages PMX hygiene findings. Walks the user through actionable fixes, drafts Teams pings for findings owned by others.
+---
+
+You help the user clean up PMX hygiene findings on a weekly cadence.
+
+## Steps
+
+1. If `/hygiene` hasn't been run in this session, run it via the PMX MCP first.
+2. Split findings into two buckets:
+   - Actionable: projects the user owns (`ownedByMe: true`)
+   - Informational: projects owned by others
+3. For each actionable finding, walk the user through it ONE AT A TIME:
+   - State the project name and the finding category
+   - Offer the most likely fixes as numbered options
+   - When the user picks an option, call the appropriate PMX MCP write tool
+     (update_project, link_outcome, update_task, etc.)
+   - Confirm the fix landed before moving on
+4. After actionable findings are done, draft Teams pings for the informational
+   ones (one short message per project owner). Group by owner so the user gets
+   one ping per person, not one per project.
+5. End with a one-line summary: how many fixed, how many pings drafted.
+
+## Rules
+
+- Never update a project the user doesn't own. Drafts only for others.
+- Show the proposed change BEFORE writing to PMX. Always confirm.
+- Be specific. Project names, not &quot;the first one&quot;. GUIDs in tool calls only,
+  never in user-facing text.
+</code></pre>
+<h3 id="step-3-trigger-it">Step 3: trigger it</h3>
+<pre><code class="language-text">&gt; /agent pmx-fixer
+✦ Switched to agent: pmx-fixer
+
+&gt; Walk me through this week's hygiene.
+
+  ✦ Running /hygiene...
+  ✦ 12 actionable, 9 informational. Starting with actionable.
+
+  [1/12] Fabric POC, Contoso, overdue (end date 2026-04-15)
+
+  Most likely fixes:
+    1. Project actually wrapped, close it (status=Completed, set actual end date)
+    2. Project still active, push end date out
+    3. Skip (revisit next week)
+
+&gt; 1
+
+  ✦ Setting status=Completed, actual end date=2026-04-30. OK to apply? [y/N]
+&gt; y
+  ✦ Applied. PMX updated.
+
+  Outcome check: no MSX opportunity linked. Want to link one now? [y/N]
+&gt; y
+  ✦ Search MSX opportunity by partner &quot;Contoso&quot;... 3 matches:
+    1. Fabric POC FY26 H2 (open, $40K)
+    2. Azure migration scoping (won, $120K)
+    3. Copilot Studio pilot (open, $25K)
+&gt; 1
+  ✦ Linked. Moving to next finding.
+
+  [2/12] AI Discovery Cards, Acme, no_outcome
+  ...
+</code></pre>
+<p>After the 12 actionable ones:</p>
+<pre><code class="language-text">  ✦ All actionable findings closed. Drafting Teams pings for the 9 owned by others.
+
+  --- To: jane@microsoft.com (3 projects) ---
+  Hi Jane, Friday hygiene nudge: 3 of your projects show as overdue in PMX,
+  Azure Migration / Initech (Apr 12), Fabric Refresh / Contoso (Apr 15),
+  Copilot Pilot / Globex (Apr 22). Mind a quick pass to close them out
+  or push the dates? Thanks.
+
+  --- To: john@microsoft.com (2 projects) ---
+  ...
+
+  Summary: 12 actionable findings closed. 9 pings drafted for 4 owners.
+  Total time: 14 minutes.
+</code></pre>
+<p>You review the pings, paste into Teams, done.</p>
+<h3 id="step-4-iterate">Step 4: iterate</h3>
+<p>First time will not be perfect. Note what the agent missed (a fix option, an edge case, a partner the agent guessed wrong on). Update the agent. By iteration 3 or 4 the weekly hygiene check goes from a 30-minute chore to a 10-minute walkthrough.</p>
+<hr>
+<h2 id="bonus-friday-partner-portfolio-sweep-optional">🚀 Bonus: Friday partner portfolio sweep (optional)</h2>
+<p>🔧 If you want to push further, this one combines all four building blocks: 2 MCPs + 1 skill + 1 agent. It produces a Friday-morning portfolio doc with a one-line summary per active partner, ready to scan over coffee.</p>
+<p>The pipeline:</p>
+<pre><code>INPUTS:  list of active partners (or detect from PMX)
+   |
+SOURCES: PMX MCP (recent project activity per partner)
+         M365 MCP (recent emails per partner, calendar this week)
+   |
+TRANSFORM: portfolio-sweep agent
+           - one paragraph per partner (state, what's open, what changed)
+           - content-humanizer skill on the final draft to strip AI tone
+   |
+OUTPUT:  portfolio-YYYY-MM-DD.md, one section per partner,
+         scannable in 2 minutes
+</code></pre>
+<p>Two notes before you build this:</p>
+<ul>
+<li><strong>Ground every claim in a source.</strong> Partner section says "Foundry pilot slipped two weeks"? That fact came from a specific PMX update or a specific email. If the agent can't cite the source, it shouldn't make the claim.</li>
+<li><strong>Run content-humanizer LAST.</strong> The raw draft from the agent will read AI-ish. The humanizer pass turns it into something you'd actually read on a Friday morning.</li>
+</ul>
+<p>Sketch of the agent's <code>SKILL.md</code>-style guardrails (paste into <code>~/.copilot/agents/portfolio-sweep.md</code>):</p>
+<pre><code class="language-markdown">---
+name: portfolio-sweep
+description: Friday portfolio sweep. One scannable paragraph per active partner from PMX + M365 data, humanized.
+---
+
+You produce a Friday-morning portfolio sweep doc.
+
+## Steps
+
+1. Determine &quot;active partners&quot;: ask the user, or infer from PMX
+   (partners with project activity in the last 14 days).
+2. For each partner:
+   a. PMX MCP: open projects, deliverables status, recent task updates
+   b. M365 MCP: emails sent/received in the last 7 days
+3. Write one paragraph per partner: 3-4 sentences max. State, what's open,
+   what changed this week, one open question or risk.
+4. After the full draft, invoke the content-humanizer skill on the prose.
+5. Save as `portfolio-YYYY-MM-DD.md`.
+
+## Rules
+
+- Every claim cites a source (project name, email subject, meeting title).
+- If a partner had zero activity, say so. Don't pad.
+- Skip partners with NDA-flagged content. Mark them &quot;review separately&quot;.
+- One paragraph = one partner. No multi-partner paragraphs.
+</code></pre>
+<p>Trigger:</p>
+<pre><code class="language-text">&gt; /agent portfolio-sweep
+✦ Switched to agent: portfolio-sweep
+&gt; Sweep this week. Partners: Contoso, Acme, Globex, Initech.
+
+  ✦ PMX: pulling project activity for 4 partners...
+  ✦ M365: pulling emails + calendar for 4 partners...
+  ✦ Drafting paragraphs...
+  ✦ Activating content-humanizer skill on the draft...
+
+  ## Portfolio sweep, week of 2026-05-04
+
+  ### Contoso
+  Fabric POC closed Friday after a two-week slip on data access. The MSX
+  opportunity is linked and the customer signed off on the next phase
+  (Foundry pilot scoping). One open question: who on Contoso's side owns
+  the AI P&amp;L next year? Worth surfacing in the next steerco.
+
+  ### Acme
+  Quiet week. AI Discovery Cards delivered Tuesday, no outcome linked yet.
+  Action: link the MSX referral before Monday or the deliverable looks
+  orphaned in PMX.
+
+  ### Globex
+  Foundry Pilot kicked off, 5 consultants trained, positive signal in the
+  follow-up email thread. ECIF burndown on track. Risk: their PSA leaves
+  in three weeks, no transition plan yet.
+
+  ### Initech
+  Azure migration overdue (end date was Apr 12). Owner is Jane on her side,
+  not Microsoft. Nudge her in the Friday hygiene ping (already drafted).
+
+  Save as portfolio-2026-05-10.md? [y/N]
+&gt; y
+  ✦ Saved.
+</code></pre>
+<p>That's two MCPs feeding an agent, one skill cleaning up the prose, one Markdown file out. Reproducible every Friday.</p>
+<hr>
+<details>
+<summary><strong>🔧 "When this stops being a project and becomes a tool"</strong>: the maturity bar, click to expand</summary>
+
+🔧 You know your pipeline is mature when:
+
+- You ran it 5+ times
+- The output needed less than 2 minutes of editing
+- A teammate could trigger it and get the same quality
+
+That's the moment to share it. Push the agent and skill to a Git repo, document the entry-point prompt, drop a Teams message in the vTeam channel.
+
+That asset is now a force multiplier across the team.
+
+</details>
+
+<hr>
+<details>
+<summary><strong>⚠️ "Common pipeline traps"</strong>: what kills pipelines, click to expand</summary>
+
+- **Over-engineering before validating.** Build the simplest version first. Use it for real. Iterate.
+- **Hiding too much.** Don't make the pipeline opaque. The user should always see what data was pulled and have a chance to correct before output is saved.
+- **Hard-coding things that should be flexible.** "Last 7 days" → make it a parameter. "vTeam channel" → ask the user.
+- **Brittle MCP dependencies.** If PMX MCP is down, the pipeline should degrade gracefully ("couldn't reach PMX, here's what I have from M365 only").
+- **Forgetting data boundaries.** A pipeline that generates partner-facing content from internal data needs an explicit human-review gate.
+
+</details>
+
+<hr>
+<h2 id="the-real-graduation-moment">🎯 The real graduation moment</h2>
+<p>🔧 You've built and used a pipeline that combines MCP + skills/agents and produces a real output you'd ship without rewriting from scratch.</p>
+<p>That's the bar.</p>
+<hr>
+<details>
+<summary><strong>🔧 "Where to go from here"</strong>: what to ship next, click to expand</summary>
+
+🔧 You've now seen all four layers (conversations, context, MCPs, agents/skills). Real depth comes from doing the work:
+
+- **Ship 3 pipelines** for your real recurring tasks. Most of them will be small.
+- **Share at least one** with the vTeam. Force-multiplier moment.
+- **Read other people's skills** in the team library. Steal patterns.
+- **Watch the source course** for advanced patterns: [GitHub Copilot CLI for Beginners](https://jamesmontemagno.github.io/copilot-cli-for-beginners/).
+
+When new MCP servers ship (and they will), the playbook is the same: install, sketch the pipeline, build the agent/skill, iterate.
+
+</details>
+
+<hr>
+<h2 id="course-graduate">✅ Course graduate 🎓</h2>
+<p>You've completed all eight lessons. You now know more about Copilot CLI than 95% of people in the org. The remaining 5% are the people you're going to teach.</p>
+<p>Find someone on your team who hasn't done this yet. Send them this course.</p>
+<hr>
+    </div>
+
+    <nav class="lesson-nav">
+      <a class="prev" href="skills.html"><div class="nav-dir">Previous</div><div class="nav-title">Skills</div></a>
+      <a class="next" href="index.html"><div class="nav-dir">Next</div><div class="nav-title">Back to course home</div></a>
+    </nav>
+  </main>
+</div>
+
+<footer class="site-foot">
+  Adapted from <a href="https://github.com/jamesmontemagno/copilot-cli-for-beginners" target="_blank" rel="noopener">GitHub Copilot CLI for Beginners</a> (MIT). Partner-specific content © Microsoft, internal use.
+</footer>
+
+</body>
+</html>

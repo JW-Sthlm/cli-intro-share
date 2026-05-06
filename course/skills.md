@@ -1,4 +1,4 @@
-# Module 6: Skills 🔧
+# Skills 🔧
 
 > ⏱️ **Estimated time:** 25 min
 > 🎯 **You'll be able to:** install skills the team has built, write your own simple skill, and ship it back to the vTeam for reuse.
@@ -195,7 +195,7 @@ You should get output in the expected format.
 🔧 Decision tree:
 
 - **One-off task:** just ask. Don't build anything.
-- **Repeatable tone/format:** agent (M5).
+- **Repeatable tone/format:** agent (Custom AI agents).
 - **Multi-step workflow with references/scripts/templates:** skill.
 - **Workflow that needs to coordinate multiple MCPs and produce a structured artefact:** skill, definitely.
 
@@ -243,7 +243,7 @@ Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
 
 ---
 
-## ✅ You're ready for M7 if
+## ✅ You're ready for Putting it all together if
 
 - You've installed `content-humanizer` (or another real skill) and triggered it successfully
 - You've built one tiny skill of your own (`vteam-update-formatter` or your own) and triggered it
@@ -251,4 +251,3 @@ Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
 
 ---
 
-## 👉 Next: [Module 7: Putting it all together](../m7-pipeline/README.md)

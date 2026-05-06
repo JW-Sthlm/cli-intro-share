@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot CLI for partner work · self-service course</title>
+  <meta name="description" content="A self-paced Copilot CLI course adapted for Microsoft partner-facing roles: PSA, PTS, PDM, PSS, PSAM, GBB, CSA. Eight lessons, partner-flavored examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Cascadia+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a class="topnav-brand" href="../">
+        <span class="brand-mark">&gt;_</span>
+        <span class="brand-text">Copilot CLI · Partner course</span>
+      </a>
+      <div class="topnav-links">
+        <a href="../setup.html">Setup guide</a>
+        <a href="../deck.html">Slide deck</a>
+        <a href="../" class="always-visible">Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-pill">📘 Self-paced · For partner-facing roles</div>
+      <h1>Talk to Copilot from your terminal.<br>Build the next level up.</h1>
+      <p class="lead">A self-service course for PSA, PTS, PDM, PSS, PSAM, GBB, CSA. Anyone who works with partners every day. Adapted from <a href="https://jamesmontemagno.github.io/copilot-cli-for-beginners/" target="_blank" rel="noopener">GitHub's Copilot CLI for Beginners</a> for Microsoft partner work.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="why-cli-for-partner-work.html">Start the course →</a>
+        <a class="btn btn-secondary" href="../setup.html">Setup guide</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Lessons</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">~3h</div>
+          <div class="stat-label">Total time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">5+3</div>
+          <div class="stat-label">Core + optional</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-h">What you'll learn</h2>
+      <p class="section-sub">Each topic maps to a concrete partner-work scenario you can use the same week.</p>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <span class="emoji">💬</span>
+          <h3>Talk-to-it interaction</h3>
+          <p>Drive Copilot from a terminal. Summarize, rewrite, draft, all without leaving the keyboard.</p>
+        </div>
+        <div class="feature">
+          <span class="emoji">📂</span>
+          <h3>Files as context</h3>
+          <p>Drop an RFP, a partner deck, a transcript. Get structured insight back. No more 12-page skim.</p>
+        </div>
+        <div class="feature">
+          <span class="emoji">🔌</span>
+          <h3>MCP power-ups</h3>
+          <p>Connect PMX, M365, GitHub. Pull from your inbox, calendar, projects, repos. In natural language.</p>
+        </div>
+        <div class="feature">
+          <span class="emoji">🤖</span>
+          <h3>Custom agents</h3>
+          <p>Build a reusable partner-briefing agent. Knows your partners, your priorities, last quarter's notes.</p>
+        </div>
+        <div class="feature">
+          <span class="emoji">⚡</span>
+          <h3>Skills</h3>
+          <p>Package a workflow once. The whole vTeam reuses it. QBR templates, briefing skeletons, status drafts.</p>
+        </div>
+        <div class="feature">
+          <span class="emoji">🚀</span>
+          <h3>End-to-end pipelines</h3>
+          <p>MCP + agent + skill, wired together. Ship one reusable asset that handles a real recurring task.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-h">Before you start</h2>
+      <p class="section-sub">Four things. Three are stuff you already have.</p>
+
+      <div class="prereqs">
+        <ul>
+          <li><strong>A laptop</strong> running Windows 10/11. Mac works, examples are Windows.</li>
+          <li><strong>GitHub Copilot access</strong> via your Microsoft enterprise account. Check at <a href="https://github.com/settings/copilot" target="_blank" rel="noopener">github.com/settings/copilot</a>.</li>
+          <li><strong>Two GitHub accounts wired up</strong>: your personal one + your <code>*_microsoft</code> EMU account. The <a href="setup-the-lazy-way.html">Setup, the lazy way</a> lesson walks you through this.</li>
+          <li><strong>Optional but recommended:</strong> an Azure subscription you can <code>az login</code> to.</li>
+        </ul>
+        <p class="prereqs-note">No coding experience needed for the first five lessons. If you can install software and follow numbered steps, you're set.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-h">The lessons</h2>
+      <p class="section-sub">Run them in order. Each one assumes the previous is done. The last three are optional and a bit more technical. They're clearly marked.</p>
+
+      <div class="lessons">
+
+        <a class="lesson-card" href="why-cli-for-partner-work.html">
+          <div class="lesson-num">1</div>
+          <div class="lesson-body">
+            <h3>Why CLI for partner work</h3>
+            <p>Decide if this is for you. Understand "talk-to-it" vs "code-the-thing".</p>
+          </div>
+          <div class="lesson-meta"><span class="time">10 min</span></div>
+        </a>
+
+        <a class="lesson-card" href="setup-the-lazy-way.html">
+          <div class="lesson-num">2</div>
+          <div class="lesson-body">
+            <h3>Setup, the lazy way</h3>
+            <p>Working CLI on your laptop with the right accounts wired up.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">15–30 min</span></div>
+        </a>
+
+        <a class="lesson-card" href="your-first-conversations.html">
+          <div class="lesson-num">3</div>
+          <div class="lesson-body">
+            <h3>Your first conversations</h3>
+            <p>Summarize, rewrite, draft, without leaving the terminal.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">20 min</span></div>
+        </a>
+
+        <a class="lesson-card" href="files-as-context.html">
+          <div class="lesson-num">4</div>
+          <div class="lesson-body">
+            <h3>Drop a file in, get insight out</h3>
+            <p>Analyze RFPs, partner decks, transcripts, customer docs.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">20 min</span></div>
+        </a>
+
+        <a class="lesson-card" href="mcp-power-ups.html">
+          <div class="lesson-num">5</div>
+          <div class="lesson-body">
+            <h3>MCP power-ups: PMX, M365, GitHub</h3>
+            <p>Pull from your inbox, calendar, projects, repos. The productivity unlock.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">20 min</span></div>
+        </a>
+
+        <div class="optional-band">
+          <strong>🔧 Optional · more technical.</strong> The remaining lessons are for anyone who wants to <em>build</em> with the CLI, not just use it. You'll write a little YAML and Markdown. No real programming. Skip them, ship what you have, come back if you want more.
+        </div>
+
+        <a class="lesson-card is-optional" href="custom-ai-agents.html">
+          <div class="lesson-num">6</div>
+          <div class="lesson-body">
+            <h3>Custom AI agents</h3>
+            <p>Build a reusable "partner-briefing" agent that knows your partners.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">25 min</span><span class="badge">Optional</span></div>
+        </a>
+
+        <a class="lesson-card is-optional" href="skills.html">
+          <div class="lesson-num">7</div>
+          <div class="lesson-body">
+            <h3>Skills</h3>
+            <p>Package a workflow once. The whole vTeam reuses it.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">25 min</span><span class="badge">Optional</span></div>
+        </a>
+
+        <a class="lesson-card is-optional" href="putting-it-all-together.html">
+          <div class="lesson-num">8</div>
+          <div class="lesson-body">
+            <h3>Putting it all together</h3>
+            <p>Ship one reusable asset combining MCP + agents + skills.</p>
+          </div>
+          <div class="lesson-meta"><span class="time">30 min</span><span class="badge">Optional</span></div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="section-h">If you get stuck</h2>
+      <ol class="help-list">
+        <li>Re-run <a href="../pre-work/verify.ps1"><code>pre-work/verify.ps1</code></a>. It diagnoses 8 common problems automatically.</li>
+        <li>Open the <a href="../reference/troubleshooting.md" target="_blank">troubleshooting reference</a>. Real workshop traps.</li>
+        <li>Drop a question in the <strong>Agentic AI vTeam</strong> Teams channel.</li>
+        <li>Join a 90-minute <a href="../setup-clinic/README.md" target="_blank">Setup Clinic</a> if async isn't working for you.</li>
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2 class="section-h">How this differs from the GitHub original</h2>
+      <p class="section-sub">The <a href="https://jamesmontemagno.github.io/copilot-cli-for-beginners/" target="_blank" rel="noopener">GitHub original</a> is excellent but built for software developers working on a Python book app. This version:</p>
+      <ul class="diff-list">
+        <li>Uses <strong>partner work scenarios</strong> throughout: RFPs, briefings, vTeam updates, PMX projects.</li>
+        <li>Adds the <strong>EMU/personal account dance</strong> that's specific to Microsoft.</li>
+        <li>Adds <strong>MCP servers we actually use</strong> (PMX, M365, GitHub) instead of generic database examples.</li>
+        <li>Calls out <strong>data boundaries</strong> (NDA content, partner data) explicitly.</li>
+        <li>Splits into <strong>core + optional</strong> so non-coders can stop at the value plateau.</li>
+      </ul>
+      <p class="section-sub" style="margin-top:18px;">The source course is referenced where it goes deeper than we need to.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <p>Maintained by the EMEA Agentic AI vTeam · Adapted from <a href="https://github.com/microsoft/copilot-cli-for-beginners" target="_blank" rel="noopener">github.com/microsoft/copilot-cli-for-beginners</a> (MIT) · <a href="../">cli-intro-share home</a></p>
+  </footer>
+
+</body>
+</html>

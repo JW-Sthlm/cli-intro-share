@@ -1,4 +1,4 @@
-# Module 0: Why CLI for partner work
+# Why CLI for partner work
 
 > ⏱️ **Estimated time:** 10 min reading
 > 🎯 **You'll be able to:** decide whether this course is for you, and what you can realistically do with the CLI in your job.
@@ -13,15 +13,15 @@ That's the whole pitch. The rest of this module is "is that actually useful for 
 
 ---
 
-## Two paths through this course
+## Two ways to use this course
 
-📖 **Track A: Use it.** You talk to the CLI. Drop files in. Get answers. Get drafts. Skills and agents that other people built do the heavy lifting. You never see code. **~90 minutes total** (M0–M4).
+📖 **Use it (lessons 1–5, ~90 minutes).** You talk to the CLI. Drop files in. Get answers. Get drafts. Skills and agents that other people built do the heavy lifting. You never see code.
 
-🔧 **Track B: Make stuff with it.** Same CLI. Now you build your own agents, your own skills, your own little tools. You still don't write code. You describe what you want, the CLI builds it, you redirect when it's wrong, you ship when it's right. **~3 hours total** (M0–M7).
+🔧 **Make stuff with it (lessons 6–8, +~90 minutes).** Same CLI. Now you build your own agents, your own skills, your own little tools. You still don't write code. You describe what you want, the CLI builds it, you redirect when it's wrong, you ship when it's right.
 
-### Track B is not "for the techy people"
+### The optional lessons aren't "for the techy people"
 
-It's for anyone tired of doing the same thing every Monday morning. Anyone who's ever thought "there should be a tool that does this." Anyone who watched a colleague spin up an HTML deck in 10 minutes and wondered how.
+They're for anyone tired of doing the same thing every Monday morning. Anyone who's ever thought "there should be a tool that does this." Anyone who watched a colleague spin up an HTML deck in 10 minutes and wondered how.
 
 The barrier used to be coding. Now the barrier is having the idea and 30 minutes.
 
@@ -34,17 +34,17 @@ You can build:
 
 You never see the code. You think, you talk, you iterate. The CLI handles the rest.
 
-### Which one?
+### Which path?
 
-| You want... | Pick |
-|-------------|------|
-| Results today, no time to invest | **Track A** |
-| To stop repeating yourself | **Track B** |
-| To finally build that tool you always wished existed | **Track B** |
-| To support a partner conversation Friday and that's it | **Track A** |
-| Not sure | **Track A first.** If by the end of M2 you're thinking "I want this thing to remember my partners and my templates," you're already ready for B. |
+| You want... | Stop at |
+|-------------|---------|
+| Results today, no time to invest | After lesson 5 |
+| To stop repeating yourself | Keep going through 8 |
+| To finally build that tool you always wished existed | Keep going through 8 |
+| To support a partner conversation Friday and that's it | After lesson 5 |
+| Not sure | After lesson 5. If by then you're thinking "I want this to remember my partners and my templates," you're ready for the rest. |
 
-Both tracks use the same CLI. Track B just adds the moves you make once you're tired of repeating yourself.
+Both paths use the same CLI. Lessons 6–8 just add the moves you make once you're tired of repeating yourself.
 
 ---
 
@@ -57,9 +57,9 @@ Both tracks use the same CLI. Track B just adds the moves you make once you're t
 | Read a 12-page partner RFP, then write a 1-page summary | Drop the RFP in a folder, ask "summarize for an account exec" |
 | Open Outlook, scroll the last week, write a partner update | Ask "summarize my emails with Contoso this month" via M365 MCP |
 | Click through PMX to remind yourself what's open with a partner | Ask "what PMX projects do I have with Contoso" via PMX MCP |
-| Draft the same QBR template for the 4th time this quarter | Have a Skill that generates the skeleton (Track B) |
+| Draft the same QBR template for the 4th time this quarter | Have a Skill that generates the skeleton (optional lessons 6–8) |
 | Pull data from your inbox, calendar, and a CSV into one update | One CLI session, all three sources, finished draft |
-| Build an internal tool that's been on your wish list for 18 months | Describe it, iterate, ship it (Track B) |
+| Build an internal tool that's been on your wish list for 18 months | Describe it, iterate, ship it (optional lessons 6–8) |
 
 ---
 
@@ -125,21 +125,19 @@ The CLI sends what you give it to a Copilot endpoint. Treat it the same way you 
 
 The CLI can *read* a lot. To *change* anything (send an email, update a calendar, modify a file) it asks you first. You stay in the driver's seat.
 
-🔧 **Track B caveat:** when you build agents and pipelines you can grant some operations to run automatically. We'll cover that explicitly in M5.
+🔧 **Heads-up for the optional lessons:** when you build agents and pipelines you can grant some operations to run automatically. We'll cover that explicitly in Custom AI agents.
 
 </details>
 
 ---
 
-## ✅ You're ready for M1 if you can answer these
+## ✅ You're ready for Setup, the lazy way if you can answer these
 
-1. What does Track A let you do? *(talk, ask, get drafts, never see code)*
-2. What does Track B add on top? *(build your own agents, skills, mini-tools, still no coding)*
+1. What does the *use it* path let you do? *(talk, ask, get drafts, never see code)*
+2. What does the *make stuff* path add on top? *(build your own agents, skills, mini-tools, still no coding)*
 3. Name two things this is NOT. *(VS Code Copilot; M365 Copilot; autonomous AI)*
 4. What's one thing in your week that this could replace? *(your answer here)*
 5. What's one thing you should stop and think about before pasting into the CLI? *(NDA content, credentials, customer PII)*
 
 ---
-
-## 👉 Next: [Module 1: Setup, the lazy way](../m1-setup/README.md)
 

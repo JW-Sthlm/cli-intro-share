@@ -1,4 +1,4 @@
-# Module 1: Setup, the lazy way
+# Setup, the lazy way
 
 > ⏱️ **Estimated time:** 15 min (Express path), 30 min (Manual path)
 > 🎯 **You'll be able to:** open `copilot` in a terminal, talk to it, and have it answer.
@@ -9,11 +9,11 @@
 
 📖 The lazy path is:
 
-1. Go to [`v2/pre-work/setup-guide.md`](../../../pre-work/setup-guide.md).
+1. Go to [`pre-work/setup-guide.md`](../pre-work/setup-guide.md).
 2. Pick **Option A: Express** in Step 1.
-3. Run [`pre-work/verify.ps1`](../../../pre-work/verify.ps1) at the end.
+3. Run [`pre-work/verify.ps1`](../pre-work/verify.ps1) at the end.
 
-If verify reports all 8 checks pass, you're done. Skip to **Module 2**.
+If verify reports all 8 checks pass, you're done. Skip to **Your first conversations**.
 
 If something fails, read on.
 
@@ -110,7 +110,7 @@ If you see a username ending in `_microsoft` (like `jwallquist_microsoft`), that
 
 If you don't see one, you might not be enrolled yet. Open a Teams chat with your manager or your IT sponsor and ask "do I have a Microsoft GitHub EMU account?". They'll point you at the request form.
 
-For most of this course (Track A, modules 0–4) you can survive with just your personal account. The EMU is only needed when you install PMX MCP in M4.
+For most of this course (lessons 1–5) you can survive with just your personal account. The EMU is only needed when you install PMX MCP in MCP power-ups.
 
 </details>
 
@@ -120,7 +120,7 @@ For most of this course (Track A, modules 0–4) you can survive with just your 
 
 📖 If you don't write code professionally, this is for you.
 
-The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../../../pre-work/express-setup.ps1)) that runs `winget install` 5 times. That's the whole script. You can read it in 30 seconds. It does *not* sign you into anything (logins stay manual, that's intentional).
+The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../pre-work/express-setup.ps1)) that runs `winget install` 5 times. That's the whole script. You can read it in 30 seconds. It does *not* sign you into anything (logins stay manual, that's intentional).
 
 **Why use it:** you don't have to remember 5 separate winget commands.
 **Why we kept it transparent:** non-coders are correctly trained "don't run random PowerShell from the internet." This script lives in our repo, is short, is readable. Open it before running.
@@ -247,7 +247,7 @@ This is the same pattern Netflix uses to log into your TV. Safe, standard, and m
 
 </details>
 
-<!-- PMX MCP install is covered in M4. The marketplace path (`copilot plugin marketplace add gim-home/pmx-mcp`) means PMX no longer goes through the "Where do you want to install this MCP server?" menu prompt. The menu still appears for GitHub and M365 MCP installs done via Copilot CLI's prompt-based flow, answer is "Copilot CLI" (option 2 in current builds), validation pending. -->
+<!-- PMX MCP install is covered in MCP power-ups. The marketplace path (`copilot plugin marketplace add gim-home/pmx-mcp`) means PMX no longer goes through the "Where do you want to install this MCP server?" menu prompt. The menu still appears for GitHub and M365 MCP installs done via Copilot CLI's prompt-based flow, answer is "Copilot CLI" (option 2 in current builds), validation pending. -->
 
 ---
 
@@ -281,19 +281,17 @@ So: try it in Codespaces if you want a 5-min taste, but install locally for real
 | verify.ps1 says GitHub auth failed but you're logged in | Old verify script | Pull the latest cli-intro. Known bug, fixed in p12. |
 | `winget install` denied | IT policy | Use Manual path or contact IT |
 | "Running scripts is disabled" | PowerShell execution policy | See the foldable in the Express section above |
-| Anything else | (varies) | [troubleshooting.md](../../../reference/troubleshooting.md) |
+| Anything else | (varies) | [troubleshooting.md](../reference/troubleshooting.md) |
 
 </details>
 
 ---
 
-## ✅ You're ready for M2 if
+## ✅ You're ready for Your first conversations if
 
 - `copilot` opens without errors
 - You can type "say hello" inside copilot and get a response
 - `verify.ps1` reports all 8 checks pass
 
 ---
-
-## 👉 Next: [Module 2: Your first conversations](../m2-first-conversations/README.md)
 
