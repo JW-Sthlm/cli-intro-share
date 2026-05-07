@@ -1,6 +1,6 @@
 # Setup, the lazy way
 
-> ⏱️ **Estimated time:** 15 min (Express path), 30 min (Manual path)
+> ⏱️ **Estimated time:** 15–30 min, depending on what's already installed and how comfortable you are with the terminal
 > 🎯 **You'll be able to:** open `copilot` in a terminal, talk to it, and have it answer.
 
 ---

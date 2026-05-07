@@ -65,7 +65,7 @@ LESSONS: list[Lesson] = [
         eyebrow="Get unstuck",
         time="15–30 min",
         outcome="Working CLI on your laptop with the right accounts wired up.",
-        description="Get a working CLI on your laptop in 15 minutes via the Express path. Manual fallback when something snags.",
+        description="Get a working CLI on your laptop in 15–30 minutes via the Express path. Manual fallback when something snags.",
     ),
     Lesson(
         slug="your-first-conversations",
