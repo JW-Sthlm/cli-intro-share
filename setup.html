@@ -435,16 +435,10 @@
 
     <div class="tip"><strong>✅ Pass:</strong> Copilot returns your next meeting and a GitHub repo. Both M365 and GitHub are alive.</div>
 
-    <p>When done, leave Copilot CLI back to PowerShell:</p>
-    <pre data-shell="copilot"><code>/exit</code></pre>
-
     <h3>3b. Install PMX</h3>
     <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see — that's why we logged that account in too back in Step 2b. Now Copilot CLI will orchestrate the install: switch the active <code>gh</code> account to your EMU, install PMX, switch back to personal.</p>
 
-    <p>Launch Copilot CLI:</p>
-    <pre><code>copilot</code></pre>
-
-    <p>Inside Copilot CLI, paste this prompt:</p>
+    <p><strong>Stay inside Copilot CLI</strong> from 3a — no need to exit and relaunch between steps. Paste this prompt next:</p>
     <pre data-shell="copilot"><code>Install the PMX MCP server for me. I have two GitHub accounts known to `gh` — my personal one and my Microsoft EMU (username ends in `_microsoft`).
 
 1. Run `gh auth status` to confirm both accounts are present and note their usernames.
