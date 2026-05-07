@@ -423,22 +423,31 @@
       </div>
     </details>
 
-    <h3>3a. Set up M365</h3>
+    <h3>3a. Install M365 (WorkIQ)</h3>
+    <p>The M365 capabilities (Outlook, Teams, Calendar, SharePoint) ship in a single plugin called <strong>WorkIQ</strong>, available in the default <code>copilot-plugins</code> marketplace. Copilot CLI will install it for you.</p>
+
     <p>Launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
     <p>Inside Copilot CLI, paste this prompt:</p>
-    <pre data-shell="copilot"><code>Set up M365 capabilities (Outlook, Teams, Calendar, SharePoint) in my Copilot CLI. If anything is already installed, just confirm it. Then run a quick test — fetch my next calendar meeting and one of my recent GitHub repos.</code></pre>
+    <pre data-shell="copilot"><code>Install the WorkIQ plugin for me. It gives me Outlook, Teams, Calendar, and SharePoint tools.
 
-    <p>Copilot will install whatever's missing, then run the tests. The GitHub test confirms the built-in GitHub MCP server is working too.</p>
+1. Run `copilot plugin install workiq@copilot-plugins`.
+2. If WorkIQ asks me to accept an EULA, stop and tell me — I need to confirm myself.
+3. When the install finishes, tell me to run `/restart` so the new tools register.
+
+If the install fails, stop and tell me what went wrong — don't try alternate paths or hand-edit `mcp.json`.</code></pre>
 
     <div class="warn"><strong>⚠️ If Copilot asks <em>"Where do you want to configure these MCP servers?"</em></strong> — pick <strong>2. Copilot CLI</strong>. The other options configure MCP for VS Code's Copilot Chat or other tools, not your local CLI.</div>
 
-    <div class="tip"><strong>✅ Pass:</strong> Copilot returns your next meeting and a GitHub repo. Both M365 and GitHub are alive.</div>
+    <p>When Copilot tells you the install is done, restart so the new tools register (preserves your session, stays inside Copilot CLI):</p>
+    <pre data-shell="copilot"><code>/restart</code></pre>
+
+    <div class="tip"><strong>✅ Pass:</strong> No errors during install, <code>/restart</code> completes cleanly. We'll verify M365 actually works in Step 4.</div>
 
     <h3>3b. Install PMX</h3>
     <p>PMX lives in <code>gim-home/pmx-mcp</code>, which only your <code>_microsoft</code> EMU account can see — that's why we logged that account in too back in Step 2b. Now Copilot CLI will orchestrate the install: switch the active <code>gh</code> account to your EMU, install PMX, switch back to personal.</p>
 
-    <p><strong>Stay inside Copilot CLI</strong> from 3a — no need to exit and relaunch between steps. Paste this prompt next:</p>
+    <p><strong>Stay inside Copilot CLI</strong> from 3a — no need to drop back to PowerShell between sub-steps. Paste this prompt next:</p>
     <pre data-shell="copilot"><code>Install the PMX MCP server for me. I have two GitHub accounts known to `gh` — my personal one and my Microsoft EMU (username ends in `_microsoft`).
 
 1. Run `gh auth status` to confirm both accounts are present and note their usernames.
@@ -528,7 +537,7 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
           <strong>MCP servers and plugins are loaded</strong>
           <p style="margin: 4px 0 0; font-size: 13px; color: var(--fg-muted);">Inside Copilot CLI, type:</p>
           <pre data-shell="copilot"><code>/env</code></pre>
-          <span class="check-pass">✅ PMX listed under MCP servers; Outlook / Teams / Calendar listed under plugins (GitHub MCP is built-in)</span>
+          <span class="check-pass">✅ PMX listed under MCP servers; WorkIQ listed under plugins (provides Outlook, Teams, Calendar, SharePoint). GitHub MCP is built-in.</span>
         </div>
       </li>
       <li>
