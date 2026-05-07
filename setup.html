@@ -448,14 +448,12 @@
 5. Switch the active gh account back to my personal one.
 6. Run `gh auth status` again to confirm my personal account is now active.
 
-If any step fails, stop and tell me what went wrong — don't continue. When everything succeeds, tell me to type `/exit` and run `copilot` again so the new MCP server registers.</code></pre>
+If any step fails, stop and tell me what went wrong — don't continue. When everything succeeds, tell me to run `/restart` so the new MCP server registers.</code></pre>
 
-    <p>Copilot will run each shell command, switching the active <code>gh</code> account as it goes. When it finishes, it will tell you to relaunch.</p>
+    <p>Copilot will run each shell command, switching the active <code>gh</code> account as it goes. When it finishes, it will tell you to restart.</p>
 
-    <p>Exit Copilot CLI back to PowerShell:</p>
-    <pre data-shell="copilot"><code>/exit</code></pre>
-    <p>Then in PowerShell, launch Copilot CLI again so the new MCP server registers:</p>
-    <pre><code>copilot</code></pre>
+    <p>Restart Copilot CLI so it picks up the new MCP server (this preserves your session, no need to drop back to PowerShell):</p>
+    <pre data-shell="copilot"><code>/restart</code></pre>
 
     <div class="warn"><strong>⚠️ Skipped 2b (no EMU account)?</strong> Skip 3b too. Only PMX needs the EMU account, and we can demo PMX together at the session.</div>
 
