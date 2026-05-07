@@ -107,6 +107,12 @@
   .success ul { list-style: none; padding: 0; margin: 16px 0 0; display: inline-flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
   .success li { font-size: 14px; }
 
+  /* What's next options */
+  .next-steps { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; }
+  .next-steps > li { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .next-steps > li > strong { display: block; font-size: 15px; color: var(--fg); margin-bottom: 4px; }
+  .next-steps > li > p { margin: 0; font-size: 14px; color: var(--fg-muted); line-height: 1.55; }
+
   /* Footer */
   .footer { text-align: center; padding-top: 24px; }
   .footer a { display: inline-block; color: var(--accent); font-weight: 600; font-size: 15px; text-decoration: none; padding: 10px 24px; border: 2px solid var(--accent); border-radius: 999px; transition: background .15s, color .15s; }
@@ -464,6 +470,9 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
     <p>Restart Copilot CLI so it picks up the new MCP server (this preserves your session, no need to drop back to PowerShell):</p>
     <pre data-shell="copilot"><code>/restart</code></pre>
 
+    <p>When the restart completes, leave Copilot CLI back to PowerShell — Step 4 starts in the regular shell:</p>
+    <pre data-shell="copilot"><code>/exit</code></pre>
+
     <div class="warn"><strong>⚠️ Skipped 2b (no EMU account)?</strong> Skip 3b too. Only PMX needs the EMU account, and we can demo PMX together at the session.</div>
 
     <details class="explainer">
@@ -554,6 +563,44 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
     <div class="warn"><strong>⚠️ Something not working?</strong> Don't stress. We'll have 5 minutes at the start of the session to troubleshoot. But the more you can get done now, the more hands-on time you'll have.</div>
   </div>
 
+  <!-- Success -->
+  <div class="success">
+    <div class="emoji">🎉</div>
+    <h2>You're ready!</h2>
+    <p>All set for the session. Here's what to bring:</p>
+    <ul>
+      <li>💻 Laptop with setup complete</li>
+      <li>⚡ PowerShell open and ready</li>
+      <li>🧠 Curiosity — no coding skills needed</li>
+    </ul>
+  </div>
+
+  <!-- What's next -->
+  <div class="step" id="next-steps">
+    <span class="step-number">What's next</span>
+    <h2>Pick one (or all)</h2>
+    <p>Setup is the runway, not the flight. The fastest way to make Copilot CLI stick is to actually use it.</p>
+
+    <ul class="next-steps">
+      <li>
+        <strong>🧪 Try the practice exercises</strong>
+        <p>Three short exercises on the <a class="inline" href="index.html">session overview</a>. Get a feel for the prompt patterns before the live session.</p>
+      </li>
+      <li>
+        <strong>💼 Use it on real work</strong>
+        <p>Open a project folder. Ask Copilot to handle today's email triage, prep your calendar for tomorrow, or run a PMX hygiene check. Real tasks, real friction, real reps.</p>
+      </li>
+      <li>
+        <strong>🎤 Just show up</strong>
+        <p>Bring your questions. We'll work through real scenarios together at the session, no homework required.</p>
+      </li>
+      <li>
+        <strong>📚 Go deeper</strong>
+        <p>The <a class="inline" href="course/">Copilot CLI course for partner roles</a> walks through the operational workflows end-to-end. For a broader, code-leaning intro, GitHub's official <a class="inline" href="https://gh.io/copilot-cli-course" target="_blank">Copilot CLI for Beginners</a> is excellent.</p>
+      </li>
+    </ul>
+  </div>
+
   <!-- Troubleshooting -->
   <div class="step" id="troubleshooting">
     <span class="step-number">Troubleshooting</span>
@@ -571,24 +618,6 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
       <tr><td>PMX install: <em>"403 Write access to repository not granted"</em></td><td>EMU is logged in but personal is still active. Run <code>gh auth status</code>, find your <code>_microsoft</code> username, then <code>gh auth switch --user YOUR_EMU_USERNAME</code>. Verify with <code>gh auth status</code> that the EMU line shows <em>"Active account: true"</em>, then re-run the marketplace commands.</td></tr>
       <tr><td>MCP servers missing in <code>/env</code></td><td>Check that <code>mcp-config.json</code> is in <code>~\.copilot\</code> and is valid JSON</td></tr>
     </table>
-  </div>
-
-  <!-- Success -->
-  <div class="success">
-    <div class="emoji">🎉</div>
-    <h2>You're ready!</h2>
-    <p>All set for the session. Here's what to bring:</p>
-    <ul>
-      <li>💻 Laptop with setup complete</li>
-      <li>⚡ PowerShell open and ready</li>
-      <li>🧠 Curiosity — no coding skills needed</li>
-    </ul>
-  </div>
-
-  <!-- Self-paced -->
-  <div class="step" style="text-align:center;">
-    <p style="margin:0 0 8px;"><strong>Want to go deeper after the session?</strong></p>
-    <p style="margin:0;font-size:14px;color:var(--fg-muted);">Official beginner course (~2 hours): <a class="inline" href="https://jamesmontemagno.github.io/copilot-cli-for-beginners/" target="_blank">Copilot CLI for Beginners</a></p>
   </div>
 
   <!-- Footer -->
