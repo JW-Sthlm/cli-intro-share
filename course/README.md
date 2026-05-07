@@ -1,6 +1,6 @@
 # Copilot CLI: self-service course for Microsoft partner roles
 
-A self-paced version of GitHub's [Copilot CLI for Beginners](https://jamesmontemagno.github.io/copilot-cli-for-beginners/), adapted for **Microsoft's partner organization** (PSA, PTS, PDM, PSS, PSAM, GBB, CSA, and anyone else working with partners every day).
+A self-paced version of GitHub's [Copilot CLI for Beginners](https://gh.io/copilot-cli-course), adapted for **Microsoft's partner organization** (PSA, PTS, PDM, PSS, PSAM, GBB, CSA, and anyone else working with partners every day).
 
 The participant experience lives at **[the course landing page](index.html)**. This README is the editable overview for anyone browsing the source.
 
@@ -66,7 +66,7 @@ The last three lessons add the build-stuff-with-it skills: custom agents, reusab
 
 ## How this differs from the GitHub original
 
-The [GitHub original](https://jamesmontemagno.github.io/copilot-cli-for-beginners/) is excellent, but built for **software developers** working on a Python book app. This version:
+The [GitHub original](https://gh.io/copilot-cli-course) is excellent, but built for **software developers** working on a Python book app. This version:
 
 - Uses **partner work scenarios** throughout (RFPs, briefings, vTeam updates, PMX projects)
 - Adds the **EMU/personal account dance** that's specific to Microsoft

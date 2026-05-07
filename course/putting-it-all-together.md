@@ -356,7 +356,7 @@ That's the bar.
 - **Ship 3 pipelines** for your real recurring tasks. Most of them will be small.
 - **Share at least one** with the vTeam. Force-multiplier moment.
 - **Read other people's skills** in the team library. Steal patterns.
-- **Watch the source course** for advanced patterns: [GitHub Copilot CLI for Beginners](https://jamesmontemagno.github.io/copilot-cli-for-beginners/).
+- **Watch the source course** for advanced patterns: [GitHub Copilot CLI for Beginners](https://gh.io/copilot-cli-course).
 
 When new MCP servers ship (and they will), the playbook is the same: install, sketch the pipeline, build the agent/skill, iterate.
 

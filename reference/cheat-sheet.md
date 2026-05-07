@@ -141,7 +141,7 @@ open questions, risks, and next steps.
 
 ## Self-Study Resources
 
-- **Beginner course (2h):** https://jamesmontemagno.github.io/copilot-cli-for-beginners/
+- **Beginner course (2h):** https://gh.io/copilot-cli-course
 - **Course repo:** https://github.com/github/copilot-cli-for-beginners
 - **Official docs:** https://docs.github.com/en/copilot/how-tos/copilot-cli
 - **Internal portal:** https://copilot.github.microsoft.com/

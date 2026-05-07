@@ -21,7 +21,7 @@ Use the skill once this week on real work. Then improve the trigger or output fo
 | Resource | What it is | Time |
 |----------|-----------|------|
 | **[Self-service course (this repo)](../course/README.md)** | **Partner-flavored course adapted from GitHub's beginner course. Two tracks: Business (📖) or Technical (🔧).** | **90 min – 3h** |
-| [Copilot CLI for Beginners (source)](https://jamesmontemagno.github.io/copilot-cli-for-beginners/) | The original GitHub course this is adapted from — developer-focused, 8 chapters, Python sample app | ~2 hours |
+| [Copilot CLI for Beginners (source)](https://gh.io/copilot-cli-course) | The original GitHub course this is adapted from — developer-focused, 8 chapters, Python sample app | ~2 hours |
 | [Course repo (Codespaces-ready)](https://github.com/github/copilot-cli-for-beginners) | Code, exercises, and a sample app to practice with | Self-paced |
 | [Copilot CLI Deep Dive Workshop](https://github.com/copilot-dev-days/copilot-cli-deep-dive-workshop) | Dev Days workshop with slides and exercises | ~2 hours |
 
