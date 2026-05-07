@@ -367,16 +367,19 @@
     </details>
 
     <h3>2c. Copilot CLI</h3>
-    <p>Now launch Copilot CLI:</p>
+    <p>Run this in PowerShell to launch Copilot CLI:</p>
     <pre><code>copilot</code></pre>
-    <p>You'll see an animated banner. Inside Copilot CLI, type:</p>
+    <p>You'll see an animated banner. You're now <strong>inside Copilot CLI</strong>, not PowerShell. The next two prompts run here:</p>
     <pre data-shell="copilot"><code>/login</code></pre>
     <p>A browser window opens — sign in with your <strong>personal</strong> GitHub account again. Once logged in, test with a simple prompt:</p>
     <pre data-shell="copilot"><code>What day is it today?</code></pre>
 
-    <div class="tip"><strong>✅ Pass:</strong> You get an answer back. Type <code>/exit</code> to leave for now.</div>
+    <div class="tip"><strong>✅ Pass:</strong> You get an answer back.</div>
 
-    <div class="warn"><strong>⚠️ Login fails or times out?</strong> Make sure you're on the corporate network or VPN. Verify your Copilot subscription at <a class="inline" href="https://github.com/settings/copilot" target="_blank">github.com/settings/copilot</a>.</div>
+    <p>Then leave Copilot CLI to come back to PowerShell. <code>/exit</code> is a Copilot command, type it inside the running session:</p>
+    <pre data-shell="copilot"><code>/exit</code></pre>
+
+    <div class="warn"><strong>⚠️ Login fails or times out?</strong>Make sure you're on the corporate network or VPN. Verify your Copilot subscription at <a class="inline" href="https://github.com/settings/copilot" target="_blank">github.com/settings/copilot</a>.</div>
 
     <details class="explainer">
       <summary>Why am I logging in twice — gh AND copilot?</summary>
@@ -432,7 +435,7 @@
 
     <div class="tip"><strong>✅ Pass:</strong> Copilot returns your next meeting and a GitHub repo. Both M365 and GitHub are alive.</div>
 
-    <p>When done, leave Copilot CLI:</p>
+    <p>When done, leave Copilot CLI back to PowerShell:</p>
     <pre data-shell="copilot"><code>/exit</code></pre>
 
     <h3>3b. Install PMX</h3>
@@ -455,9 +458,9 @@ If any step fails, stop and tell me what went wrong — don't continue. When eve
 
     <p>Copilot will run each shell command, switching the active <code>gh</code> account as it goes. When it finishes, it will tell you to relaunch.</p>
 
-    <p>Exit Copilot CLI:</p>
+    <p>Exit Copilot CLI back to PowerShell:</p>
     <pre data-shell="copilot"><code>/exit</code></pre>
-    <p>And start it again so the new MCP server registers:</p>
+    <p>Then in PowerShell, launch Copilot CLI again so the new MCP server registers:</p>
     <pre><code>copilot</code></pre>
 
     <div class="warn"><strong>⚠️ Skipped 2b (no EMU account)?</strong> Skip 3b too. Only PMX needs the EMU account, and we can demo PMX together at the session.</div>
