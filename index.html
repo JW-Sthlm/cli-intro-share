@@ -34,6 +34,28 @@
   .meta strong{color:var(--text);}
   a.inline{color:var(--purple);text-decoration:none;}
   a.inline:hover{text-decoration:underline;}
+
+  /* Why-CLI explainer */
+  .explainer{background:var(--panel);border:1px solid var(--border);border-radius:12px;margin:0 0 40px;overflow:hidden;}
+  .explainer summary{padding:18px 22px;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:700;font-size:15px;color:var(--text);}
+  .explainer summary::-webkit-details-marker{display:none;}
+  .explainer summary::after{content:"▸";color:var(--purple);font-size:14px;transition:transform .2s ease;flex-shrink:0;}
+  .explainer[open] summary::after{transform:rotate(90deg);}
+  .explainer summary:hover{background:rgba(137,87,229,.06);}
+  .explainer-body{padding:6px 22px 22px;border-top:1px solid var(--border);font-size:14.5px;line-height:1.6;}
+  .explainer-body p{margin:14px 0;color:var(--text);}
+  .explainer-body .lede{font-size:16px;font-weight:600;margin-top:18px;}
+  .explainer-body .punch{font-size:20px;font-weight:800;color:var(--purple);text-align:center;padding:16px 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);margin:22px 0;letter-spacing:-.015em;line-height:1.25;}
+  .explainer-body .bullets-intro{font-weight:600;margin:18px 0 6px;}
+  .explainer-body ul.bullets{padding-left:20px;margin:0 0 16px;}
+  .explainer-body ul.bullets li{margin:10px 0;color:var(--muted);}
+  .explainer-body ul.bullets li strong{color:var(--text);}
+  .explainer-body code{background:rgba(137,87,229,.12);color:var(--purple);padding:1px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.88em;}
+  .explainer-body .taste{margin-top:18px;padding:14px 16px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;}
+  .explainer-body .taste-label{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+  .explainer-body .taste p{margin:6px 0;color:var(--text);}
+  .explainer-body .taste em{color:var(--text);font-style:italic;}
+  .explainer-body .taste-note{font-size:13px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -41,6 +63,33 @@
   <span class="tag">60 min · hands-on workshop</span>
   <h1>Your Operational <span class="accent">Copilot</span></h1>
   <p class="sub">From M365 help to repeatable, tool-connected partner workflows. Everything you need for the session is here.</p>
+
+  <details class="explainer">
+    <summary>Why a CLI when I already have M365 Copilot?</summary>
+    <div class="explainer-body">
+      <p class="lede">Short answer: different beast. You'll want both.</p>
+
+      <p>M365 Copilot lives inside Outlook, Teams, Word. It reads what's in front of it and answers. If it's not in M365, it doesn't see it.</p>
+
+      <p>Copilot CLI lives on your machine, in your terminal. It can do anything you can do at that machine. Open a file. Edit it. Save it somewhere else. Run a command. Hit an API. Open a browser. Call the cloud. Chain all of that together in one prompt.</p>
+
+      <p class="punch">It has hands. M365 Copilot has eyes.</p>
+
+      <p class="bullets-intro">What that unlocks:</p>
+      <ul class="bullets">
+        <li><strong>Reach.</strong> Plug in anything with an MCP server. PMX, GitHub, Azure, your own scripts, partner APIs. New ones land every week. M365 Copilot is fixed to what Microsoft ships.</li>
+        <li><strong>Execution, not retrieval.</strong> "Pull last week's PMX projects, draft a one-pager for each, save to OneDrive." Ask once. The whole chain runs. M365 Copilot can find and summarize. The CLI can do the work.</li>
+        <li><strong>Every other CLI for free.</strong> It already speaks <code>gh</code>, <code>az</code>, <code>git</code>, <code>npm</code>, PowerShell, bash. You don't memorize syntax. You say what you want, it picks the tool.</li>
+        <li><strong>Where the real work lives.</strong> Your repos. Your scripts. Your files. Your terminal. No tab-switching. No re-uploading.</li>
+      </ul>
+
+      <div class="taste">
+        <span class="taste-label">Taste test</span>
+        <p><em>"Find my last three meetings with Contoso, summarize what we discussed, check their PMX project status, then draft a follow-up email for me to review before sending."</em></p>
+        <p class="taste-note">Calendar + PMX + Outlook + reasoning, chained in one prompt. M365 Copilot can't reach across all four. The CLI can.</p>
+      </div>
+    </div>
+  </details>
 
   <div class="section-label">Session materials</div>
   <div class="cards">
