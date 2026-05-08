@@ -10,8 +10,8 @@ The participant experience lives at **[the course landing page](index.html)**. T
 
 | You are... | Your day looks like... | Where to focus |
 |------------|------------------------|----------------|
-| **PDM, PSS, partner manager**, business-side PSA | Decks, briefings, partner emails, status updates, **Excel and Outlook all day**. You're not coding. | First five lessons (~90 min) |
-| **PTS, technical PSA, CSA, PSAM, GBB** | Architecture conversations, demos, customer technical reviews, occasional scripting and IaC | All eight lessons (~3h) |
+| **PDM, PSS, marketing, go-to-market, managers**, business-side PSA | Decks, briefings, partner emails, status updates, **Excel and Outlook all day**. You're not coding. | First five lessons (~90 min) |
+| **PTS, technical PSA, PSAM** | Architecture conversations, demos, customer technical reviews, occasional scripting and IaC | All eight lessons (~3h) |
 | Not sure | Start at the top. Decide after MCP power-ups whether to keep going. | First five, then optional |
 
 The first five lessons cover the talk-to-it skills. After that, you can drive 80% of partner-work CLI value.
