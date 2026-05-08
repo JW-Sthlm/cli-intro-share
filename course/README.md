@@ -1,6 +1,6 @@
 # Copilot CLI: self-service course for Microsoft partner roles
 
-A self-paced version of GitHub's [Copilot CLI for Beginners](https://gh.io/copilot-cli-course), adapted for **Microsoft's partner organization** (PSA, PTS, PDM, PSAM, PSS, plus marketing, go-to-market, managers, and anyone else working with partners every day).
+A self-paced version of GitHub's [Copilot CLI for Beginners](https://gh.io/copilot-cli-course), adapted for **Microsoft's partner organization**. For everyone in the partner org: tech, sales, business, marketing (PSA, PTS, PDM, PSAM, PSS, PMA, and similar), and their managers. Anyone who works with partners every day.
 
 The participant experience lives at **[the course landing page](index.html)**. This README is the editable overview for anyone browsing the source.
 
@@ -10,8 +10,8 @@ The participant experience lives at **[the course landing page](index.html)**. T
 
 | You are... | Your day looks like... | Where to focus |
 |------------|------------------------|----------------|
-| **PDM, PSS, PSAM, marketing, go-to-market, managers**, business-side PSA | Decks, briefings, partner emails, status updates, **Excel and Outlook all day**. You're not coding. | First five lessons (~90 min) |
-| **PTS, technical PSA** | Architecture conversations, demos, customer technical reviews, occasional scripting and IaC | All eight lessons (~3h) |
+| **Sales, business, marketing, managers, and business-side tech** (PDM, PSAM, PSS, PMA, business-side PSA) | Decks, briefings, partner emails, status updates, **Excel and Outlook all day**. You're not coding. | First five lessons (~90 min) |
+| **Technical roles that script** (PTS, PSA) | Architecture conversations, demos, customer technical reviews, occasional scripting and IaC | All eight lessons (~3h) |
 | Not sure | Start at the top. Decide after MCP power-ups whether to keep going. | First five, then optional |
 
 The first five lessons cover the talk-to-it skills. After that, you can drive 80% of partner-work CLI value.
