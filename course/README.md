@@ -1,6 +1,6 @@
 # Copilot CLI: self-service course for Microsoft partner roles
 
-A self-paced version of GitHub's [Copilot CLI for Beginners](https://gh.io/copilot-cli-course), adapted for **Microsoft's partner organization** (PSA, PTS, PDM, PSS, PSAM, GBB, CSA, and anyone else working with partners every day).
+A self-paced version of GitHub's [Copilot CLI for Beginners](https://gh.io/copilot-cli-course), adapted for **Microsoft's partner organization** (PSA, PTS, PDM, PSAM, PSS, plus marketing, go-to-market, managers, and anyone else working with partners every day).
 
 The participant experience lives at **[the course landing page](index.html)**. This README is the editable overview for anyone browsing the source.
 
