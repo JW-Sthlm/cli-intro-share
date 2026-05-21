@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operator Hour · Copilot CLI for partner work</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0D1117; --bg-2:#010409; --panel:#161B22; --border:#30363D; --text:#E6EDF3; --muted:#A6B0BC; --purple:#8957E5; --green:#3FB950; --amber:#D29922; --pink:#F778BA; --teal:#39D2C0; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Mona Sans',system-ui,sans-serif;background:var(--bg-2);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:800px;margin:0 auto;padding:64px 24px 96px;}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin:0 0 24px;letter-spacing:.04em;}
+  .crumb a{color:var(--muted);text-decoration:none;}
+  .crumb a:hover{color:var(--purple);}
+  .tag{display:inline-block;background:rgba(57,210,192,.1);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(57,210,192,.3);}
+  h1{font-size:44px;font-weight:900;letter-spacing:-.03em;margin:0 0 8px;line-height:1.05;}
+  h1 .accent{color:var(--teal);}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 40px;max-width:54ch;line-height:1.55;}
+  .section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:32px 0 12px;font-weight:600;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:0 0 12px;}
+  @media(max-width:640px){.cards{grid-template-columns:1fr;}}
+  .card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;}
+  .card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .card h2{font-size:18px;font-weight:700;margin:0 0 6px;color:var(--text);}
+  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5;}
+  .card .icon{font-size:24px;margin-bottom:10px;display:block;}
+  .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:10px;}
+  .card-tag.teal{color:var(--teal);background:rgba(57,210,192,.1);border:1px solid rgba(57,210,192,.25);}
+  .card-tag.amber{color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);}
+  .season{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px 0;margin:0 0 36px;}
+  .ep{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 24px;border-top:1px solid var(--border);}
+  .ep:first-child{border-top:0;}
+  .ep-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);letter-spacing:.04em;padding-top:2px;}
+  .ep-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 4px;}
+  .ep-desc{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
+  .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:36px;}
+  .meta strong{color:var(--text);}
+  a.inline{color:var(--teal);text-decoration:none;}
+  a.inline:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">← All resources</a></div>
+  <span class="tag">Weekly · Tuesdays 10:30 CET · Season 1</span>
+  <h1>Operator <span class="accent">Hour</span></h1>
+  <p class="sub">A weekly internal series for non-coders at Microsoft on AI-first ways of working in partner-facing roles. Six episodes, 45 minutes each, mess included. Bring one use case, leave with the next move.</p>
+
+  <div class="section-label">Start here this week</div>
+  <div class="cards">
+    <a class="card" href="use-case-finder.html">
+      <span class="icon">🎯</span>
+      <h2>Use Case Finder</h2>
+      <p>Paste this prompt into Copilot CLI. Five questions later you have a ranked list of personal use cases and one START HERE move for this week.</p>
+      <span class="card-tag teal">on-ramp · 5 min</span>
+    </a>
+    <a class="card" href="../course/">
+      <span class="icon">🎓</span>
+      <h2>Self-service course</h2>
+      <p>Eight lessons, self-paced. The full Copilot CLI course for partner roles. Work through it between episodes for depth.</p>
+      <span class="card-tag teal">self-paced</span>
+    </a>
+  </div>
+
+  <div class="section-label">Season 1: From Zero to Agent</div>
+  <div class="season">
+    <div class="ep"><div class="ep-date">Tue May 26</div><div><p class="ep-title">Start at zero. Find your first use case.</p><p class="ep-desc">Live run of the Use Case Finder on a volunteer. Otto debuts in the chat.</p></div></div>
+    <div class="ep"><div class="ep-date">Tue Jun 2</div><div><p class="ep-title">Decks that win the room.</p><p class="ep-desc">Brief, research, outline, slides, polish. Frontier-style HTML deck flow.</p></div></div>
+    <div class="ep"><div class="ep-date">Tue Jun 9</div><div><p class="ep-title">Reclaim your morning. Inbox + brief.</p><p class="ep-desc">Email triage and morning brief running on real (sanitised) traffic.</p></div></div>
+    <div class="ep"><div class="ep-date">Tue Jun 16</div><div><p class="ep-title">Prototypes that show, not tell.</p><p class="ep-desc">Customer Workshop Engine: research, working prototype, IaC handover.</p></div></div>
+    <div class="ep"><div class="ep-date">Tue Jun 23</div><div><p class="ep-title">Sound like yourself, at scale.</p><p class="ep-desc">Signal engine: session log to LinkedIn post in your voice.</p></div></div>
+    <div class="ep"><div class="ep-date">Tue Jun 30</div><div><p class="ep-title">Build the agent that runs Season 2.</p><p class="ep-desc">Reveal Otto's architecture. Hand the repo to the community.</p></div></div>
+  </div>
+
+  <div class="section-label">Format</div>
+  <div class="cards">
+    <a class="card" href="../" style="cursor:default;border-color:var(--border);" onclick="return false;">
+      <h2>5 + 20 + 10 + 5</h2>
+      <p>Five minutes on this week's move. Twenty minutes of live demo, mess included. Ten minutes AMA with Otto picking up chat. Five minutes on the one thing you take home this week.</p>
+    </a>
+    <a class="card" href="../" style="cursor:default;border-color:var(--border);" onclick="return false;">
+      <h2>Async friendly</h2>
+      <p>Recordings and recaps land here within a day. Miss a session, catch up at your own pace. The take-home challenge always works without the live session.</p>
+    </a>
+  </div>
+
+  <div class="meta">
+    <p><strong>Audience:</strong> EMEA EPS + GCPS. Drop in for any session. No prep required.</p>
+    <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank">LinkedIn</a></p>
+    <p><strong>Recordings + recaps:</strong> land in this folder after each episode.</p>
+  </div>
+</div>
+</body>
+</html>
