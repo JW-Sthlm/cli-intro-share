@@ -19,7 +19,12 @@
   .tag{display:inline-block;background:rgba(57,210,192,.1);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(57,210,192,.3);}
   h1{font-size:40px;font-weight:900;letter-spacing:-.03em;margin:0 0 8px;line-height:1.05;}
   h1 .accent{color:var(--teal);}
-  .sub{color:var(--muted);font-size:17px;margin:0 0 32px;max-width:60ch;line-height:1.55;}
+  .sub{color:var(--muted);font-size:17px;margin:0 0 28px;max-width:60ch;line-height:1.55;}
+
+  .runs-on{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 28px;}
+  .runs-on .pill{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:12.5px;color:var(--text);font-weight:500;}
+  .runs-on .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+
   .how{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:0 0 24px;}
   .how h2{font-size:14px;font-weight:700;color:var(--text);margin:0 0 10px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;}
   .how ol{margin:0;padding-left:22px;color:var(--muted);font-size:14.5px;line-height:1.7;}
@@ -32,9 +37,6 @@
   .copy-btn.ok{background:var(--green);color:#062611;}
 
   pre.prompt{background:#020409;border:1px solid var(--border);border-radius:10px;padding:22px 26px;color:#D5DEE8;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;margin:0 0 28px;}
-  pre.prompt .qline{color:var(--teal);font-weight:600;}
-  pre.prompt .hdr{color:var(--purple);font-weight:700;}
-  pre.prompt .bullet{color:var(--amber);}
 
   .next{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:0 0 16px;}
   .next h2{font-size:14px;font-weight:700;color:var(--text);margin:0 0 8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;}
@@ -51,16 +53,22 @@
   <div class="crumb"><a href="../">All resources</a> &nbsp;›&nbsp; <a href="./">Operator Hour</a> &nbsp;›&nbsp; Use Case Finder</div>
   <span class="tag">Episode 1 · On-ramp · ~5 min</span>
   <h1>Use Case <span class="accent">Finder</span></h1>
-  <p class="sub">Get from "I have this tool, now what" to a ranked list of personal use cases. Five questions, one START HERE move. Runs locally in your own CLI session. Nothing leaves your machine.</p>
+  <p class="sub">Get from "I have this powerful tool, now what" to a ranked list of personal use cases for this week. The prompt gathers context about you first (role, org, recent work), proposes a starter list, then sharpens with a few quick questions.</p>
+
+  <div class="runs-on">
+    <span class="pill"><span class="dot"></span>Copilot CLI</span>
+    <span class="pill"><span class="dot"></span>Clawpilot (web agent)</span>
+    <span class="pill"><span class="dot"></span>M365 Copilot Cowork</span>
+  </div>
 
   <div class="how">
     <h2>How to use</h2>
     <ol>
-      <li>Open <strong>Copilot CLI</strong> in your terminal. New folder, fresh session.</li>
+      <li>Open <strong>Copilot CLI</strong>, <strong>Clawpilot</strong>, or <strong>M365 Copilot Cowork</strong>. Any AI assistant with tools will do.</li>
       <li>Click <strong>Copy prompt</strong> below.</li>
-      <li>Paste into Copilot CLI. Hit enter.</li>
-      <li>Answer one question at a time. Honest answers, even the boring ones.</li>
-      <li>After five answers you get the ranked list and a copy-paste-ready prompt for the START HERE pick.</li>
+      <li>Paste and run. The agent will research you first (~60-90s), then show what it found.</li>
+      <li>Review the candidate list. Answer the three sharpening questions.</li>
+      <li>You get the ranked list and a copy-paste-ready prompt for the START HERE pick.</li>
     </ol>
   </div>
 
@@ -69,35 +77,61 @@
     <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">Copy prompt</button>
   </div>
 
-<pre class="prompt" id="prompt">You are my use case finder. Job: get me from "I have this tool, now what" to a ranked list of things I can actually do this week.
+<pre class="prompt" id="prompt">You are my use case finder. Your job: get me from "I have this powerful tool, now what" to a ranked list of personal use cases for this week, based on who I actually am and what I actually do.
 
-Ground rules.
+You can run inside Copilot CLI (with MCPs), Clawpilot (web agent), or M365 Copilot Cowork (chat agent). Use whatever tools are available in your environment.
 
-- One question at a time. Wait for my answer before the next.
-- Short questions. Plain language. No tool-speak.
-- After five answers, stop asking and produce the list.
+## Step 1. Gather context yourself. Don't make me type my CV.
 
-Ask in this order:
+Before asking me anything, use the tools you have:
 
-1. Walk me through a normal week. What do you actually spend time on?
-2. What three tasks do you push to Friday because you can't face them?
-3. What do you produce that looks the same every time but takes hours?
-4. Who do you write to most, and what about?
-5. What did you learn last quarter that you wish your team also knew?
+- Web / LinkedIn search for my name, role, and recent posts
+- GitHub: my repos, recent activity, organisations
+- M365 / Graph: my title, manager, frequent collaborators, kinds of files I touch, recurring meeting patterns
+- PMX or partner data: partners I am tied to, segment, region
+- Anything I already pasted into the session (signature, email, calendar invite)
 
-When I have answered all five, produce this output:
+Take 60-90 seconds. Be efficient. Then tell me what you found in two short lines, like:
 
-## Your top use cases
+> "You are a Partner Solution Architect at Microsoft Stockholm, Data and AI specialty, working with EMEA partners. Most active on AI-first content and partner enablement. Recent focus: Copilot CLI workshops, agentic AI library."
 
-Rank five to ten candidates. For each:
+If the tools returned nothing useful, fall back to Step 1b. Otherwise jump to Step 2.
 
-- Title (verb-led, four to seven words)
-- What it does (one sentence in my voice)
-- Why it lands for you (one sentence tying back to my answers)
+### Step 1b. Fallback if tools didn't help.
+
+Ask me three short questions only:
+
+1. What's your role and where do you sit (org, region)?
+2. What do you produce most weeks that takes hours?
+3. What do you push to Friday because you can't face it?
+
+Then continue from Step 2.
+
+## Step 2. Propose 5-8 candidates. Don't ask first.
+
+Based on what you learned, propose 5-8 candidate use cases for someone in my role and context. For each:
+
+- Title (verb-led, 4-7 words)
+- What it does (one sentence)
+- Why it fits you (specific to my role and what you found, not generic)
 - Effort (S / M / L)
 - Visible value (S / M / L)
 
-Then pick one and label it START HERE THIS WEEK. Give me the exact prompt I should paste into Copilot CLI to do the first version. Copy-paste ready. No placeholders. Use what I told you.
+Order them by your best guess of "satisfying win this week."
+
+## Step 3. Sharpen with three quick questions.
+
+After I see the candidates, ask:
+
+1. What surprises you on this list? (positive or negative is fine)
+2. What's one task you'd add that I missed?
+3. Which one would feel like the most satisfying win this week?
+
+Adjust the ranking and add or remove candidates based on my answers.
+
+## Step 4. Pick one. Hand me the next move.
+
+Pick the single best candidate. Label it START HERE THIS WEEK. Give me the exact prompt I should paste into Copilot CLI / Clawpilot / Cowork to do the first version. Copy-paste ready. No placeholders. Use my real context, not example data.
 
 End with one line: "If you want to go further, here is the next move." Then a follow-up prompt for the second iteration.</pre>
 
