@@ -48,6 +48,11 @@
   .meta strong{color:var(--text);}
   a.inline{color:var(--teal);text-decoration:none;}
   a.inline:hover{text-decoration:underline;}
+  .invite-note{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:rgba(57,210,192,.04);border:1px dashed rgba(57,210,192,.35);border-radius:10px;padding:16px 20px;margin:-12px 0 0;}
+  .invite-note .invite-icon{font-size:22px;line-height:1.1;padding-top:2px;}
+  .invite-note p{margin:0;}
+  .invite-note .invite-title{font-size:14px;font-weight:700;color:var(--text);margin:0 0 4px;}
+  .invite-note .invite-desc{font-size:13.5px;color:var(--muted);line-height:1.55;}
 </style>
 </head>
 <body>
@@ -97,6 +102,14 @@
     <div class="ep"><div class="ep-date">Tue Jun 16</div><div><p class="ep-title">Prototypes that show, not tell.</p><p class="ep-desc">Customer Workshop Engine: research, working prototype, IaC handover.</p></div></div>
     <div class="ep"><div class="ep-date">Tue Jun 23</div><div><p class="ep-title">Sound like yourself, at scale.</p><p class="ep-desc">Signal engine: session log to LinkedIn post in your voice.</p></div></div>
     <div class="ep"><div class="ep-date">Tue Jun 30</div><div><p class="ep-title">Build the agent that runs Season 2.</p><p class="ep-desc">Reveal Otto's architecture. Hand the repo to the community.</p></div></div>
+  </div>
+
+  <div class="invite-note">
+    <span class="invite-icon">🎟️</span>
+    <div>
+      <p class="invite-title">Not on the calendar invite?</p>
+      <p class="invite-desc">Anyone at Microsoft is welcome. <a class="inline" href="https://teams.microsoft.com/l/team/19%3Ar5cJ0CKN1kn-T3gjeTALqlLO-4Emu6CUjbVLBNophHg1%40thread.tacv2/conversations?groupId=5c2280c6-aa1c-4480-954c-958a2949d50e&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener">Join the cohort team</a> and post "add me", or email <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20%E2%80%94%20add%20me%20to%20the%20invite">the host</a>. You'll be on the list before next Tuesday.</p>
+    </div>
   </div>
 
   <div class="section-label">Format</div>
