@@ -31,12 +31,19 @@
   .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:10px;}
   .card-tag.teal{color:var(--teal);background:rgba(57,210,192,.1);border:1px solid rgba(57,210,192,.25);}
   .card-tag.amber{color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);}
-  .season{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px 0;margin:0 0 36px;}
-  .ep{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 24px;border-top:1px solid var(--border);}
+  .season{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:8px 0;margin:0 0 36px;overflow:hidden;}
+  .ep{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 24px;border-top:1px solid var(--border);color:inherit;text-decoration:none;transition:background-color .2s;}
   .ep:first-child{border-top:0;}
+  a.ep:hover{background:rgba(57,210,192,.04);}
   .ep-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);letter-spacing:.04em;padding-top:2px;}
   .ep-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 4px;}
   .ep-desc{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
+  .ep--published{background:linear-gradient(90deg,rgba(57,210,192,.08) 0%,rgba(57,210,192,.02) 55%,transparent 100%);box-shadow:inset 3px 0 0 var(--teal);}
+  a.ep--published:hover{background:linear-gradient(90deg,rgba(57,210,192,.14) 0%,rgba(57,210,192,.05) 55%,rgba(57,210,192,.01) 100%);}
+  .ep--published .ep-date{color:var(--teal);font-weight:600;}
+  .ep--published .ep-title{color:var(--text);}
+  .ep-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--teal);background:rgba(57,210,192,.12);border:1px solid rgba(57,210,192,.4);padding:3px 8px;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;margin-left:10px;vertical-align:2px;transition:background-color .2s,border-color .2s;}
+  a.ep--published:hover .ep-badge{background:rgba(57,210,192,.22);border-color:rgba(57,210,192,.7);}
   .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:36px;}
   .meta strong{color:var(--text);}
   a.inline{color:var(--teal);text-decoration:none;}
@@ -78,10 +85,10 @@
 
   <div class="section-label" id="season-1">Season 1: From Zero to Agent</div>
   <div class="season">
-    <a class="ep" href="s1e1/" style="text-decoration:none;color:inherit;display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 24px;border-top:0;transition:background-color .15s;" onmouseover="this.style.backgroundColor='rgba(57,210,192,.04)'" onmouseout="this.style.backgroundColor='transparent'">
+    <a class="ep ep--published" href="s1e1/">
       <div class="ep-date">Tue May 26</div>
       <div>
-        <p class="ep-title">Start at zero. Finish a hero. <span style="color:var(--teal);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;margin-left:6px;">recap →</span></p>
+        <p class="ep-title">Start at zero. Finish a hero. <span class="ep-badge">▶ Watch recap</span></p>
         <p class="ep-desc">Live run of the Use Case Finder on a volunteer. Otto debuts in the chat.</p>
       </div>
     </a>
