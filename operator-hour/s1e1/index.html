@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>S1E1 · Start at zero. Finish a hero. · Operator Hour</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0D1117; --bg-2:#010409; --panel:#161B22; --border:#30363D; --text:#E6EDF3; --muted:#A6B0BC; --purple:#8957E5; --green:#3FB950; --amber:#D29922; --pink:#F778BA; --teal:#39D2C0; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Mona Sans',system-ui,sans-serif;background:var(--bg-2);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:800px;margin:0 auto;padding:64px 24px 96px;}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin:0 0 24px;letter-spacing:.04em;}
+  .crumb a{color:var(--muted);text-decoration:none;}
+  .crumb a:hover{color:var(--teal);}
+  .tag{display:inline-block;background:rgba(57,210,192,.1);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(57,210,192,.3);}
+  h1{font-size:44px;font-weight:900;letter-spacing:-.03em;margin:0 0 12px;line-height:1.05;}
+  h1 .accent{color:var(--teal);}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 40px;max-width:54ch;line-height:1.55;}
+  .section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:36px 0 12px;font-weight:600;}
+  p{font-size:16px;color:var(--text);margin:0 0 16px;}
+  .recap p{color:#C9D1D9;}
+  .recap em{color:var(--teal);font-style:normal;font-weight:600;}
+  .recap strong{color:var(--text);}
+  .pull{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:16px 20px;margin:18px 0;font-size:15px;color:#C9D1D9;}
+  .pull .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:0 0 12px;}
+  @media(max-width:640px){.cards{grid-template-columns:1fr;}}
+  .card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;}
+  .card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .card h2{font-size:18px;font-weight:700;margin:0 0 6px;color:var(--text);}
+  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5;}
+  .card .icon{font-size:24px;margin-bottom:10px;display:block;}
+  .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:10px;}
+  .card-tag.teal{color:var(--teal);background:rgba(57,210,192,.1);border:1px solid rgba(57,210,192,.25);}
+  .card-tag.amber{color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);}
+  .card-tag.muted{color:var(--muted);background:rgba(166,176,188,.08);border:1px solid rgba(166,176,188,.18);}
+  .card.disabled{cursor:default;opacity:.55;}
+  .card.disabled:hover{border-color:var(--border);transform:none;box-shadow:none;}
+  .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:48px;}
+  .meta strong{color:var(--text);}
+  a.inline{color:var(--teal);text-decoration:none;}
+  a.inline:hover{text-decoration:underline;}
+  .takehome{background:linear-gradient(180deg,rgba(57,210,192,.08),rgba(57,210,192,.02));border:1px solid rgba(57,210,192,.3);border-radius:12px;padding:24px 26px;margin:0 0 16px;}
+  .takehome h3{margin:0 0 10px;font-size:18px;font-weight:800;color:var(--teal);letter-spacing:-.01em;}
+  .takehome p{margin:0 0 8px;font-size:15px;color:#C9D1D9;line-height:1.55;}
+  .takehome p:last-child{margin-bottom:0;}
+  .refrain{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-top:24px;font-style:italic;}
+  .refrain strong{color:var(--text);font-style:normal;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">← Operator Hour</a></div>
+  <span class="tag">S1 · Episode 1 · Tue May 26 2026</span>
+  <h1>Start at zero. <span class="accent">Finish a hero.</span></h1>
+  <p class="sub">The foundation episode. Build your personal use case list from a five-minute interview with the agent, not a generic list from someone else's deck.</p>
+
+  <div class="section-label">Recap</div>
+  <div class="recap">
+    <p>Foundation episode. The point: stop browsing lists of "ten AI use cases for sellers". Build <em>your</em> list from a five-minute interview with the agent. We ran the Use Case Finder live, walked through the five-question interview, and read the ranked output and start-here pick out loud.</p>
+    <p>One prompt, three doors. CLI in the terminal. Clawpilot as a desktop app. M365 Copilot Cowork in chat. Same shift, three scales of freedom. Most people in this room will end up in Clawpilot once it ships, and that's fine.</p>
+    <p><strong>Operator move:</strong> two questions every Monday. What can I stop doing by hand. What can I now attempt that I couldn't before. The second question is the bigger one.</p>
+    <div class="pull">
+      <span class="lbl">Otto debut</span>
+      Otto landed in the meeting chat for the first time. Version zero. Knows this episode, the use case finder, the season schedule, and a small FAQ. @mention Otto to wake it up. By episode six it should know everything we covered plus your unanswered questions.
+    </div>
+  </div>
+
+  <div class="section-label">Take-home this week</div>
+  <div class="takehome">
+    <h3>Run the Use Case Finder on yourself</h3>
+    <p>Five minutes. Use whatever tool you have. Five honest answers. Pick your start-here.</p>
+    <p>Bring that start-here pick to E2 next Tuesday. We'll use what you bring as the brief for the live deck demo. If you don't bring one, you watch. If you do, you might get your deck built in front of the room.</p>
+  </div>
+
+  <div class="section-label">Resources from this episode</div>
+  <div class="cards">
+    <a class="card" href="../use-case-finder.html">
+      <span class="icon">🎯</span>
+      <h2>Use Case Finder prompt</h2>
+      <p>The prompt we ran on stage. Paste into CLI, Clawpilot, or Cowork. Answer five questions. Get your ranked list.</p>
+      <span class="card-tag teal">on-ramp · 5 min</span>
+    </a>
+    <a class="card disabled" href="#" onclick="return false;" aria-disabled="true">
+      <span class="icon">🎬</span>
+      <h2>Recording</h2>
+      <p>The full session, lightly edited. Posted within a day of the live. Hard-refresh this page if you don't see it yet.</p>
+      <span class="card-tag muted">link soon</span>
+    </a>
+  </div>
+  <!-- RECORDING LINK
+       To enable, replace the <a class="card disabled"> above with:
+       <a class="card" href="PASTE_STREAM_OR_SHAREPOINT_URL_HERE" target="_blank" rel="noopener">
+       and change the card-tag class from "muted" to "teal" with label "watch · 45 min".
+  -->
+
+  <div class="section-label">What's next</div>
+  <div class="cards">
+    <a class="card" href="../#season-1">
+      <span class="icon">📅</span>
+      <h2>E2 · Decks that win the room</h2>
+      <p>Tue Jun 2. Brief, research, outline, slides, polish. We use someone's start-here pick from E1 as the live brief.</p>
+      <span class="card-tag amber">next Tuesday</span>
+    </a>
+    <a class="card" href="../../course/">
+      <span class="icon">🎓</span>
+      <h2>Self-service course</h2>
+      <p>Eight lessons, self-paced. Work through between episodes for depth on the CLI itself.</p>
+      <span class="card-tag teal">self-paced</span>
+    </a>
+  </div>
+
+  <p class="refrain"><strong>Still not a developer.</strong> Just stopped accepting "too much work to bother" as the end of the conversation.</p>
+
+  <div class="meta">
+    <p><strong>Episode:</strong> S1E1 · May 26 2026 · 45 min · EMEA EPS + GCPS</p>
+    <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">LinkedIn</a></p>
+    <p><strong>Feedback:</strong> drop a note in the cohort chat (link on the <a class="inline" href="../">Operator Hour landing page</a>) or DM the host.</p>
+  </div>
+</div>
+</body>
+</html>

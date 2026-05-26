@@ -66,9 +66,30 @@
     </a>
   </div>
 
-  <div class="section-label">Season 1: From Zero to Agent</div>
+  <div class="section-label">Cohort chat</div>
+  <div class="cards">
+    <a class="card disabled" id="cohort-chat-card" href="#" onclick="return false;" aria-disabled="true">
+      <span class="icon">💬</span>
+      <h2>Join the cohort chat</h2>
+      <p>Persistent Teams chat for the season. Ask Otto between episodes, share what you ship, see what other operators are trying. Click to request access.</p>
+      <span class="card-tag muted">link soon</span>
+    </a>
+  </div>
+  <!-- COHORT CHAT LINK
+       To enable, replace the <a> above with:
+       <a class="card" id="cohort-chat-card" href="PASTE_TEAMS_JOIN_URL_HERE" target="_blank" rel="noopener">
+       and change the card-tag class from "muted" to "teal" with label "click to join".
+  -->
+
+  <div class="section-label" id="season-1">Season 1: From Zero to Agent</div>
   <div class="season">
-    <div class="ep"><div class="ep-date">Tue May 26</div><div><p class="ep-title">Start at zero. Find your first use case.</p><p class="ep-desc">Live run of the Use Case Finder on a volunteer. Otto debuts in the chat.</p></div></div>
+    <a class="ep" href="s1e1/" style="text-decoration:none;color:inherit;display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 24px;border-top:0;transition:background-color .15s;" onmouseover="this.style.backgroundColor='rgba(57,210,192,.04)'" onmouseout="this.style.backgroundColor='transparent'">
+      <div class="ep-date">Tue May 26</div>
+      <div>
+        <p class="ep-title">Start at zero. Finish a hero. <span style="color:var(--teal);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;margin-left:6px;">recap →</span></p>
+        <p class="ep-desc">Live run of the Use Case Finder on a volunteer. Otto debuts in the chat.</p>
+      </div>
+    </a>
     <div class="ep"><div class="ep-date">Tue Jun 2</div><div><p class="ep-title">Decks that win the room.</p><p class="ep-desc">Brief, research, outline, slides, polish. Frontier-style HTML deck flow.</p></div></div>
     <div class="ep"><div class="ep-date">Tue Jun 9</div><div><p class="ep-title">Reclaim your morning. Inbox + brief.</p><p class="ep-desc">Email triage and morning brief running on real (sanitised) traffic.</p></div></div>
     <div class="ep"><div class="ep-date">Tue Jun 16</div><div><p class="ep-title">Prototypes that show, not tell.</p><p class="ep-desc">Customer Workshop Engine: research, working prototype, IaC handover.</p></div></div>
