@@ -22,7 +22,15 @@ It will not replace your judgement. Good. That is the point.
 
 ## Install in Copilot CLI
 
-### 1. Copy the skill file
+The easiest way: point Copilot at the skill page and ask it to install the skill. No folders, no file copying, no commands.
+
+```text
+Install the deck-maker skill from https://jw-sthlm.github.io/cli-intro-share/skills/copilot-skill-deck-maker/. Fetch SKILL.md and save it into my Copilot skills folder, then confirm it's available.
+```
+
+Then restart your session and try it.
+
+### Do it by hand instead
 
 Create the skill folder and copy `SKILL.md` into it.
 
@@ -38,21 +46,19 @@ mkdir -p ~/.copilot/skills/copilot-skill-deck-maker
 cp ./SKILL.md ~/.copilot/skills/copilot-skill-deck-maker/SKILL.md
 ```
 
-### 2. Restart your Copilot CLI session
-
-Skills are loaded when the session starts.
-
-### 3. Try it
+Skills load when a session starts, so restart Copilot CLI. Then:
 
 ```text
 Make a deck from these notes: <paste notes>
 ```
 
-Or:
+## Use it in Clawpilot (desktop app)
 
-```text
-Build slides about our AI readiness workshop. Use https://www.example-partner.com for brand matching.
-```
+Clawpilot runs the same Copilot engine, so the skill works. It does not auto-read `~/.copilot/skills`, so you point it at the folder yourself:
+
+1. Save `SKILL.md` into any folder (for example `~/.copilot/skills/copilot-skill-deck-maker/`).
+2. In Clawpilot, open **Settings → Skills** and add that folder to the skill directories.
+3. Start a new session. The skill is now available.
 
 ## Use it in VS Code Copilot Chat
 
@@ -65,6 +71,10 @@ Use one of these paths:
 3. Start a new chat and ask Copilot to follow the deck maker instructions.
 
 Keep the instruction file with the project if you want the whole team to use it.
+
+## Use it in Copilot Cowork (Microsoft 365)
+
+Cowork uses a different extensibility model and does not load filesystem skills, so there is nothing to install. The method still travels: paste the body of `SKILL.md` into your first message as instructions, then give it your notes. You get the same workflow, just not installed permanently.
 
 ## Example prompt
 

@@ -32,12 +32,35 @@
 
   <section class="section" id="install">
     <div class="panel">
-      <span class="eyebrow">3-step install</span>
-      <div class="steps">
-        <div class="step"><div><h3>Copy the skill</h3><p>Create the Copilot CLI skill folder and copy SKILL.md into it.</p><pre>New-Item -ItemType Directory -Force "$HOME\.copilot\skills\copilot-skill-deck-maker"
-Copy-Item ".\SKILL.md" "$HOME\.copilot\skills\copilot-skill-deck-maker\SKILL.md" -Force</pre></div></div>
-        <div class="step"><div><h3>Restart Copilot CLI</h3><p>Start a fresh session so Copilot loads the new skill.</p></div></div>
-        <div class="step"><div><h3>Try it</h3><p>Paste notes and ask for the deck.</p><pre>Make a deck from these notes: &lt;paste notes&gt;</pre></div></div>
+      <span class="eyebrow">Install</span>
+      <h2>Just ask Copilot to install it.</h2>
+      <p class="lead" style="margin-top:10px;font-size:18px;">No folders, no file copying, no commands. Point Copilot at this page and let it do the fetching.</p>
+      <pre>Install the deck-maker skill from https://jw-sthlm.github.io/cli-intro-share/skills/copilot-skill-deck-maker/. Fetch SKILL.md and save it into my Copilot skills folder, then confirm it's available.</pre>
+      <p style="color:var(--muted);font-size:14px;margin-top:10px;">Then start a fresh session and try it: <code>Make a deck from these notes: &lt;paste notes&gt;</code></p>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <span class="eyebrow">By surface</span>
+      <h2>Where it works, and how.</h2>
+      <div class="grid" style="margin-top:18px;">
+        <article class="card">
+          <h3>Copilot CLI</h3>
+          <p>The ask-Copilot install above works as-is. Skills in <code>~/.copilot/skills/</code> load when a session starts. Prefer to do it by hand?</p>
+          <pre>New-Item -ItemType Directory -Force "$HOME\.copilot\skills\copilot-skill-deck-maker"
+Copy-Item ".\SKILL.md" "$HOME\.copilot\skills\copilot-skill-deck-maker\SKILL.md" -Force</pre>
+        </article>
+        <article class="card">
+          <h3>Clawpilot <span style="color:var(--weak);font-weight:500;">· desktop app</span></h3>
+          <p>Same Copilot engine, so the skill runs. It does not auto-read <code>~/.copilot/skills</code>. Save <code>SKILL.md</code> into any folder, then in Clawpilot open <strong>Settings → Skills</strong>, add that folder, and start a new session.</p>
+        </article>
+        <article class="card">
+          <h3>VS Code Copilot Chat</h3>
+          <p>VS Code does not load CLI skills. Paste the contents of <code>SKILL.md</code> into <code>.github/copilot-instructions.md</code> (or <code>.github/instructions/deck-maker.instructions.md</code>), then start a new chat and ask Copilot to follow it.</p>
+        </article>
+        <article class="card">
+          <h3>Copilot Cowork <span style="color:var(--weak);font-weight:500;">· Microsoft 365</span></h3>
+          <p>Cowork doesn't load filesystem skills. It's a different extensibility model. The <em>method</em> still works: paste the body of <code>SKILL.md</code> into your first message as instructions, then give it your notes. You just won't have it installed permanently.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -48,7 +71,7 @@ Copy-Item ".\SKILL.md" "$HOME\.copilot\skills\copilot-skill-deck-maker\SKILL.md"
       <h2>Take the skill, then test the example.</h2>
       <div class="links">
         <a class="link-card" href="./SKILL.md"><strong>Raw SKILL.md</strong><span>Copy this into your Copilot setup.</span></a>
-        <a class="link-card" href="./README.md"><strong>README</strong><span>Install notes for Copilot CLI and VS Code.</span></a>
+        <a class="link-card" href="./README.md"><strong>README</strong><span>Install notes for CLI, Clawpilot, VS Code, and Cowork.</span></a>
         <a class="link-card" href="./example.html"><strong>Example deck</strong><span>Three slides with presenter view and arrow-key nav.</span></a>
       </div>
     </div>
