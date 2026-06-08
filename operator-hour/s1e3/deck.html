@@ -494,25 +494,27 @@ SAY: One job, three levels. Level one, the easy one, you do it with no terminal 
 
 PRE-FLIGHT (before the call):
 1. Split screen. Windows Terminal pinned left at about 45 percent, New Outlook right at about 55 percent. Both fully visible, no overlap.
-2. Off screen, open Copilot CLI. Either cd into C:\Users\jwallquist\projects\email-triage-agent first, or just name the folder in the prompt. On stage you never type a path.
+2. Off screen, open Copilot CLI. On stage you set the folder with the /cwd line (copy chip below), then ask in plain language. You never type a path by hand.
 3. In Outlook, confirm the seeded inbox holds only broadcast and notification mail: newsletters, system notices, build alerts. No direct or partner mail anywhere on screen. Anything sensitive stays in a collapsed folder.
-4. Do one dry run before the call: run triage.ps1 once so the four folders already exist and the Outlook COM connection is warm. The root triage.ps1 has no cache to rebuild, so it stays fast live.
+4. Use a demo copy of inbox-triage.ps1 (the exact give-away file) with $MyEmail set to your address, saved in the email-triage-agent folder. Do one dry run before the call so the four folders already exist and the Outlook COM connection is warm. No cache, no Teams post, so it stays fast and silent live.
 5. Open the 20-second backup recording in a tab, in case Outlook COM hangs.
 6. Terminal font at presentation size. Sort the inbox by date, newest on top, so the movement is visible.
 
 RUN (6 to 8 minutes, hard stop at 8):
-1. Copilot CLI is ready. Say the setup line, then type one plain sentence: Run triage.ps1 in my email-triage-agent folder.
-2. Press enter. When Copilot asks to run it, approve. Do not narrate the code. Narrate the inbox.
-3. As folders fill, point at Newsletters, then Notifications, then Mass. Read the running count out loud.
-4. Land the trust beat: scroll the inbox, show the handful that stayed, say they are addressed to you and untouched.
-5. Open the Newsletters folder to prove nothing real got buried.
+1. Set the folder: paste the /cwd line (copy chip below) and press enter. The CLI prompt now points at the script.
+2. Say the setup line, then paste the plain-language prompt: Run the inbox-triage.ps1 script in this folder.
+3. Press enter. When Copilot asks to run it, approve. Do not narrate the code. Narrate the inbox.
+4. As folders fill, point at Newsletters, then Notifications, then Mass. Read the running count out loud.
+5. Land the trust beat: scroll the inbox, show the handful that stayed, say they are addressed to you and untouched.
+6. Open the Newsletters folder to prove nothing real got buried.
 
-FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If Copilot CLI stalls or phrases it oddly, run the script directly with .\triage.ps1 from the email-triage-agent folder.
+FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If Copilot CLI stalls or phrases it oddly, run the script directly with .\inbox-triage.ps1 from the email-triage-agent folder.
 
-COPY: Run triage.ps1 in my email-triage-agent folder.
-COPY: .\triage.ps1
+COPY: /cwd C:\Users\jwallquist\projects\email-triage-agent
+COPY: Run the inbox-triage.ps1 script in this folder.
+COPY: .\inbox-triage.ps1
 
-SAY: Okay. This is the script that already sorts my inbox every single morning. I'm just running it now, live, by asking Copilot. I've cleaned out anything I can't show you. The rest is real. Watch the right side, not the terminal.
+SAY: Okay. This is the exact script I'm giving you today, and it runs the same sort I use on my own inbox every morning. I'm just running it now, live, by asking Copilot. I've cleaned out anything I can't show you. The rest is real. Watch the right side, not the terminal.
 
 No path, no setup. I just ask for it. That's it.
 

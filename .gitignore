@@ -1,2 +1,5 @@
 .DS_Store
 Thumbs.db
+
+# Real exported emails used for triage testing - never publish
+operator-hour/s1e3/emails/

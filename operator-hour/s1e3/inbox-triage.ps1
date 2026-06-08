@@ -55,6 +55,11 @@ try {
     }
 
     $myEmailLower = $MyEmail.ToLowerInvariant()
+
+    # MAPI property tags used to read the true SMTP address behind Exchange senders.
+    $SenderSmtpProp = "http://schemas.microsoft.com/mapi/proptag/0x5D01001F"
+    $RecipSmtpProp  = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E"
+
     $stats   = @{ Inbox=0; Notifications=0; Newsletters=0; Mass=0; 'Group Invites'=0 }
     $moves   = @()
     $kept    = @()
@@ -76,35 +81,71 @@ try {
         $cc         = "$($item.CC)"
         $isMeeting  = ($item.Class -eq 53)
         $recipCount = (@($to -split ';').Count + @($cc -split ';').Count)
-        $addressedToMe = ($to -like "*$myEmailLower*" -or $cc -like "*$myEmailLower*")
+
+        # Resolve the real SMTP address. Microsoft and Exchange-internal senders
+        # arrive as an X.500 path (/o=ExchangeLabs/...), not name@company.com, so a
+        # plain text match misses them. Read the SMTP property as a fallback.
+        $senderSmtp = $sender
+        if ($sender -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') {
+            try {
+                $sv = $item.PropertyAccessor.GetProperty($SenderSmtpProp)
+                if ($sv) { $senderSmtp = $sv.ToString().ToLowerInvariant() }
+            } catch {}
+        }
+        $senderBlob = "$senderName $senderSmtp".ToLowerInvariant()
+
+        # Am I really on the To or CC line? Check the actual recipient list by exact
+        # SMTP address, not a substring of the display text. Far fewer false matches,
+        # so a broadcast sent to a list you happen to be on no longer looks "direct".
+        $addressedToMe = $false
+        try {
+            for ($ri = 1; $ri -le $item.Recipients.Count; $ri++) {
+                $recip = $item.Recipients.Item($ri)
+                if ($recip.Type -le 2) {
+                    if ("$($recip.Address)".ToLowerInvariant() -eq $myEmailLower) { $addressedToMe = $true; break }
+                    try {
+                        $rs = $recip.PropertyAccessor.GetProperty($RecipSmtpProp)
+                        if ($rs -and "$rs".ToLowerInvariant() -eq $myEmailLower) { $addressedToMe = $true; break }
+                    } catch {}
+                }
+            }
+        } catch {}
+        if (-not $addressedToMe) {
+            $addressedToMe = ($to -like "*$myEmailLower*" -or $cc -like "*$myEmailLower*")
+        }
 
         $dest = 'Inbox'
 
         # RULE 0 - Self-sent: keep in Inbox
-        if ($sender -eq $myEmailLower) {
+        if ($sender -eq $myEmailLower -or $senderSmtp -eq $myEmailLower) {
             $dest = 'Inbox'
         }
         # RULE 1 - Notifications: automated / system mail
         elseif (
-            $sender -like '*noreply*' -or $sender -like '*no-reply*' -or
-            $sender -like '*donotreply*' -or $sender -like '*notifications@*' -or
-            $sender -like '*github*' -or $sender -like '*alert@*' -or
-            $sender -like '*approval@*' -or
+            $senderBlob -like '*noreply*'        -or $senderBlob -like '*no-reply*'      -or
+            $senderBlob -like '*donotreply*'     -or $senderBlob -like '*notifications@*' -or
+            $senderBlob -like '*github*'         -or $senderBlob -like '*alert@*'         -or
+            $senderBlob -like '*approval@*'      -or $senderBlob -like '*postmaster*'     -or
+            $senderBlob -like '*azure-noreply*'  -or $senderBlob -like '*msgraph-noreply*' -or
+            $senderBlob -like '*microsoftexchange*' -or
+            $senderName -like '*LinkedIn*'       -or $senderName -like '*Notifications*'  -or
+            $senderName -like '*Microsoft Loop*' -or $senderName -like '*Microsoft Planner*' -or
+            $senderName -like '*Microsoft Viva*' -or
             $subject -match 'Action required|Approval request|Your daily briefing|Mentioned you in'
         ) {
             $dest = 'Notifications'
         }
         # RULE 2 - Newsletters: digests, blogs, roundups
         elseif (
-            $sender -like '*engage.mail*' -or
-            $senderName -like '*Developer Blog*' -or
-            $senderName -like '*Community Calendar*' -or
-            $subject -match 'Announcement:|digest|newsletter|weekly recap|weekly roundup|Daily Digest|field comms'
+            $senderBlob -like '*engage.mail*' -or
+            $senderBlob -like '*developer blog*' -or
+            $senderBlob -like '*community calendar*' -or
+            $subject -match 'Announcement:|digest|newsletter|weekly recap|weekly roundup|Daily Digest|update pack|field comms'
         ) {
             $dest = 'Newsletters'
         }
         # RULE 3 - Small-group protection: a real person + me + a few others stays in Inbox
-        elseif ($addressedToMe -and $recipCount -le $SmallGroupLimit -and $sender -notlike '*noreply*') {
+        elseif ($addressedToMe -and $recipCount -le $SmallGroupLimit -and $senderBlob -notlike '*noreply*') {
             $dest = 'Inbox'
         }
         # RULE 4 - Mass: broadcasts and events (only when NOT addressed directly to me)
