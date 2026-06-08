@@ -127,7 +127,7 @@ try {
             $senderBlob -like '*github*'         -or $senderBlob -like '*alert@*'         -or
             $senderBlob -like '*approval@*'      -or $senderBlob -like '*postmaster*'     -or
             $senderBlob -like '*azure-noreply*'  -or $senderBlob -like '*msgraph-noreply*' -or
-            $senderBlob -like '*microsoftexchange*' -or
+            $senderBlob -like '*microsoftexchange*' -or $senderBlob -like '*linkedin*'     -or
             $senderName -like '*LinkedIn*'       -or $senderName -like '*Notifications*'  -or
             $senderName -like '*Microsoft Loop*' -or $senderName -like '*Microsoft Planner*' -or
             $senderName -like '*Microsoft Viva*' -or
@@ -140,7 +140,8 @@ try {
             $senderBlob -like '*engage.mail*' -or
             $senderBlob -like '*developer blog*' -or
             $senderBlob -like '*community calendar*' -or
-            $subject -match 'Announcement:|digest|newsletter|weekly recap|weekly roundup|Daily Digest|update pack|field comms'
+            $senderBlob -like '*weekly feed*' -or
+            $subject -match 'Announcement:|digest|newsletter|weekly recap|weekly roundup|Daily Digest|update pack|field comms|Insiders Update'
         ) {
             $dest = 'Newsletters'
         }
@@ -148,12 +149,16 @@ try {
         elseif ($addressedToMe -and $recipCount -le $SmallGroupLimit -and $senderBlob -notlike '*noreply*') {
             $dest = 'Inbox'
         }
-        # RULE 4 - Mass: broadcasts and events (only when NOT addressed directly to me)
+        # RULE 4 - Mass: broadcasts and events. A huge recipient list is a broadcast
+        # even if your address is on it, so big blasts file out; small groups (Rule 3)
+        # and mid-size threads you're named on still stay in the Inbox.
         elseif (
-            -not $addressedToMe -and (
-                $to -like '*All*' -or $to -like '*Community*' -or $cc -like '*All*' -or
-                $recipCount -gt $GroupInviteThreshold -or
-                $subject -match 'Community Call|Geo Review|GTM|Office Hours|All-Hands|All Hands|Town Hall|FY2|Company Meeting|save the date|conference|Jumpstart|Hackathon'
+            $recipCount -gt $GroupInviteThreshold -or (
+                -not $addressedToMe -and (
+                    $to -like '*All*' -or $to -like '*Community*' -or $cc -like '*All*' -or
+                    $to -like '*Announcements*' -or $to -like '*service.microsoft.com*' -or
+                    $subject -match 'Community Call|Geo Review|GTM|Office Hours|All-Hands|All Hands|Town Hall|FY2|Company Meeting|save the date|conference|Jumpstart|Hackathon|Field Update'
+                )
             )
         ) {
             $dest = 'Mass'
