@@ -499,10 +499,10 @@ SAY: One job, three levels. Level one, the easy one, you do it with no terminal 
     <aside class="notes">DO: LIVE DEMO.
 
 ALREADY DONE (off-stage, before the call):
-- Use CLASSIC Outlook, not New Outlook. Drag-drop of .eml files and the script's COM both need Classic. New Outlook does neither. (Toggle "New Outlook" off, or launch OUTLOOK.EXE.) Close New Outlook so you don't drag into the wrong window.
+- Use CLASSIC Outlook, not New Outlook. The script's COM needs Classic and New Outlook can't run it. (Toggle "New Outlook" off, or launch OUTLOOK.EXE.) Close New Outlook so the demo window is unambiguous.
 - Split screen: Terminal left, Classic Outlook right, both fully visible.
 - Demo copy of inbox-triage.ps1 in the email-triage-agent folder, $MyEmail set to my address.
-- Seeded the inbox: dragged the .eml files into Classic Outlook's inbox. Don't run Outlook as admin, or Windows blocks the drop.
+- Seeded the inbox: ran seed-demo-inbox.ps1 in the email-triage-agent folder. It builds the demo messages straight into the inbox from the saved .eml set, so no flaky drag-drop. Wipe them after with seed-demo-inbox.ps1 -Clean.
 - One dry run so the four folders exist and Outlook COM is warm.
 - Backup recording open in a tab.
 
