@@ -468,7 +468,7 @@ SAY: Here is the shift. A rule sorts. It moves a message into a folder. It still
       <h1>One job. <span class="accent">Three ways to do it.</span></h1>
       <p class="lead">Reclaiming your morning is one job. Microsoft now gives you three ways to do it, from hands-on to fully automatic. We build the first one live. The other two are where this is going.</p>
       <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:32px;">
-        <div class="card"><div class="num">01 · LIVE</div><div class="t">⌨️ Build it yourself</div><div class="d">Copilot CLI. Write the routine once, save it as a skill, run it with one command tomorrow. This is what we build today.</div></div>
+        <div class="card"><div class="num">01 · LIVE</div><div class="t">⌨️ Build it yourself</div><div class="d">Copilot CLI. Write the routine once, save it, then just ask Copilot to run it tomorrow. This is what we build today.</div></div>
         <div class="card"><div class="num">02 · LIVE</div><div class="t">✨ No terminal: Cowork</div><div class="d">The Cowork agent inside Microsoft 365 Copilot. Same routine, plain prompts, no command line.</div></div>
         <div class="card"><div class="num">03 · ROADMAP</div><div class="t">🛰️ Where it heads: Scout</div><div class="d">The first agent in Microsoft's Autopilot family. Proactive, its own identity. New, shown at Build. Ask your admin.</div></div>
       </div>
@@ -486,7 +486,7 @@ SAY: One job, three rungs. Rung one, you build it yourself in the CLI. That is t
     <div class="slide-inner" style="justify-content:center;">
       <div class="eyebrow">Live now</div>
       <h1 class="hero">Watch it <span class="accent">sort itself.</span></h1>
-      <p class="lead" style="font-size:24px;margin-top:24px;">One command. A real inbox. The folders fill in front of you.</p>
+      <p class="lead" style="font-size:24px;margin-top:24px;">I just ask. A real inbox. The folders fill in front of you.</p>
     </div>
     <div class="foot"><div class="count">Slide <span>5</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
     <div class="progress"><div class="bar"></div></div>
@@ -494,25 +494,27 @@ SAY: One job, three rungs. Rung one, you build it yourself in the CLI. That is t
 
 PRE-FLIGHT (before the call):
 1. Split screen. Windows Terminal pinned left at about 45 percent, New Outlook right at about 55 percent. Both fully visible, no overlap.
-2. In Outlook, confirm the seeded inbox holds only broadcast and notification mail: newsletters, system notices, build alerts. No direct or partner mail anywhere on screen. Anything sensitive stays in a collapsed folder.
-3. Pre-warm the correspondents cache: run the script once in the terminal before the call so the cache is fresh. It rebuilds when older than 24 hours and that shells out, which is slow live.
-4. Open the 20-second backup recording in a tab, in case Outlook COM hangs.
-5. Terminal font at presentation size. Sort the inbox by date, newest on top, so the movement is visible.
+2. Off screen, cd into the folder that holds inbox-triage.ps1 and launch Copilot CLI there. On stage you never type a path.
+3. In Outlook, confirm the seeded inbox holds only broadcast and notification mail: newsletters, system notices, build alerts. No direct or partner mail anywhere on screen. Anything sensitive stays in a collapsed folder.
+4. Pre-warm the correspondents cache: run the script once before the call so the cache is fresh. It rebuilds when older than 24 hours and that shells out, which is slow live.
+5. Open the 20-second backup recording in a tab, in case Outlook COM hangs.
+6. Terminal font at presentation size. Sort the inbox by date, newest on top, so the movement is visible.
 
 RUN (6 to 8 minutes, hard stop at 8):
-1. Say the setup line, then type the one command: .\inbox-triage.ps1
-2. Press enter. Do not narrate the code. Narrate the inbox.
+1. Copilot CLI is already open in the script's folder. Say the setup line, then type one plain sentence: Run my inbox triage script.
+2. Press enter. When Copilot asks to run it, approve. Do not narrate the code. Narrate the inbox.
 3. As folders fill, point at Newsletters, then Notifications, then Mass. Read the running count out loud.
 4. Land the trust beat: scroll the inbox, show the handful that stayed, say they are addressed to you and untouched.
 5. Open the Newsletters folder to prove nothing real got buried.
 
-FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If the cache starts rebuilding, say it is refreshing who you talk to and wait it out, or cut to the clip.
+FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If Copilot CLI stalls or phrases it oddly, run the script directly with .\inbox-triage.ps1 in the same folder. If the cache starts rebuilding, say it is refreshing who you talk to and wait it out, or cut to the clip.
 
+COPY: Run my inbox triage script.
 COPY: .\inbox-triage.ps1
 
 SAY: Okay. This is my actual inbox. I have cleaned out anything I can't show you, the rest is real. Watch the right side, not the terminal.
 
-One command. That is it.
+I just ask Copilot to run it. One sentence, no path, no setup. That is it.
 
 There it goes. Newsletters, moving. System notifications, moving. The broadcast noise, gone into its own folder. A hundred and forty messages down to a handful.
 
@@ -534,7 +536,7 @@ That is the whole trick. No AI guessing what matters to me. Three plain rules, r
             <li><span class="n">1</span><span>Describe the job in a sentence.</span></li>
             <li><span class="n">2</span><span>Tell it the rules in plain words.</span></li>
             <li><span class="n">3</span><span>Let it write and test the script.</span></li>
-            <li><span class="n">4</span><span>Save it. Tomorrow it's one command.</span></li>
+            <li><span class="n">4</span><span>Save it. Tomorrow you just ask.</span></li>
           </ul>
         </div>
         <div>
