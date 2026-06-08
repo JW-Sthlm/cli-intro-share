@@ -490,39 +490,35 @@ SAY: One job, three levels. Level one, the easy one, you do it with no terminal 
     </div>
     <div class="foot"><div class="count">Slide <span>5</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
     <div class="progress"><div class="bar"></div></div>
-    <aside class="notes">DO: LIVE DEMO. Full runbook.
+    <aside class="notes">DO: LIVE DEMO.
 
-PRE-FLIGHT (before the call):
-1. Split screen. Windows Terminal pinned left at about 45 percent, New Outlook right at about 55 percent. Both fully visible, no overlap.
-2. Off screen, open Copilot CLI. On stage you set the folder with the /cwd line (copy chip below), then ask in plain language. You never type a path by hand.
-3. In Outlook, confirm the seeded inbox holds only broadcast and notification mail: newsletters, system notices, build alerts. No direct or partner mail anywhere on screen. Anything sensitive stays in a collapsed folder.
-4. Use a demo copy of inbox-triage.ps1 (the exact give-away file) with $MyEmail set to your address, saved in the email-triage-agent folder. Do one dry run before the call so the four folders already exist and the Outlook COM connection is warm. No cache, no Teams post, so it stays fast and silent live.
-5. Open the 20-second backup recording in a tab, in case Outlook COM hangs.
-6. Terminal font at presentation size. Sort the inbox by date, newest on top, so the movement is visible.
+ALREADY DONE (off-stage, before the call):
+- Split screen: Terminal left, Outlook right, both fully visible.
+- Demo copy of inbox-triage.ps1 in the email-triage-agent folder, $MyEmail set to my address.
+- One dry run so the four folders exist and Outlook COM is warm.
+- Seeded inbox holds only broadcast and notification mail. Nothing sensitive on screen.
+- Backup recording open in a tab.
 
-RUN (6 to 8 minutes, hard stop at 8):
-1. Set the folder: paste the /cwd line (copy chip below) and press enter. The CLI prompt now points at the script.
-2. Say the setup line, then paste the plain-language prompt: Run the inbox-triage.ps1 script in this folder.
-3. Press enter. When Copilot asks to run it, approve. Do not narrate the code. Narrate the inbox.
-4. As folders fill, point at Newsletters, then Notifications, then Mass. Read the running count out loud.
-5. Land the trust beat: scroll the inbox, show the handful that stayed, say they are addressed to you and untouched.
-6. Open the Newsletters folder to prove nothing real got buried.
+ON STAGE (3 steps):
+1. Paste the /cwd line, enter. The prompt now points at the folder.
+2. Paste the plain-language prompt, enter, approve when Copilot asks. Then talk, don't watch the code.
+3. Narrate the inbox, not the terminal. Point at the folders filling. Then land the trust beat on what stayed.
 
-FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If Copilot CLI stalls or phrases it oddly, run the script directly with .\inbox-triage.ps1 from the email-triage-agent folder.
+FALLBACK: COM hangs past 10 seconds, cut to the backup recording and keep talking. Don't debug live. If Copilot CLI stalls, run .\inbox-triage.ps1 directly.
 
 COPY: /cwd C:\Users\jwallquist\projects\email-triage-agent
 COPY: Run the inbox-triage.ps1 script in this folder.
 COPY: .\inbox-triage.ps1
 
-SAY: Okay. This is the exact script I'm giving you today, and it runs the same sort I use on my own inbox every morning. I'm just running it now, live, by asking Copilot. I've cleaned out anything I can't show you. The rest is real. Watch the right side, not the terminal.
+SAY: Okay. This is the exact script I'm giving you today. And here's the honest part. For me, this already runs on its own, every hour, while Outlook is open. Most mornings it's done before I sit down. What you're about to see is me triggering it by hand, just so you can watch it work. I've cleared out anything I can't show you. The rest is real mail. Watch the right side, not the terminal.
 
-No path, no setup. I just ask for it. That's it.
+No path, no setup. I just ask. That's it.
 
-There it goes. Newsletters, moving. System notifications, moving. The broadcast noise, gone into its own folder. A hundred and forty messages down to a handful.
+There it goes. Newsletters, moving. Notifications, moving. The broadcast noise drops into its own folder. A packed inbox down to a handful.
 
-Now look at what stayed. These are addressed to me. A person wrote them. The routine never touches those. When it's not sure, it leaves the mail right here where I'll see it.
+Now look at what stayed. These are addressed to me. A real person wrote them. The routine never touches those. When it isn't sure, it leaves the mail right here where I'll see it.
 
-That's the whole trick. No AI guessing what matters to me. Just three plain rules, run every morning before I even open my laptop.</aside>
+That's the whole trick. No AI guessing what matters to me. Just a few plain rules, run every morning before I even open my laptop.</aside>
   </section>
 
   <!-- SLIDE 6: Build story -->
