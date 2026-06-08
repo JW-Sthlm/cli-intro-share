@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operator Hour · S1E3 · Reclaim your morning</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F1E5;
+  --bg-2:#F0E9D7;
+  --panel:#FFFDF7;
+  --panel-2:#F5EFE0;
+  --border:#E3DAC5;
+  --border-soft:#EDE5D0;
+  --ink:#1B1F26;
+  --ink-2:#3B4250;
+  --muted:#6A7180;
+  --muted-2:#9298A4;
+  --teal:#0F8A7A;
+  --teal-2:#0B6E62;
+  --teal-soft:rgba(15,138,122,.10);
+  --purple:#5B43C7;
+  --purple-2:#4A35A6;
+  --purple-soft:rgba(91,67,199,.10);
+  --amber:#B5851A;
+  --pink:#C7457A;
+  --shadow-sm:0 1px 2px rgba(27,31,38,.05);
+  --shadow-md:0 8px 24px rgba(27,31,38,.08);
+  --shadow-lg:0 24px 60px rgba(27,31,38,.15);
+  --radius:14px;
+  --radius-sm:8px;
+  --radius-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-2);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+/* Stage + slide */
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding:24px;}
+.slide{
+  width:min(96vw,1500px);aspect-ratio:16/9;max-height:94vh;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  display:none;
+}
+.slide.active{display:flex;flex-direction:column;}
+.slide-inner{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:64px 84px;gap:8px;
+}
+
+/* Top bar inside slide */
+.top{
+  position:absolute;top:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.12em;text-transform:uppercase;
+  pointer-events:none;
+}
+.top .left{display:flex;gap:14px;align-items:center;}
+.top .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-soft);}
+
+/* Progress at bottom */
+.progress{
+  position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--border-soft);
+}
+.progress .bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--purple));width:0;transition:width .35s var(--ease);}
+
+/* Footer */
+.foot{
+  position:absolute;bottom:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.08em;
+}
+.foot .count span{color:var(--teal);font-weight:600;}
+.foot .keys{display:flex;gap:6px;align-items:center;}
+.foot .k{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:4px;
+  border:1px solid var(--border);background:var(--panel);color:var(--muted);
+  font-size:10px;letter-spacing:0;
+}
+
+/* Typography */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--teal);letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  margin-bottom:18px;
+}
+h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(40px,5.6vw,80px);line-height:1.02;font-weight:800;
+  letter-spacing:-.025em;color:var(--ink);text-wrap:balance;
+}
+h1.hero{
+  font-size:clamp(56px,7.5vw,108px);line-height:.96;font-weight:900;
+  letter-spacing:-.035em;max-width:18ch;
+}
+h1 .accent{color:var(--teal);}
+h1 .purple{color:var(--purple);}
+h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(28px,3.2vw,44px);line-height:1.12;font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);text-wrap:balance;
+}
+h3{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(20px,2.2vw,28px);line-height:1.2;font-weight:700;
+  color:var(--ink);
+}
+.lead{
+  font-size:clamp(18px,1.5vw,22px);line-height:1.55;color:var(--ink-2);
+  max-width:60ch;text-wrap:pretty;margin-top:14px;
+}
+.kicker{
+  font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.smallcaps{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+}
+
+/* Components */
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;
+  border:1px solid var(--border);background:var(--panel);
+  border-radius:var(--radius-pill);font-size:13px;color:var(--ink-2);
+  font-weight:500;
+}
+.pill .mark{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);font-size:12px;}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:var(--shadow-sm);
+}
+.card .num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple);
+  font-weight:700;letter-spacing:.1em;
+}
+.card .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:var(--ink);line-height:1.25;}
+.card .d{font-size:13.5px;color:var(--muted);line-height:1.5;}
+
+/* Quote big */
+.bigquote{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(54px,7vw,108px);line-height:1.02;letter-spacing:-.03em;
+  text-wrap:balance;color:var(--ink);
+}
+.bigquote .mute{color:var(--muted-2);}
+.q-cap{
+  margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--muted);letter-spacing:.06em;
+}
+
+/* Terminal mock */
+.term{
+  background:#1B1F26;border-radius:12px;border:1px solid #2A2F38;
+  box-shadow:var(--shadow-lg);overflow:hidden;font-family:'JetBrains Mono',monospace;
+  color:#E6E2D5;font-size:13.5px;line-height:1.65;
+}
+.term-bar{
+  display:flex;align-items:center;gap:8px;padding:9px 14px;background:#23272F;
+  border-bottom:1px solid #2A2F38;
+}
+.term-bar .d{width:11px;height:11px;border-radius:50%;}
+.term-bar .r{background:#ff5f56;} .term-bar .y{background:#ffbd2e;} .term-bar .g{background:#27c93f;}
+.term-bar .ttl{margin-left:8px;font-size:11.5px;color:#9298A4;letter-spacing:.05em;}
+.term-body{padding:18px 22px;white-space:pre-wrap;}
+.term .pmt{color:#7ED9C9;}
+.term .cmt{color:#7d8290;font-style:italic;}
+.term .acc{color:#C9A8FF;}
+.term .ok{color:#7BD389;}
+.term .arr{color:#FFB75C;}
+.term .h{color:#F58CB0;font-weight:600;}
+
+/* Two-col layouts */
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;}
+.two.right-heavy{grid-template-columns:.85fr 1.15fr;}
+.qs{
+  list-style:none;display:flex;flex-direction:column;gap:14px;
+}
+.qs li{
+  display:flex;gap:14px;align-items:flex-start;font-size:16px;color:var(--ink-2);
+  line-height:1.45;
+}
+.qs li .n{
+  flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+  background:var(--teal-soft);color:var(--teal-2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+  margin-top:1px;
+}
+
+/* Output card mock */
+.out-mock{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 24px;box-shadow:var(--shadow-md);
+}
+.out-mock .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+.out-mock h3{font-size:18px;}
+.out-mock .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;}
+.uc{
+  display:grid;grid-template-columns:1fr auto auto;gap:14px;
+  padding:12px 0;border-top:1px solid var(--border-soft);align-items:center;
+}
+.uc:first-of-type{border-top:none;}
+.uc .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:15px;color:var(--ink);}
+.uc .why{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.uc .badges{display:flex;gap:6px;}
+.uc .b{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+  padding:3px 8px;border-radius:var(--radius-pill);
+  background:var(--bg-2);color:var(--muted);letter-spacing:.06em;
+}
+.uc .b.s{color:var(--teal-2);background:var(--teal-soft);}
+.uc .b.m{color:var(--amber);background:rgba(181,133,26,.12);}
+.uc .b.l{color:var(--pink);background:rgba(199,69,122,.10);}
+.uc.start{background:linear-gradient(90deg,var(--teal-soft),transparent);border-radius:8px;padding:14px 14px;margin-top:6px;border-top:none;}
+.uc.start .ribbon{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;font-weight:700;
+  color:var(--teal-2);text-transform:uppercase;margin-bottom:4px;
+}
+
+/* Otto card */
+.otto-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 30px;display:flex;gap:22px;align-items:center;box-shadow:var(--shadow-md);
+}
+.otto-av{
+  width:84px;height:84px;border-radius:22px;
+  background:linear-gradient(135deg,var(--teal),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:34px;color:#fff;font-weight:700;
+  flex-shrink:0;box-shadow:var(--shadow-md);
+}
+.otto-card .name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;}
+.otto-card .role{font-size:14px;color:var(--muted);margin-top:2px;}
+.otto-card .desc{font-size:14.5px;color:var(--ink-2);margin-top:10px;line-height:1.5;max-width:48ch;}
+
+/* Take-home */
+.takehome{
+  background:linear-gradient(135deg,var(--teal-soft),var(--purple-soft));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 32px;margin-top:18px;
+}
+.takehome .tag{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal-2);
+  letter-spacing:.16em;font-weight:700;text-transform:uppercase;
+}
+.takehome h2{margin-top:6px;}
+.takehome p{margin-top:10px;color:var(--ink-2);font-size:17px;line-height:1.5;max-width:54ch;}
+
+/* Next teaser */
+.next{
+  display:flex;align-items:center;gap:32px;margin-top:24px;
+}
+.next .when{
+  font-family:'JetBrains Mono',monospace;color:var(--purple);
+  font-size:14px;letter-spacing:.1em;font-weight:600;
+}
+.next .arrow{color:var(--muted);font-size:32px;line-height:1;}
+
+/* Refrain */
+.refrain{
+  margin-top:32px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
+  font-size:clamp(22px,2.4vw,32px);color:var(--ink);line-height:1.2;letter-spacing:-.015em;
+}
+.refrain .small{display:block;font-weight:500;font-size:.78em;color:var(--muted);margin-top:6px;}
+
+/* Speaker notes - hidden in deck mode */
+.notes{display:none;}
+
+/* Popup banner */
+#popup-blocked{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:#fff5f5;border:1px solid #f0a8a8;color:#a52a2a;
+  padding:10px 16px;border-radius:8px;z-index:200;
+  font-size:13px;display:none;box-shadow:var(--shadow-md);
+}
+
+/* Hero title slide */
+.hero-slide .slide-inner{justify-content:center;gap:0;}
+.hero-meta{
+  margin-top:46px;display:flex;gap:32px;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.hero-meta .b{color:var(--ink-2);font-weight:600;}
+
+/* ============= PRESENTER VIEW STYLES ============= */
+body.presenter{background:#0E1118;color:#E5E7EB;overflow:hidden;padding:18px;}
+body.presenter .stage{display:none;}
+.pres-root{display:none;}
+body.presenter .pres-root{
+  display:grid;grid-template-columns:minmax(320px,1.2fr) minmax(360px,1fr);gap:18px;height:calc(100vh - 36px);
+  font-family:'Inter',sans-serif;min-height:0;
+}
+.pres-left{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;}
+.pres-thumb{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;overflow:hidden;
+  flex:1;min-height:0;position:relative;
+}
+.pres-thumb iframe{
+  position:absolute;top:0;left:0;
+  width:1600px;height:900px;border:0;background:var(--bg);
+  transform-origin:0 0;pointer-events:none;
+}
+.pres-status{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;
+  padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9CA3AF;
+  letter-spacing:.06em;flex-shrink:0;
+}
+.pres-status .now{color:#7ED9C9;font-weight:700;}
+.pres-status .clk{color:#E5E7EB;font-weight:600;}
+.pres-right{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;overflow:auto;}
+.pres-block{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;padding:18px 20px;
+}
+.pres-block h4{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;margin-bottom:8px;
+}
+.pres-block.next h4{color:#C9A8FF;}
+.pres-block h3{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;
+  color:#F3F4F6;margin-bottom:12px;line-height:1.25;
+}
+.pres-do{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#7ED9C9;font-weight:600;
+  line-height:1.55;margin-bottom:14px;padding:10px 12px;
+  background:rgba(126,217,201,.06);border-left:2px solid #7ED9C9;border-radius:4px;
+  white-space:pre-wrap;
+}
+.pres-do::before{
+  content:'DO';display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.14em;color:#7ED9C9;margin-right:8px;opacity:.7;
+}
+.pres-say{
+  font-family:'Inter',sans-serif;font-size:22px;line-height:1.55;font-weight:400;
+  color:#E5E7EB;white-space:pre-wrap;
+}
+.pres-block.next .pres-do{color:#C9A8FF;background:rgba(201,168,255,.06);border-left-color:#C9A8FF;}
+.pres-block.next .pres-do::before{color:#C9A8FF;content:'NEXT DO';}
+.pres-block.next .pres-say{font-size:15px;color:#9CA3AF;}
+.pres-controls{
+  display:flex;gap:8px;justify-content:flex-end;font-size:12px;color:#6B7280;
+  font-family:'JetBrains Mono',monospace;
+}
+.pres-controls button{
+  background:#23272F;border:1px solid #2A2F38;color:#E5E7EB;
+  padding:6px 12px;border-radius:6px;font-family:inherit;font-size:12px;cursor:pointer;
+}
+.pres-controls button:hover{border-color:#3B4250;}
+@media (max-width: 900px){
+  body.presenter .pres-root{grid-template-columns:1fr;grid-template-rows:35vh 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="popup-blocked">Presenter window blocked. Allow popups for this page, then try again.</div>
+
+<!-- ============= DECK ============= -->
+<div class="stage" id="stage">
+
+  <!-- SLIDE 1: Title -->
+  <section class="slide hero-slide" data-title="Title">
+    <div class="top"><div class="left"><span class="dot"></span><span>Operator Hour · S1E3</span></div><div>Jun 9 2026</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Season 1 · Episode 3</div>
+      <h1 class="hero">Reclaim your <span class="accent">morning.</span></h1>
+      <h2 style="margin-top:18px;color:var(--muted);font-weight:600;">Hand back the first hour of your day.</h2>
+      <div class="hero-meta">
+        <span><span class="b">30 min</span> · live</span>
+        <span>Tuesdays <span class="b">10:30 CET</span></span>
+        <span>Made for <span class="b">EMEA EPS + GCPS</span></span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>1</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Warm open. Episode three of six. Greet the room. This is the practical one. By the end they have a routine they can run tomorrow. 60 seconds, then move.
+
+SAY: Welcome back. Today is the one people ask for most. We hand back the first hour of your day. Not inbox-zero theatre. A routine that reads what landed overnight, tells you what needs you, and drafts the rest. You leave with it ready to run.</aside>
+  </section>
+
+  <!-- SLIDE 2: Inbox chaos -->
+  <section class="slide" data-title="Inbox chaos">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · The feeling</span></div><div>02</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">You know this feeling</div>
+      <h1>Open your inbox. <span class="accent">Lose the morning.</span></h1>
+      <p class="lead">Two hundred unread. Most of it noise. A few that actually need you, buried somewhere in the middle. You've tried to fix it. Outlook rules. Power Automate. A folder system that lasted about a week. None of it stuck.</p>
+      <div class="pill-row">
+        <span class="pill"><span class="mark">✕</span> Outlook rules</span>
+        <span class="pill"><span class="mark">✕</span> Power Automate</span>
+        <span class="pill"><span class="mark">✕</span> The folder system you abandoned</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>2</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Get a hands-up. "Who has tried Outlook rules and given up?" Let the room laugh at the pills. This is the relatable open, keep it light. 60 seconds.
+
+SAY: Everyone in this call has stood at the bottom of this hill. I tried rules. I tried Power Automate. I built a folder system that I stopped using by Friday. The mail still won. So I stopped fighting it by hand.</aside>
+  </section>
+
+  <!-- SLIDE 3: The shift -->
+  <section class="slide" data-title="The shift">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · The shift</span></div><div>03</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The shift</div>
+      <div class="bigquote">Rules sort. <span class="mute">Routines decide.</span></div>
+      <p class="q-cap">Inbox rules move mail into folders you never open. A morning routine reads, decides what needs you, and drafts the rest.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>3</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: This is the core reframe of the episode. Pause after the big line. The difference between sorting and deciding is the whole point. 60 seconds.
+
+SAY: Here is the shift. A rule sorts. It moves a message into a folder. It still leaves you to open the folder and decide. A routine decides for you. It reads your inbox, your calendar, the one channel that matters, works out what actually needs you, and drafts the rest. You get a three-line brief instead of a backlog.</aside>
+  </section>
+
+  <!-- SLIDE 4: Three rungs -->
+  <section class="slide" data-title="Three rungs">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Three rungs</span></div><div>04</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The same job, three rungs</div>
+      <h1>One job. <span class="accent">Three ways to do it.</span></h1>
+      <p class="lead">Reclaiming your morning is one job. Microsoft now gives you three ways to do it, from hands-on to fully automatic. We build the first one live. The other two are where this is going.</p>
+      <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:32px;">
+        <div class="card"><div class="num">01 · LIVE</div><div class="t">⌨️ Build it yourself</div><div class="d">Copilot CLI. Write the routine once, save it as a skill, run it with one command tomorrow. This is what we build today.</div></div>
+        <div class="card"><div class="num">02 · LIVE</div><div class="t">✨ No terminal: Cowork</div><div class="d">The Cowork agent inside Microsoft 365 Copilot. Same routine, plain prompts, no command line.</div></div>
+        <div class="card"><div class="num">03 · ROADMAP</div><div class="t">🛰️ Where it heads: Scout</div><div class="d">The first agent in Microsoft's Autopilot family. Proactive, its own identity. New, shown at Build. Ask your admin.</div></div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>4</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Frame the three rungs as one ladder, not three products. Same job. Point out we build rung one live, rung two is what most of the room will actually use, rung three is the future. 75 seconds. Don't deep-dive Scout here, that's slide 10.
+
+SAY: One job, three rungs. Rung one, you build it yourself in the CLI. That is the live demo. Rung two, you do the same thing with no terminal at all, inside the Copilot you already have. Rung three is Scout, where the agent runs on its own. Most of you will live on rung two. Let me show you rung one first, because once you see it work, rung two is obvious.</aside>
+  </section>
+
+  <!-- SLIDE 5: The move -->
+  <section class="slide" data-title="Live demo">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Live</span></div><div>05</div></div>
+    <div class="slide-inner" style="justify-content:center;">
+      <div class="eyebrow">Live now</div>
+      <h1 class="hero">Watch it <span class="accent">sort itself.</span></h1>
+      <p class="lead" style="font-size:24px;margin-top:24px;">One command. A real inbox. The folders fill in front of you.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>5</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: HAND OFF TO LIVE DEMO. Split screen: Windows Terminal left, New Outlook right, both visible. PRE-FLIGHT (do before the call): pre-warm the correspondents cache, seed the inbox with safe broadcast/notification mail only (newsletters, system notices) and keep all direct/partner mail OUT of view. Backup screen-recording ready if COM hangs. RUN: trigger the one command, narrate as the Mass/Notifications/Newsletters folders fill and the inbox drops to a handful. Point out the direct mail that stayed put. 6 to 8 minutes, not more.
+
+SAY: This is my real inbox, cleaned of anything I can't show you. One command. Watch the right side. Newsletters, system notices, broadcast mail all move into their own folders. The mail that's actually addressed to me stays right where I'll see it. That's the whole trick. Let me run it.</aside>
+  </section>
+
+  <!-- SLIDE 6: Build story -->
+  <section class="slide" data-title="Where it came from">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Build story</span></div><div>06</div></div>
+    <div class="slide-inner">
+      <div class="two">
+        <div>
+          <div class="eyebrow">Where the script came from</div>
+          <h2>I didn't write it. I <span style="color:var(--teal-2);">asked for it.</span></h2>
+          <p class="lead">I opened Copilot CLI and described the job in plain language. It wrote the script. No syntax to learn, no Stack Overflow tabs. If you can describe how you want your inbox sorted, you can build this.</p>
+          <ul class="qs" style="margin-top:18px;">
+            <li><span class="n">1</span><span>Describe the job in a sentence.</span></li>
+            <li><span class="n">2</span><span>Tell it the rules in plain words.</span></li>
+            <li><span class="n">3</span><span>Let it write and test the script.</span></li>
+            <li><span class="n">4</span><span>Save it. Tomorrow it's one command.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="term">
+            <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="ttl">copilot · inbox-triage</span></div>
+            <div class="term-body"><span class="pmt">›</span> <span class="acc">Sort my Outlook inbox every morning.</span>
+Keep anything addressed to me. Move the
+newsletters, notifications and broadcasts
+into their own folders.
+
+<span class="cmt"># Copilot</span>
+<span class="arr">→</span> Reading your folders via Outlook...
+<span class="arr">→</span> Drafting a PowerShell routine
+<span class="arr">→</span> Rule: direct mail always stays in Inbox
+<span class="ok">✓</span> Wrote <span class="h">inbox-triage.ps1</span>
+<span class="ok">✓</span> Dry run: 142 scanned, 7 kept, 135 filed
+<span class="pmt">›</span> <span class="acc">Run it for real every morning at 8.</span>
+<span class="ok">✓</span> Scheduled. You're done.
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>6</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: This is the "you could build this too" beat. Talk about the conversation, not the code. If you want the animated version, this is the slide to alt-tab into the terminal-demo overlay. Otherwise the static mock carries it. 90 seconds. Be honest that the first AI version mis-filed real mail, so the rules ended up deliberately simple (sets up slide 7).
+
+SAY: Here's the part that matters for this room. I did not write this script. I described what I wanted, in the same words I just used with you, and Copilot wrote it. It even tested it before running. One honest note: my first version let the AI decide what was important, and it buried a couple of real emails. So I made the rules dumb on purpose. That's the next slide.</aside>
+  </section>
+
+  <!-- SLIDE 7: Three rules -->
+  <section class="slide" data-title="Three rules">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · The engine</span></div><div>07</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">What it actually does</div>
+      <h1>Three rules. <span class="accent">That's the engine.</span></h1>
+      <p class="lead">No clever AI deciding what matters to you. Three plain rules you can read in one breath. Dumb on purpose, so it never hides a real email.</p>
+      <ul class="qs" style="margin-top:22px;">
+        <li><span class="n">1</span><span><strong style="color:var(--ink);">Addressed to you stays put.</strong> Anything sent directly to you stays in the inbox. Always.</span></li>
+        <li><span class="n">2</span><span><strong style="color:var(--ink);">Noise gets its own room.</strong> Newsletters, notifications and broadcasts move to their own folders.</span></li>
+        <li><span class="n">3</span><span><strong style="color:var(--ink);">When unsure, keep it.</strong> If it can't tell, it leaves it in the inbox. It never guesses a real one into a folder.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><div class="count">Slide <span>7</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: This is the trust slide. Non-technical room needs to believe it won't lose mail. Lean on rule 3. Read all three slowly. 75 seconds.
+
+SAY: People worry an agent will hide something important. So the rules are deliberately simple. If a message is addressed to you, it stays in your inbox, full stop. The newsletters and the system noise get their own folders. And when it isn't sure, it does the safe thing and leaves it in front of you. You can read the whole logic in one breath. That's the point.</aside>
+  </section>
+
+  <!-- SLIDE 8: Cowork twin -->
+  <section class="slide" data-title="No terminal: Cowork">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Cowork</span></div><div>08</div></div>
+    <div class="slide-inner">
+      <div class="two right-heavy">
+        <div>
+          <div class="eyebrow">No terminal</div>
+          <h2>Same routine. <span style="color:var(--teal-2);">No command line.</span></h2>
+          <p class="lead">Don't want a terminal? You don't need one. The Cowork agent lives inside the Microsoft 365 Copilot you already have. Same two jobs, plain prompts, on a schedule you set.</p>
+          <p class="kicker" style="margin-top:24px;">Paste these into Cowork. Both are in the kit.</p>
+        </div>
+        <div>
+          <div class="out-mock">
+            <div class="head"><h3>Cowork · your morning</h3><span class="meta">2 PROMPTS</span></div>
+            <div class="uc start">
+              <div>
+                <div class="ribbon">▸ Every morning</div>
+                <div class="t">"Organize my inbox"</div>
+                <div class="why">Files the noise, surfaces what needs you, leaves direct mail alone.</div>
+              </div>
+              <div class="badges"><span class="b s">DAILY</span></div>
+            </div>
+            <div class="uc">
+              <div>
+                <div class="t">"Give me my morning brief"</div>
+                <div class="why">What changed overnight, what's on your calendar, what's waiting on you, what to do first.</div>
+              </div>
+              <div class="badges"><span class="b m">08:00</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>8</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: This is the rung most of the room will actually use. Make it feel effortless. Two prompts, no install. Optionally show Cowork organizing the inbox live, or a short clip. Both prompts are in the kit on the next slide. 90 seconds.
+
+SAY: Here's the version with no terminal at all. Cowork sits inside the Copilot you already pay for. You give it two prompts. Organize my inbox. Give me my morning brief. Set them to run every morning. Same routine I just built in the CLI, only you never touch a command line. For most of you, this is the answer.</aside>
+  </section>
+
+  <!-- SLIDE 9: The kit -->
+  <section class="slide" data-title="The kit">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Take it home</span></div><div>09</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Take it home</div>
+      <h1>The Morning <span class="accent">Routine Kit.</span></h1>
+      <div class="takehome">
+        <div class="tag">▸ Copy &amp; run</div>
+        <h2>Both Cowork prompts. The give-away script. Where Scout fits.</h2>
+        <p>The whole routine, ready to run. Pick the rung you want. <a href="https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e3/morning-routine-kit.html" target="_blank" rel="noopener" style="color:var(--teal);">Kit link in the chat</a>. For the script, change one line, your email address, and you're done.</p>
+        <p style="font-size:14px;color:var(--ink-2);margin-top:14px;">Everything else lives at <a href="https://jw-sthlm.github.io/cli-intro-share/" target="_blank" rel="noopener" style="color:var(--teal);">jw-sthlm.github.io/cli-intro-share</a>. Course, all sessions, every prompt. Bookmark it.</p>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>9</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Point at the kit as the one thing to grab. Drop the link in the chat now. It holds both Cowork prompts and the script, so nobody has to remember anything. 45 seconds.
+
+SAY: Everything I showed you is in one place. The Morning Routine Kit. Both Cowork prompts, the script if you want the CLI version, and where Scout fits when it lands. Link is in the chat. Change one line and it's yours.</aside>
+  </section>
+
+  <!-- SLIDE 10: Scout -->
+  <section class="slide" data-title="Where it heads: Scout">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Roadmap</span></div><div>10</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Where this heads</div>
+      <h1>Next: <span class="purple">Scout.</span></h1>
+      <p class="lead">The first agent in Microsoft's Autopilot family. Proactive, with its own identity, working while you're elsewhere. You don't prompt it every morning. It already did the morning. New, and I haven't tested it yet. This is from what Microsoft showed at Build.</p>
+      <div class="pill-row" style="margin-top:26px;">
+        <span class="pill"><span class="mark">▸</span> Proactive, not prompted</span>
+        <span class="pill"><span class="mark">▸</span> Its own identity</span>
+        <span class="pill"><span class="mark">▸</span> Ask your admin to enable it</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>10</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Honesty matters here. Be clear this is roadmap, not something you've run. Frame from the public Build announcement only. Don't overclaim. 60 seconds. The "where it's going" beat after the two things they can use today.
+
+SAY: One rung up from Cowork is Scout. The first of Microsoft's Autopilot agents. The difference is it's proactive. You don't ask it to do your morning. It already did it. I'll be straight with you, I haven't run this yet, it's new. This is what Microsoft showed at Build. If you want to try it, that's a conversation with your admin.</aside>
+  </section>
+
+  <!-- SLIDE 11: AMA -->
+  <section class="slide" data-title="AMA with Otto">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · AMA</span></div><div>11</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Ask anything · 5 min</div>
+      <h1>AMA. <span class="purple">Otto is in the room.</span></h1>
+      <p class="lead">Drop questions in chat. Otto answers what it can, I take the rest. Stuck on the script, the prompts, or where to start tomorrow? Now's the time.</p>
+      <div class="otto-card" style="margin-top:30px;">
+        <div class="otto-av">@</div>
+        <div>
+          <div class="name">Otto</div>
+          <div class="role">AI-first sidekick · in this chat, every Tuesday</div>
+          <div class="desc">Knows today's morning routine, both Cowork prompts, the give-away script, and the season schedule. Logs everything else for next week.</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>11</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Open the floor. Let Otto take the first one or two in chat, read aloud, correct if needed. 5 minutes. If it's quiet, seed one ("Otto, what's the difference between the script and Cowork?"). Move on if nothing lands.
+
+SAY: Five minutes for questions. Otto is in the chat and knows today's routine, both prompts and the script. Ask it anything. If it gets something wrong, that's on tape and we fix it before next week.</aside>
+  </section>
+
+  <!-- SLIDE 12: What's next -->
+  <section class="slide" data-title="What's next">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E3 · Next</span></div><div>12</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Next Tuesday</div>
+      <h1>E4. <span class="purple">Prototypes that show, not tell.</span></h1>
+      <div class="next">
+        <span class="when">Tue Jun 16 · 10:30 CET</span>
+        <span class="arrow">→</span>
+        <span style="font-size:17px;color:var(--ink-2);">Set up your routine this week. Bring what it got wrong.</span>
+      </div>
+      <div class="refrain">
+        Still not a developer.
+        <span class="small">Just stopped letting the first hour of the day run me.</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>12</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Close. Land the refrain. Hold the smile. Mention the recap and recording land on the same page tonight.
+
+SAY: This week, block twenty minutes and set the routine up on your own inbox. Run it once on Thursday morning. Bring what it got right and what it got wrong. Next Tuesday we build prototypes that show instead of tell. Still not a developer. I just stopped letting the first hour of the day run me.</aside>
+  </section>
+
+</div>
+
+<!-- ============= PRESENTER VIEW ============= -->
+<div class="pres-root">
+  <div class="pres-left">
+    <div class="pres-thumb"><iframe id="presIframe"></iframe></div>
+    <div class="pres-status">
+      <div>Now: <span class="now" id="presNow">1 / 12</span> · <span id="presTitle">Title</span></div>
+      <div class="clk" id="presClock">00:00</div>
+    </div>
+  </div>
+  <div class="pres-right">
+    <div class="pres-block">
+      <h4>Current</h4>
+      <h3 id="curTitle">Title</h3>
+      <div id="curDo" class="pres-do" style="display:none;"></div>
+      <div id="curSay" class="pres-say"></div>
+    </div>
+    <div class="pres-block next">
+      <h4>Next up</h4>
+      <h3 id="nxtTitle">...</h3>
+      <div id="nxtDo" class="pres-do" style="display:none;"></div>
+      <div id="nxtSay" class="pres-say"></div>
+    </div>
+    <div class="pres-controls">
+      <button onclick="postNav('prev')">← Prev</button>
+      <button onclick="postNav('next')">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const isPresenter = params.get('presenter') === 'notes';
+  const isThumb = params.get('presenter') === 'thumb';
+  const channelName = 'operator-hour-s1e3';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+
+  function show(i, silent){
+    idx = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('active', k === idx));
+    const pct = ((idx + 1) / total) * 100;
+    document.querySelectorAll('.progress .bar').forEach(b => b.style.width = pct + '%');
+    if (silent) return;
+    try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+    try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+  }
+
+  // BroadcastChannel sync
+  let bc = null;
+  try { bc = new BroadcastChannel(channelName); } catch(e){}
+
+  // Thumb iframe mode: just render slides, listen for nav silently (never re-broadcast)
+  if (isThumb) {
+    document.body.style.background = '#fff';
+    document.querySelector('.stage').style.padding = '6px';
+    if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') show(e.data.idx, true); };
+    window.addEventListener('storage', (e) => {
+      if (e.key === channelName + ':state' && e.newValue) {
+        try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
+      }
+    });
+    show(0, true);
+    return;
+  }
+
+  // Presenter mode
+  if (isPresenter) {
+    document.body.classList.add('presenter');
+    document.title = 'Notes · Operator Hour · S1E3';
+    // Load the thumbnail iframe inside the notes window
+    const ifr = document.getElementById('presIframe');
+    if (ifr && !ifr.src) ifr.src = '?presenter=thumb';
+
+    // Scale the thumbnail iframe to fit its container while preserving 16:9
+    const THUMB_W = 1600, THUMB_H = 900;
+    function scaleThumb(){
+      const wrap = document.querySelector('.pres-thumb');
+      if (!wrap || !ifr) return;
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (w <= 0 || h <= 0) return;
+      const s = Math.min(w / THUMB_W, h / THUMB_H);
+      ifr.style.transform = 'scale(' + s + ')';
+      ifr.style.left = Math.round((w - THUMB_W * s) / 2) + 'px';
+      ifr.style.top  = Math.round((h - THUMB_H * s) / 2) + 'px';
+    }
+    window.addEventListener('resize', scaleThumb);
+    if (ifr) ifr.addEventListener('load', scaleThumb);
+    setTimeout(scaleThumb, 50);
+    setTimeout(scaleThumb, 400);
+
+    const titles = slides.map(s => s.dataset.title || '');
+    const rawNotes = slides.map(s => {
+      const n = s.querySelector('.notes');
+      return n ? n.textContent.trim() : '';
+    });
+
+    function parseNotes(raw){
+      let doText = '', sayText = raw;
+      const m = raw.match(/^DO:\s*([\s\S]*?)\s*SAY:\s*/i);
+      if (m){ doText = m[1].trim(); sayText = raw.substring(m[0].length).trim(); }
+      else { const sm = raw.match(/^SAY:\s*/i); if (sm) sayText = raw.substring(sm[0].length).trim(); }
+      return { doText, sayText };
+    }
+
+    function setBlock(prefix, i){
+      const t = titles[i] || '';
+      const { doText, sayText } = parseNotes(rawNotes[i] || '');
+      document.getElementById(prefix + 'Title').textContent = t;
+      const doEl = document.getElementById(prefix + 'Do');
+      const sayEl = document.getElementById(prefix + 'Say');
+      if (doText){ doEl.textContent = doText; doEl.style.display = ''; } else { doEl.style.display = 'none'; }
+      sayEl.textContent = sayText || '';
+    }
+
+    function render(i){
+      idx = i;
+      document.getElementById('presNow').textContent = (i + 1) + ' / ' + total;
+      document.getElementById('presTitle').textContent = titles[i] || '';
+      setBlock('cur', i);
+      const nx = i + 1 < total ? i + 1 : null;
+      if (nx !== null){
+        setBlock('nxt', nx);
+      } else {
+        document.getElementById('nxtTitle').textContent = 'End of deck';
+        document.getElementById('nxtDo').style.display = 'none';
+        document.getElementById('nxtSay').textContent = '';
+      }
+    }
+
+    function postNav(action){
+      const newIdx = action === 'next' ? Math.min(total - 1, idx + 1)
+                    : action === 'prev' ? Math.max(0, idx - 1)
+                    : action === 'first' ? 0
+                    : action === 'last' ? total - 1
+                    : idx;
+      idx = newIdx;
+      try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+      try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+      render(idx);
+    }
+    window.postNav = postNav;
+
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); postNav('next'); }
+      else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); postNav('prev'); }
+      else if (e.key === 'Home') { postNav('first'); }
+      else if (e.key === 'End') { postNav('last'); }
+    });
+
+    // Clock
+    const startT = Date.now();
+    function updClock(){
+      const s = Math.floor((Date.now() - startT) / 1000);
+      const mm = String(Math.floor(s / 60)).padStart(2, '0');
+      const ss = String(s % 60).padStart(2, '0');
+      document.getElementById('presClock').textContent = mm + ':' + ss;
+    }
+    setInterval(updClock, 1000);
+
+    // Receive state from deck
+    if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') render(e.data.idx); };
+    window.addEventListener('storage', (e) => {
+      if (e.key === channelName + ':state' && e.newValue) {
+        try { render(JSON.parse(e.newValue).idx); } catch(_){}
+      }
+    });
+
+    render(0);
+    return;
+  }
+
+  // Deck mode
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); show(idx + 1); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(total - 1); }
+    else if (e.key === 'p' || e.key === 'P') { openPresenter(); }
+  });
+
+  function openPresenter(){
+    const url = location.pathname + '?presenter=notes' + location.hash;
+    const w = window.open(url, 'op-hour-presenter',
+      'popup=yes,resizable=yes,scrollbars=yes,width=1280,height=820,menubar=0,toolbar=0,location=0,status=0');
+    if (!w) {
+      document.getElementById('popup-blocked').style.display = 'block';
+      setTimeout(() => { document.getElementById('popup-blocked').style.display = 'none'; }, 5000);
+      return;
+    }
+    // Send current state once the notes window has loaded and its iframe has subscribed
+    setTimeout(() => {
+      try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+      try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+    }, 600);
+  }
+
+  // Deck mode receives state updates silently (the notes window can send nav back)
+  if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') show(e.data.idx, true); };
+  window.addEventListener('storage', (e) => {
+    if (e.key === channelName + ':state' && e.newValue) {
+      try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
+    }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
