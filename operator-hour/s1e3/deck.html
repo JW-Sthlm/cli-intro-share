@@ -301,18 +301,29 @@ body.presenter{background:#0E1118;color:#E5E7EB;overflow:hidden;padding:18px;}
 body.presenter .stage{display:none;}
 .pres-root{display:none;}
 body.presenter .pres-root{
-  display:grid;grid-template-columns:minmax(320px,1.2fr) minmax(360px,1fr);gap:18px;height:calc(100vh - 36px);
+  display:grid;grid-template-columns:var(--pres-left-w,56%) 10px 1fr;gap:14px;height:calc(100vh - 36px);
   font-family:'Inter',sans-serif;min-height:0;
 }
 .pres-left{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;}
+.pres-split{
+  align-self:stretch;width:10px;cursor:col-resize;border-radius:5px;
+  background:#23272F;border:1px solid #2A2F38;
+  display:flex;align-items:center;justify-content:center;touch-action:none;
+}
+.pres-split:hover,.pres-split.dragging{background:#2F3640;border-color:#3B4250;}
+.pres-split::after{content:'';width:2px;height:30px;border-radius:2px;background:#525a66;}
 .pres-thumb{
   background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;overflow:hidden;
   flex:1;min-height:0;position:relative;
 }
-.pres-thumb iframe{
+.pres-thumb iframe,.pres-thumb-next iframe{
   position:absolute;top:0;left:0;
   width:1600px;height:900px;border:0;background:var(--bg);
   transform-origin:0 0;pointer-events:none;
+}
+.pres-thumb-next{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:8px;overflow:hidden;
+  position:relative;aspect-ratio:16/9;width:100%;margin:0 0 12px;
 }
 .pres-status{
   display:flex;justify-content:space-between;align-items:center;
@@ -330,7 +341,7 @@ body.presenter .pres-root{
   font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
   color:#7ED9C9;text-transform:uppercase;font-weight:700;margin-bottom:8px;
 }
-.pres-block.next h4{color:#C9A8FF;}
+.pres-block.pres-next h4{color:#C9A8FF;}
 .pres-block h3{
   font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;
   color:#F3F4F6;margin-bottom:12px;line-height:1.25;
@@ -349,9 +360,29 @@ body.presenter .pres-root{
   font-family:'Inter',sans-serif;font-size:22px;line-height:1.55;font-weight:400;
   color:#E5E7EB;white-space:pre-wrap;
 }
-.pres-block.next .pres-do{color:#C9A8FF;background:rgba(201,168,255,.06);border-left-color:#C9A8FF;}
-.pres-block.next .pres-do::before{color:#C9A8FF;content:'NEXT DO';}
-.pres-block.next .pres-say{font-size:15px;color:#9CA3AF;}
+.pres-copy{display:flex;flex-direction:column;gap:8px;margin:0 0 16px;}
+.pres-copy .pc-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;opacity:.8;margin-bottom:2px;
+}
+.copy-chip{
+  display:flex;align-items:center;gap:10px;background:#11151C;
+  border:1px solid #2A2F38;border-radius:8px;padding:7px 7px 7px 12px;
+}
+.copy-chip .cc-text{
+  flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:#E5E7EB;white-space:pre-wrap;word-break:break-word;line-height:1.4;
+}
+.copy-chip .cc-btn{
+  flex-shrink:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#0E1118;
+  background:#7ED9C9;border:0;border-radius:6px;padding:7px 13px;transition:background .12s;
+}
+.copy-chip .cc-btn:hover{background:#9BE7DA;}
+.copy-chip .cc-btn.ok{background:#3FB950;color:#06210F;}
+.pres-block.pres-next .pres-do{color:#C9A8FF;background:rgba(201,168,255,.06);border-left-color:#C9A8FF;}
+.pres-block.pres-next .pres-do::before{color:#C9A8FF;content:'NEXT DO';}
+.pres-block.pres-next .pres-say{font-size:15px;color:#9CA3AF;}
 .pres-controls{
   display:flex;gap:8px;justify-content:flex-end;font-size:12px;color:#6B7280;
   font-family:'JetBrains Mono',monospace;
@@ -363,6 +394,7 @@ body.presenter .pres-root{
 .pres-controls button:hover{border-color:#3B4250;}
 @media (max-width: 900px){
   body.presenter .pres-root{grid-template-columns:1fr;grid-template-rows:35vh 1fr;}
+  body.presenter .pres-split{display:none;}
 }
 </style>
 </head>
@@ -458,9 +490,35 @@ SAY: One job, three rungs. Rung one, you build it yourself in the CLI. That is t
     </div>
     <div class="foot"><div class="count">Slide <span>5</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
     <div class="progress"><div class="bar"></div></div>
-    <aside class="notes">DO: HAND OFF TO LIVE DEMO. Split screen: Windows Terminal left, New Outlook right, both visible. PRE-FLIGHT (do before the call): pre-warm the correspondents cache, seed the inbox with safe broadcast/notification mail only (newsletters, system notices) and keep all direct/partner mail OUT of view. Backup screen-recording ready if COM hangs. RUN: trigger the one command, narrate as the Mass/Notifications/Newsletters folders fill and the inbox drops to a handful. Point out the direct mail that stayed put. 6 to 8 minutes, not more.
+    <aside class="notes">DO: LIVE DEMO. Full runbook.
 
-SAY: This is my real inbox, cleaned of anything I can't show you. One command. Watch the right side. Newsletters, system notices, broadcast mail all move into their own folders. The mail that's actually addressed to me stays right where I'll see it. That's the whole trick. Let me run it.</aside>
+PRE-FLIGHT (before the call):
+1. Split screen. Windows Terminal pinned left at about 45 percent, New Outlook right at about 55 percent. Both fully visible, no overlap.
+2. In Outlook, confirm the seeded inbox holds only broadcast and notification mail: newsletters, system notices, build alerts. No direct or partner mail anywhere on screen. Anything sensitive stays in a collapsed folder.
+3. Pre-warm the correspondents cache: run the script once in the terminal before the call so the cache is fresh. It rebuilds when older than 24 hours and that shells out, which is slow live.
+4. Open the 20-second backup recording in a tab, in case Outlook COM hangs.
+5. Terminal font at presentation size. Sort the inbox by date, newest on top, so the movement is visible.
+
+RUN (6 to 8 minutes, hard stop at 8):
+1. Say the setup line, then type the one command: .\inbox-triage.ps1
+2. Press enter. Do not narrate the code. Narrate the inbox.
+3. As folders fill, point at Newsletters, then Notifications, then Mass. Read the running count out loud.
+4. Land the trust beat: scroll the inbox, show the handful that stayed, say they are addressed to you and untouched.
+5. Open the Newsletters folder to prove nothing real got buried.
+
+FALLBACK: if COM hangs past 10 seconds, cut to the backup recording and keep talking. Do not debug live. If the cache starts rebuilding, say it is refreshing who you talk to and wait it out, or cut to the clip.
+
+COPY: .\inbox-triage.ps1
+
+SAY: Okay. This is my actual inbox. I have cleaned out anything I can't show you, the rest is real. Watch the right side, not the terminal.
+
+One command. That is it.
+
+There it goes. Newsletters, moving. System notifications, moving. The broadcast noise, gone into its own folder. A hundred and forty messages down to a handful.
+
+Now look at what stayed. These are addressed to me. A person wrote them. The routine never touches those. When it is not sure, it leaves the mail right here where I will see it.
+
+That is the whole trick. No AI guessing what matters to me. Three plain rules, run every morning before I open my laptop.</aside>
   </section>
 
   <!-- SLIDE 6: Build story -->
@@ -564,6 +622,9 @@ SAY: People worry an agent will hide something important. So the rules are delib
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: This is the rung most of the room will actually use. Make it feel effortless. Two prompts, no install. Optionally show Cowork organizing the inbox live, or a short clip. Both prompts are in the kit on the next slide. 90 seconds.
 
+COPY: Organize my inbox
+COPY: Give me my morning brief
+
 SAY: Here's the version with no terminal at all. Cowork sits inside the Copilot you already pay for. You give it two prompts. Organize my inbox. Give me my morning brief. Set them to run every morning. Same routine I just built in the CLI, only you never touch a command line. For most of you, this is the answer.</aside>
   </section>
 
@@ -583,6 +644,8 @@ SAY: Here's the version with no terminal at all. Cowork sits inside the Copilot 
     <div class="foot"><div class="count">Slide <span>9</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Point at the kit as the one thing to grab. Drop the link in the chat now. It holds both Cowork prompts and the script, so nobody has to remember anything. 45 seconds.
+
+COPY: https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e3/morning-routine-kit.html
 
 SAY: Everything I showed you is in one place. The Morning Routine Kit. Both Cowork prompts, the script if you want the CLI version, and where Scout fits when it lands. Link is in the chat. Change one line and it's yours.</aside>
   </section>
@@ -627,6 +690,8 @@ SAY: One rung up from Cowork is Scout. The first of Microsoft's Autopilot agents
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Open the floor. Let Otto take the first one or two in chat, read aloud, correct if needed. 5 minutes. If it's quiet, seed one ("Otto, what's the difference between the script and Cowork?"). Move on if nothing lands.
 
+COPY: Otto, what's the difference between the script and Cowork?
+
 SAY: Five minutes for questions. Otto is in the chat and knows today's routine, both prompts and the script. Ask it anything. If it gets something wrong, that's on tape and we fix it before next week.</aside>
   </section>
 
@@ -664,15 +729,18 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
       <div class="clk" id="presClock">00:00</div>
     </div>
   </div>
+  <div class="pres-split" id="presSplit" title="Drag to resize"></div>
   <div class="pres-right">
     <div class="pres-block">
       <h4>Current</h4>
       <h3 id="curTitle">Title</h3>
       <div id="curDo" class="pres-do" style="display:none;"></div>
+      <div id="curCopy" class="pres-copy" style="display:none;"></div>
       <div id="curSay" class="pres-say"></div>
     </div>
-    <div class="pres-block next">
+    <div class="pres-block pres-next">
       <h4>Next up</h4>
+      <div class="pres-thumb-next"><iframe id="presIframeNext"></iframe></div>
       <h3 id="nxtTitle">...</h3>
       <div id="nxtDo" class="pres-do" style="display:none;"></div>
       <div id="nxtSay" class="pres-say"></div>
@@ -708,17 +776,21 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
   let bc = null;
   try { bc = new BroadcastChannel(channelName); } catch(e){}
 
-  // Thumb iframe mode: just render slides, listen for nav silently (never re-broadcast)
+  // Thumb iframe mode: render the slide for this channel (cur or nxt), listen silently.
   if (isThumb) {
+    const ch = params.get('ch') || 'cur';
+    const key = channelName + ':thumb:' + ch;
     document.body.style.background = '#fff';
     document.querySelector('.stage').style.padding = '6px';
-    if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') show(e.data.idx, true); };
+    let tbc = null;
+    try { tbc = new BroadcastChannel(key); } catch(e){}
+    if (tbc) tbc.onmessage = (e) => { if (e.data && typeof e.data.idx === 'number') show(e.data.idx, true); };
     window.addEventListener('storage', (e) => {
-      if (e.key === channelName + ':state' && e.newValue) {
+      if (e.key === key && e.newValue) {
         try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
       }
     });
-    show(0, true);
+    try { const v = localStorage.getItem(key); if (v) show(JSON.parse(v).idx, true); else show(0, true); } catch(_){ show(0, true); }
     return;
   }
 
@@ -726,24 +798,49 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
   if (isPresenter) {
     document.body.classList.add('presenter');
     document.title = 'Notes · Operator Hour · S1E3';
-    // Load the thumbnail iframe inside the notes window
-    const ifr = document.getElementById('presIframe');
-    if (ifr && !ifr.src) ifr.src = '?presenter=thumb';
+    // Thumbnail channels: current slide and next slide
+    let thumbBcCur = null, thumbBcNxt = null;
+    try { thumbBcCur = new BroadcastChannel(channelName + ':thumb:cur'); } catch(e){}
+    try { thumbBcNxt = new BroadcastChannel(channelName + ':thumb:nxt'); } catch(e){}
+    function pushThumbs(i){
+      const cur = i, nxt = Math.min(total - 1, i + 1);
+      try { thumbBcCur && thumbBcCur.postMessage({ idx: cur }); } catch(e){}
+      try { thumbBcNxt && thumbBcNxt.postMessage({ idx: nxt }); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:cur', JSON.stringify({ idx: cur, t: Date.now() })); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:nxt', JSON.stringify({ idx: nxt, t: Date.now() })); } catch(e){}
+    }
 
-    // Scale the thumbnail iframe to fit its container while preserving 16:9
+    // Load the thumbnail iframes inside the notes window
+    const ifr = document.getElementById('presIframe');
+    const ifrNext = document.getElementById('presIframeNext');
+    if (ifr && !ifr.src) ifr.src = '?presenter=thumb&ch=cur';
+    if (ifrNext && !ifrNext.src) ifrNext.src = '?presenter=thumb&ch=nxt';
+
+    // Scale thumbnail iframes to fit their containers while preserving 16:9
     const THUMB_W = 1600, THUMB_H = 900;
-    function scaleThumb(){
-      const wrap = document.querySelector('.pres-thumb');
-      if (!wrap || !ifr) return;
+    function scaleOne(wrap, frame){
+      if (!wrap || !frame) return;
       const w = wrap.clientWidth, h = wrap.clientHeight;
       if (w <= 0 || h <= 0) return;
       const s = Math.min(w / THUMB_W, h / THUMB_H);
-      ifr.style.transform = 'scale(' + s + ')';
-      ifr.style.left = Math.round((w - THUMB_W * s) / 2) + 'px';
-      ifr.style.top  = Math.round((h - THUMB_H * s) / 2) + 'px';
+      frame.style.transform = 'scale(' + s + ')';
+      frame.style.left = Math.round((w - THUMB_W * s) / 2) + 'px';
+      frame.style.top  = Math.round((h - THUMB_H * s) / 2) + 'px';
+    }
+    function scaleThumb(){
+      scaleOne(document.querySelector('.pres-thumb'), ifr);
+      scaleOne(document.querySelector('.pres-thumb-next'), ifrNext);
     }
     window.addEventListener('resize', scaleThumb);
-    if (ifr) ifr.addEventListener('load', scaleThumb);
+    if (window.ResizeObserver){
+      const ro = new ResizeObserver(scaleThumb);
+      const tn = document.querySelector('.pres-thumb');
+      const tx = document.querySelector('.pres-thumb-next');
+      if (tn) ro.observe(tn);
+      if (tx) ro.observe(tx);
+    }
+    if (ifr) ifr.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
+    if (ifrNext) ifrNext.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
     setTimeout(scaleThumb, 50);
     setTimeout(scaleThumb, 400);
 
@@ -754,21 +851,70 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
     });
 
     function parseNotes(raw){
+      const copies = [];
+      raw = raw.replace(/^[ \t]*COPY:[ \t]*(.+)$/gim, function(_, txt){ copies.push(txt.trim()); return ''; });
+      raw = raw.replace(/\n{3,}/g, '\n\n').trim();
       let doText = '', sayText = raw;
       const m = raw.match(/^DO:\s*([\s\S]*?)\s*SAY:\s*/i);
       if (m){ doText = m[1].trim(); sayText = raw.substring(m[0].length).trim(); }
       else { const sm = raw.match(/^SAY:\s*/i); if (sm) sayText = raw.substring(sm[0].length).trim(); }
-      return { doText, sayText };
+      return { doText, sayText, copies };
+    }
+
+    function copyText(text, btn){
+      function flash(ok){
+        if (!btn) return;
+        const orig = btn.textContent;
+        btn.textContent = ok ? 'Copied' : 'Ctrl+C';
+        btn.classList.toggle('ok', ok);
+        setTimeout(function(){ btn.textContent = orig; btn.classList.remove('ok'); }, 1400);
+      }
+      function fallback(){
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta); flash(ok);
+        } catch(e){ flash(false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ flash(true); }, fallback);
+      } else { fallback(); }
+    }
+
+    function renderCopies(list){
+      const box = document.getElementById('curCopy');
+      if (!box) return;
+      box.innerHTML = '';
+      if (!list || !list.length){ box.style.display = 'none'; return; }
+      box.style.display = '';
+      const label = document.createElement('div');
+      label.className = 'pc-label';
+      label.textContent = list.length > 1 ? 'Paste · ' + list.length : 'Paste';
+      box.appendChild(label);
+      list.forEach(function(text){
+        const chip = document.createElement('div');
+        chip.className = 'copy-chip';
+        const code = document.createElement('span');
+        code.className = 'cc-text'; code.textContent = text;
+        const btn = document.createElement('button');
+        btn.className = 'cc-btn'; btn.type = 'button'; btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){ copyText(text, btn); });
+        chip.appendChild(code); chip.appendChild(btn);
+        box.appendChild(chip);
+      });
     }
 
     function setBlock(prefix, i){
       const t = titles[i] || '';
-      const { doText, sayText } = parseNotes(rawNotes[i] || '');
+      const { doText, sayText, copies } = parseNotes(rawNotes[i] || '');
       document.getElementById(prefix + 'Title').textContent = t;
       const doEl = document.getElementById(prefix + 'Do');
       const sayEl = document.getElementById(prefix + 'Say');
       if (doText){ doEl.textContent = doText; doEl.style.display = ''; } else { doEl.style.display = 'none'; }
       sayEl.textContent = sayText || '';
+      if (prefix === 'cur') renderCopies(copies);
     }
 
     function render(i){
@@ -784,6 +930,8 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
         document.getElementById('nxtDo').style.display = 'none';
         document.getElementById('nxtSay').textContent = '';
       }
+      pushThumbs(i);
+      scaleThumb();
     }
 
     function postNav(action){
@@ -823,6 +971,36 @@ SAY: This week, block twenty minutes and set the routine up on your own inbox. R
         try { render(JSON.parse(e.newValue).idx); } catch(_){}
       }
     });
+
+    // Resizable split between preview and notes (drag the divider)
+    (function(){
+      const root = document.querySelector('.pres-root');
+      const sp = document.getElementById('presSplit');
+      if (!root || !sp) return;
+      try { const sv = localStorage.getItem(channelName + ':split'); if (sv) root.style.setProperty('--pres-left-w', sv); } catch(e){}
+      let dragging = false;
+      sp.addEventListener('pointerdown', (e) => {
+        dragging = true; sp.classList.add('dragging');
+        try { sp.setPointerCapture(e.pointerId); } catch(_){}
+        e.preventDefault();
+      });
+      sp.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const r = root.getBoundingClientRect();
+        let pct = ((e.clientX - r.left) / r.width) * 100;
+        pct = Math.max(25, Math.min(75, pct));
+        root.style.setProperty('--pres-left-w', pct.toFixed(1) + '%');
+        scaleThumb();
+      });
+      function end(){
+        if (!dragging) return;
+        dragging = false; sp.classList.remove('dragging');
+        try { localStorage.setItem(channelName + ':split', root.style.getPropertyValue('--pres-left-w')); } catch(e){}
+        scaleThumb();
+      }
+      sp.addEventListener('pointerup', end);
+      sp.addEventListener('pointercancel', end);
+    })();
 
     render(0);
     return;
