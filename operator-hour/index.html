@@ -38,8 +38,11 @@
   .ep-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);letter-spacing:.04em;padding-top:2px;}
   .ep-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 4px;}
   .ep-desc{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
-  .ep--published{position:relative;z-index:1;background:linear-gradient(90deg,rgba(57,210,192,.1) 0%,rgba(57,210,192,.03) 55%,transparent 100%);box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.22),0 0 0 1px rgba(57,210,192,.4),0 0 28px -2px rgba(57,210,192,.45);border-radius:6px;margin:4px 8px;padding-left:20px;}
-  a.ep--published:hover{background:linear-gradient(90deg,rgba(57,210,192,.16) 0%,rgba(57,210,192,.06) 55%,rgba(57,210,192,.01) 100%);box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.45),0 0 0 1px rgba(57,210,192,.7),0 0 38px 0 rgba(57,210,192,.6);}
+  .ep--published{position:relative;z-index:1;background:linear-gradient(90deg,rgba(57,210,192,.1) 0%,rgba(57,210,192,.03) 55%,transparent 100%);box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.22),0 0 0 1px rgba(57,210,192,.4);border-radius:6px;margin:4px 8px;padding-left:20px;}
+  a.ep--published:hover{background:linear-gradient(90deg,rgba(57,210,192,.16) 0%,rgba(57,210,192,.06) 55%,rgba(57,210,192,.01) 100%);box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.45),0 0 0 1px rgba(57,210,192,.7);}
+  /* Only the most recent shipped episode glows. Older published rows keep accent + gradient + badge. */
+  .ep--latest{box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.22),0 0 0 1px rgba(57,210,192,.4),0 0 28px -2px rgba(57,210,192,.45);}
+  a.ep--latest:hover{box-shadow:inset 4px 0 0 var(--teal),inset 0 0 0 1px rgba(57,210,192,.45),0 0 0 1px rgba(57,210,192,.7),0 0 38px 0 rgba(57,210,192,.6);}
   .ep--published+.ep{border-top:0;}
   .ep--published .ep-date{color:var(--teal);font-weight:700;}
   .ep-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--teal);background:rgba(57,210,192,.15);border:1px solid rgba(57,210,192,.5);padding:3px 9px;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;margin-left:10px;vertical-align:2px;transition:background-color .2s,border-color .2s,box-shadow .2s;box-shadow:0 0 12px -2px rgba(57,210,192,.4);}
@@ -98,8 +101,8 @@
       </div>
     </a>
     <a class="ep ep--published" href="s1e2/"><div class="ep-date">Tue Jun 2</div><div><p class="ep-title">Decks that win the room. <span class="ep-badge">▶ Watch recap</span></p><p class="ep-desc">Brief, research, outline, slides, polish. Frontier-style HTML deck flow.</p></div></a>
-    <a class="ep" href="s1e3/"><div class="ep-date">Tue Jun 9</div><div><p class="ep-title">Reclaim your morning. Inbox + brief. <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.3);padding:2px 7px;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;margin-left:10px;vertical-align:2px;font-weight:600;">preview</span></p><p class="ep-desc">Email triage and morning brief running on real (sanitised) traffic.</p></div></a>
-    <div class="ep"><div class="ep-date">Tue Jun 16</div><div><p class="ep-title">Prototypes that show, not tell.</p><p class="ep-desc">Customer Workshop Engine: research, working prototype, IaC handover.</p></div></div>
+    <a class="ep ep--published ep--latest" href="s1e3/"><div class="ep-date">Tue Jun 9</div><div><p class="ep-title">Reclaim your morning. Inbox + brief. <span class="ep-badge">▶ Watch recap</span></p><p class="ep-desc">Email triage and morning brief running on real (sanitised) traffic.</p></div></a>
+    <a class="ep" href="s1e4/"><div class="ep-date">Tue Jun 16</div><div><p class="ep-title">Prototypes that show, not tell.</p><p class="ep-desc">Customer Workshop Engine: research, working prototype, IaC handover.</p></div></a>
     <div class="ep"><div class="ep-date">Tue Jun 23</div><div><p class="ep-title">Sound like yourself, at scale.</p><p class="ep-desc">Signal engine: session log to LinkedIn post in your voice.</p></div></div>
     <div class="ep"><div class="ep-date">Tue Jun 30</div><div><p class="ep-title">Build the agent that runs Season 2.</p><p class="ep-desc">Reveal Otto's architecture. Hand the repo to the community.</p></div></div>
   </div>

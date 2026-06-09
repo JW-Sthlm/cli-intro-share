@@ -22,6 +22,9 @@
   .sub{color:var(--muted);font-size:18px;margin:0 0 40px;max-width:54ch;line-height:1.55;}
   .section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:36px 0 12px;font-weight:600;}
   p{font-size:16px;color:var(--text);margin:0 0 16px;}
+  .lede p{color:#C9D1D9;}
+  .lede em{color:var(--teal);font-style:normal;font-weight:600;}
+  .lede strong{color:var(--text);}
   .pull{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:16px 20px;margin:18px 0;font-size:15px;color:#C9D1D9;}
   .pull .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px;}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:0 0 12px;}
@@ -54,85 +57,43 @@
 <body>
 <div class="wrap">
   <div class="crumb"><a href="../">← Operator Hour</a></div>
-  <span class="tag">S1 · Episode 3 · Tue Jun 9 2026 · 10:30 CET · preview</span>
+  <span class="tag">S1 · Episode 3 · Tue Jun 9 2026 · recap</span>
   <h1>Reclaim your <span class="accent">morning.</span></h1>
   <p class="sub">The first hour of your day, handed back to you. We point the agent at a real morning: inbox, calendar, and the channel that actually matters. You leave with a brief you can run with one command tomorrow, and a clear read on where Microsoft is taking this next.</p>
 
-  <div class="section-label">What we'll cover</div>
-  <ol class="steps">
-    <li>
-      <strong>Read the last 24 hours</strong>
-      <span>Point the agent at a sanitised inbox, your calendar, and the one channel that matters. It reads everything that landed overnight so you don't have to scroll.</span>
-    </li>
-    <li>
-      <strong>Triage, not just sort</strong>
-      <span>What needs you, what needs a reply you can approve in one line, what is noise. The agent proposes. You stay in the loop.</span>
-    </li>
-    <li>
-      <strong>The morning brief</strong>
-      <span>One short read: what changed, what is on your calendar, what is waiting on you, what to do first. The thing you wish landed at 08:00.</span>
-    </li>
-    <li>
-      <strong>Make it a routine</strong>
-      <span>Save the flow as a skill. Tomorrow it is one command, not a fresh prompt. The routine is the point, not the one-off.</span>
-    </li>
-    <li>
-      <strong>Guardrails</strong>
-      <span>What stays on your machine. What never auto-sends. How to keep client detail out of anything that leaves your laptop.</span>
-    </li>
-  </ol>
-
-  <div class="pull">
-    <span class="lbl">The shift</span>
-    Inbox rules sort mail into folders you never open. A morning routine reads your inbox, calendar and channels, decides what actually needs you, and drafts the rest. You get a three-line brief instead of a backlog.
+  <div class="section-label">Recap</div>
+  <div class="lede">
+    <p>Everyone has a morning routine. The hype version is five a.m., yoga, a cold plunge, something green in a glass. The real one is you crawl to your inbox and it hits you like Mike Tyson. Forty unread before you've found the coffee. That's the routine we fixed. Not inbox-zero theatre, but a routine that reads what landed overnight, tells you what actually needs you, and drafts the rest.</p>
+    <p><strong>Rules sort. Routines decide.</strong> An Outlook rule drops mail in a folder you never open, and it's still on you to go look. A routine reads the inbox, works out what needs you, and leaves the noise filed. One job, <em>three levels</em>: Cowork inside the Copilot you already have, the CLI you build yourself, and Scout on the roadmap. We built level two live.</p>
+    <p><strong>The live part.</strong> A real inbox, sanitised, seeded with the kind of mail that actually lands overnight. One plain sentence, <em>"Sort out my inbox"</em>, and the folders filled in front of the room. A packed inbox down to a handful. The trust beat is what stayed behind: mail a real person addressed to me, untouched. When the routine isn't sure, it leaves it right where I'll see it.</p>
+    <div class="pull">
+      <span class="lbl">The payoff</span>
+      The sort runs on a schedule, and the brief is ready by eight, before I'm even up. I don't start the day in my inbox anymore. I wake up and it's already sorted, the brief's waiting, and the first thing I touch is the actual work.
+    </div>
+    <p><strong>Why it's safe.</strong> Three dumb rules you can read in one breath. Addressed to you stays put. Noise gets its own room. When unsure, keep it. No clever AI guessing what matters to you. Then the real reward, Prompt B: a short morning brief. What changed overnight, the one meeting that needs prep, what's waiting on a reply from you, the three things to do first. Easy replies drafted, nothing sent.</p>
+    <p><strong>The operator move:</strong> pick the one inbox, calendar or channel that owns your first hour, and set the routine on it. Run Prompt A, then Prompt B. Want it hands-off? Grab the give-away script and set the scheduler block once. One honest note from the room: the brief shows up in Copilot, not as an email in your inbox. That's the bit to know before you promise yourself a magic 8am email.</p>
   </div>
 
-  <div class="section-label">The same job, three levels</div>
-  <p style="color:var(--muted);font-size:14px;margin:-4px 0 14px;">Reclaiming your morning is one job. Microsoft gives you three ways to do it. Start with the easy one, go as deep as you want. We build the hands-on version live. The other two you can pick up as you go.</p>
+  <div class="section-label">Take-home this week</div>
+  <div class="bring">
+    <h3>Set the routine on the inbox that owns your first hour</h3>
+    <p>Pick the inbox, calendar or Teams channel that eats your morning. Block <strong>20 minutes</strong> this week, set the routine up on it, and run it once Thursday morning. Bring what it got right, and what it got wrong, to E4.</p>
+    <p>Didn't run the Use Case Finder yet? <a class="inline" href="../use-case-finder.html">Five minutes</a>. Morning triage is most people's second or third pick.</p>
+  </div>
+
+  <div class="section-label">Resources from this episode</div>
   <div class="cards">
-    <div class="card">
-      <span class="icon">✨</span>
-      <h2>No terminal: Cowork</h2>
-      <p>The Cowork agent inside Microsoft 365 Copilot. Organize my inbox, Arrange my week, Prep for a meeting, on a schedule. Same routine, no command line. The easiest place to start.</p>
-      <span class="card-tag teal">live · in your Copilot</span>
-    </div>
-    <div class="card">
-      <span class="icon">⌨️</span>
-      <h2>Build it yourself</h2>
-      <p>Copilot CLI. You write the routine once, save it as a skill, then just ask Copilot to run it tomorrow. This is what we build live.</p>
-      <span class="card-tag teal">live · you build it</span>
-    </div>
-    <div class="card">
-      <span class="icon">🛰️</span>
-      <h2>Where it heads: Scout</h2>
-      <p>The first agent in Microsoft's Autopilot family. Proactive, with its own identity, working while you are elsewhere. New, and I have not tested it yet. This is from what Microsoft showed at Build.</p>
-      <span class="card-tag amber">roadmap · ask your admin</span>
-    </div>
+    <a class="card" href="https://microsofteur-my.sharepoint.com/personal/jwallquist_microsoft_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fjwallquist%5Fmicrosoft%5Fcom%2FDocuments%2FRecordings%2FAI%2Dfirst%20Operator%20Hour%2D20260609%5F083037UTC%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ef0e7ab29%2D6327%2D48af%2Db376%2D2071608cd8ac" target="_blank" rel="noopener">
+      <span class="icon">🎬</span>
+      <h2>Recording</h2>
+      <p>The full session, Jun 9 2026. Microsoft tenant sign-in required. Watch the live inbox sort and the morning brief if you missed it.</p>
+      <span class="card-tag teal">watch · 30 min</span>
+    </a>
     <a class="card" href="morning-routine-kit.html">
       <span class="icon">🌅</span>
-      <h2>Take it home</h2>
-      <p>The Morning Routine Kit. Both Cowork prompts, the give-away script, and where Scout fits. The whole routine, ready to run.</p>
+      <h2>Morning Routine Kit</h2>
+      <p>Both Cowork prompts, the give-away script, and where Scout fits. Change one line, your email address, and it's yours.</p>
       <span class="card-tag teal">copy &amp; run · take-home kit</span>
-    </a>
-  </div>
-
-  <div class="section-label">Bring this</div>
-  <div class="bring">
-    <h3>Pick what eats your morning</h3>
-    <p>Choose the inbox, calendar or Teams channel that owns your first hour. After the session, block <strong>20 minutes</strong> and set the routine up on it. Run it once Thursday morning. Bring what it got right, and what it got wrong, to E4.</p>
-    <p>New here? Start with the <a class="inline" href="../use-case-finder.html">Use Case Finder</a>, then come back. Morning triage is most people's second or third use case.</p>
-  </div>
-
-  <div class="section-label">Format</div>
-  <p style="color:var(--muted);font-size:14px;margin:-4px 0 12px;"><strong style="color:var(--text);font-weight:600;">5 + 18 + 5 + 2.</strong> Five on the frame. Eighteen on the live build. Five on the AMA with Otto. Two on your move for next week.</p>
-
-  <div class="section-label">Useful before the session</div>
-  <div class="cards">
-    <a class="card" href="../s1e2/">
-      <span class="icon">📺</span>
-      <h2>E2 recap</h2>
-      <p>If you missed last week. The six-move deck build, the Frontier framing, the operator move that carries into this episode.</p>
-      <span class="card-tag teal">watch · 30 min</span>
     </a>
     <a class="card" href="../use-case-finder.html">
       <span class="icon">🎯</span>
@@ -141,16 +102,34 @@
       <span class="card-tag teal">on-ramp · 5 min</span>
     </a>
   </div>
+  <!-- RECORDING LINK
+       Points at the Stream/OneDrive view URL for the MP4 in Johan's personal OneDrive Recordings folder.
+       For the cohort to play it, the file must be shared as "People in Microsoft with the link can view".
+       If a colleague gets an access prompt, open the recording in Stream → Share → People in Microsoft → Copy link, and replace the href above.
+  -->
 
-  <div class="section-label">Not on the calendar?</div>
-  <p style="color:var(--muted);font-size:14px;line-height:1.55;margin:-4px 0 12px;">Anyone at Microsoft is welcome. <a class="inline" href="https://teams.microsoft.com/l/team/19%3Ar5cJ0CKN1kn-T3gjeTALqlLO-4Emu6CUjbVLBNophHg1%40thread.tacv2/conversations?groupId=5c2280c6-aa1c-4480-954c-958a2949d50e&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener">Join the cohort team</a> and post "add me", or <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20%E2%80%94%20add%20me%20to%20the%20invite">email the host</a>. You'll be on the invite before Tuesday.</p>
+  <div class="section-label">What's next</div>
+  <div class="cards">
+    <a class="card" href="../s1e4/">
+      <span class="icon">📅</span>
+      <h2>E4 · Prototypes that show, not tell</h2>
+      <p>Tue Jun 16. Research to working prototype to a clean handover. Bring the morning routine you set up this week.</p>
+      <span class="card-tag amber">next Tuesday</span>
+    </a>
+    <a class="card" href="../../course/">
+      <span class="icon">🎓</span>
+      <h2>Self-service course</h2>
+      <p>Eight lessons, self-paced. Work through between episodes for depth on the CLI itself.</p>
+      <span class="card-tag teal">self-paced</span>
+    </a>
+  </div>
 
   <p class="refrain"><strong>Still not a developer.</strong> Just stopped letting the first hour of the day run me.</p>
 
   <div class="meta">
     <p><strong>Episode:</strong> S1E3 · Jun 9 2026 · 30 min · EMEA EPS + GCPS</p>
     <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">LinkedIn</a></p>
-    <p><strong>Recap + recording:</strong> this page upgrades from preview to recap on Tuesday evening. Same URL.</p>
+    <p><strong>Recap + recording:</strong> both live on this page.</p>
   </div>
 </div>
 </body>

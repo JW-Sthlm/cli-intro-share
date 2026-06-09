@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>S1E4 · Prototypes that show, not tell · Operator Hour</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0D1117; --bg-2:#010409; --panel:#161B22; --border:#30363D; --text:#E6EDF3; --muted:#A6B0BC; --purple:#8957E5; --green:#3FB950; --amber:#D29922; --pink:#F778BA; --teal:#39D2C0; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Mona Sans',system-ui,sans-serif;background:var(--bg-2);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:800px;margin:0 auto;padding:64px 24px 96px;}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin:0 0 24px;letter-spacing:.04em;}
+  .crumb a{color:var(--muted);text-decoration:none;}
+  .crumb a:hover{color:var(--teal);}
+  .tag{display:inline-block;background:rgba(210,153,34,.1);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(210,153,34,.3);}
+  h1{font-size:44px;font-weight:900;letter-spacing:-.03em;margin:0 0 12px;line-height:1.05;}
+  h1 .accent{color:var(--teal);}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 40px;max-width:54ch;line-height:1.55;}
+  .section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:36px 0 12px;font-weight:600;}
+  p{font-size:16px;color:var(--text);margin:0 0 16px;}
+  .pull{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:16px 20px;margin:18px 0;font-size:15px;color:#C9D1D9;}
+  .pull .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:0 0 12px;}
+  @media(max-width:640px){.cards{grid-template-columns:1fr;}}
+  .card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;}
+  .card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .card h2{font-size:18px;font-weight:700;margin:0 0 6px;color:var(--text);}
+  .card p{font-size:14px;color:var(--muted);margin:0;line-height:1.5;}
+  .card .icon{font-size:24px;margin-bottom:10px;display:block;}
+  .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-top:10px;}
+  .card-tag.teal{color:var(--teal);background:rgba(57,210,192,.1);border:1px solid rgba(57,210,192,.25);}
+  .card-tag.amber{color:var(--amber);background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);}
+  .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:48px;}
+  .meta strong{color:var(--text);}
+  a.inline{color:var(--teal);text-decoration:none;}
+  a.inline:hover{text-decoration:underline;}
+  .bring{background:linear-gradient(180deg,rgba(57,210,192,.08),rgba(57,210,192,.02));border:1px solid rgba(57,210,192,.3);border-radius:12px;padding:24px 26px;margin:0 0 16px;}
+  .bring h3{margin:0 0 10px;font-size:18px;font-weight:800;color:var(--teal);letter-spacing:-.01em;}
+  .bring p{margin:0 0 8px;font-size:15px;color:#C9D1D9;line-height:1.55;}
+  .bring p:last-child{margin-bottom:0;}
+  .steps{counter-reset:step;list-style:none;padding:0;margin:0 0 24px;}
+  .steps li{position:relative;padding:14px 18px 14px 56px;background:var(--panel);border:1px solid var(--border);border-radius:10px;margin:0 0 10px;counter-increment:step;}
+  .steps li::before{content:counter(step);position:absolute;left:14px;top:12px;width:30px;height:30px;border-radius:50%;background:rgba(57,210,192,.12);border:1px solid rgba(57,210,192,.4);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .steps li strong{display:block;font-size:15px;color:var(--text);margin:0 0 3px;}
+  .steps li span{font-size:14px;color:var(--muted);line-height:1.5;}
+  .refrain{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-top:24px;font-style:italic;}
+  .refrain strong{color:var(--text);font-style:normal;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">← Operator Hour</a></div>
+  <span class="tag">S1 · Episode 4 · Tue Jun 16 2026 · 10:30 CET · preview</span>
+  <h1>Prototypes that <span class="accent">show, not tell.</span></h1>
+  <p class="sub">A working thing beats a slide about the thing. We take a real customer problem and build a small prototype you can click, live in the room. Then hand it over clean, so an engineer can pick it up and take it the rest of the way.</p>
+
+  <div class="section-label">What we'll cover</div>
+  <ol class="steps">
+    <li>
+      <strong>Start from the customer problem</strong>
+      <span>Frame the one thing the prototype has to prove. Not the whole platform. The single moment that makes a customer lean in.</span>
+    </li>
+    <li>
+      <strong>Research into substance</strong>
+      <span>Pull the real context the prototype needs, the part a generic demo can't fake. Their data shape, their workflow, their words.</span>
+    </li>
+    <li>
+      <strong>Build something clickable</strong>
+      <span>A working prototype, not a mockup. We describe it in plain language and Copilot builds it while we talk through the choices.</span>
+    </li>
+    <li>
+      <strong>Show, don't tell</strong>
+      <span>Demo it the way you'd show a customer. Let them click. A slide asks them to imagine. A prototype lets them try.</span>
+    </li>
+    <li>
+      <strong>Hand it over clean</strong>
+      <span>Infrastructure-as-code so an engineer can stand it up and run with it. The prototype isn't a dead end, it's the first commit.</span>
+    </li>
+  </ol>
+
+  <div class="pull">
+    <span class="lbl">The shift</span>
+    A slide says trust me. A prototype says try it. The fastest way to get a room aligned is to put a working thing in front of them and let them poke at it, instead of describing what it would do one day.
+  </div>
+
+  <div class="section-label">Bring this</div>
+  <div class="bring">
+    <h3>Bring the conversation that stalled on a slide</h3>
+    <p>Pick a customer or partner conversation that didn't land because it stayed abstract. Bring the <strong>problem</strong>, not a solution. We'll build a prototype against it live, and you'll leave with the start of something you can actually show.</p>
+    <p>Set up your morning routine from E3 yet? <a class="inline" href="../s1e3/">Five minutes</a>, then bring what it got wrong.</p>
+  </div>
+
+  <div class="section-label">Format</div>
+  <p style="color:var(--muted);font-size:14px;margin:-4px 0 12px;"><strong style="color:var(--text);font-weight:600;">5 + 20 + 10 + 5.</strong> Five on the frame. Twenty on the live build, mess included. Ten on the AMA with Otto. Five on your move for next week.</p>
+
+  <div class="section-label">Useful before the session</div>
+  <div class="cards">
+    <a class="card" href="../s1e3/">
+      <span class="icon">📺</span>
+      <h2>E3 recap</h2>
+      <p>If you missed last week. The morning inbox sort, the brief, and the three dumb rules that keep it safe.</p>
+      <span class="card-tag teal">watch · 30 min</span>
+    </a>
+    <a class="card" href="../use-case-finder.html">
+      <span class="icon">🎯</span>
+      <h2>Use Case Finder prompt</h2>
+      <p>The five-question interview. Run it on yourself if you haven't. A stuck customer demo is often near the top of the list.</p>
+      <span class="card-tag teal">on-ramp · 5 min</span>
+    </a>
+  </div>
+
+  <div class="section-label">Not on the calendar?</div>
+  <p style="color:var(--muted);font-size:14px;line-height:1.55;margin:-4px 0 12px;">Anyone at Microsoft is welcome. <a class="inline" href="https://teams.microsoft.com/l/team/19%3Ar5cJ0CKN1kn-T3gjeTALqlLO-4Emu6CUjbVLBNophHg1%40thread.tacv2/conversations?groupId=5c2280c6-aa1c-4480-954c-958a2949d50e&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener">Join the cohort team</a> and post "add me", or <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20%E2%80%94%20add%20me%20to%20the%20invite">email the host</a>. You'll be on the invite before Tuesday.</p>
+
+  <p class="refrain"><strong>Still not a developer.</strong> Just stopped describing the thing when I could hand someone the thing.</p>
+
+  <div class="meta">
+    <p><strong>Episode:</strong> S1E4 · Jun 16 2026 · 30 min · EMEA EPS + GCPS</p>
+    <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">LinkedIn</a></p>
+    <p><strong>Recap + recording:</strong> this page upgrades from preview to recap on Tuesday evening. Same URL.</p>
+  </div>
+</div>
+</body>
+</html>
