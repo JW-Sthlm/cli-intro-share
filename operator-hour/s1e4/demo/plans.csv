@@ -1,0 +1,9 @@
+product,category,name,price_eur_month,data,highlights,fit_for
+mobile,consumer,Helios Go,12,10 GB,"EU roaming included, eSIM ready","Light users, second phone"
+mobile,consumer,Helios Flow,19,50 GB,"EU roaming included, hotspot allowed, eSIM ready","Most popular consumer plan"
+mobile,consumer,Helios Max,29,Unlimited,"5G priority, EU + UK roaming, hotspot allowed","Heavy streamers, remote workers"
+mobile,family,Helios Family Duo,35,2x 40 GB,"Two SIMs one bill, shared data top-up, parental controls","Couples, parent + teen"
+mobile,family,Helios Family Four,59,4x 40 GB,"Four SIMs one bill, parental controls, free SIM swaps","Families with kids"
+smarthome,bundle,Helios Home Base,24,n/a,"Wi-Fi 6 router, 4G failover, app-managed guest network","Apartments, home office"
+smarthome,bundle,Helios Home Plus,34,n/a,"Wi-Fi 6 router, 4G failover, 3 smart plugs, energy insights","Houses, smart-home starters"
+smarthome,addon,Helios Mesh Point,6,n/a,"Adds coverage per room, plug and play","Larger homes, thick walls"

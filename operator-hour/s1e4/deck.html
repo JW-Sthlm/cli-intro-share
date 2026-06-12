@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operator Hour · S1E4 · Show, not tell</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F1E5;
+  --bg-2:#F0E9D7;
+  --panel:#FFFDF7;
+  --panel-2:#F5EFE0;
+  --border:#E3DAC5;
+  --border-soft:#EDE5D0;
+  --ink:#1B1F26;
+  --ink-2:#3B4250;
+  --muted:#6A7180;
+  --muted-2:#9298A4;
+  --teal:#0F8A7A;
+  --teal-2:#0B6E62;
+  --teal-soft:rgba(15,138,122,.10);
+  --purple:#5B43C7;
+  --purple-2:#4A35A6;
+  --purple-soft:rgba(91,67,199,.10);
+  --amber:#B5851A;
+  --pink:#C7457A;
+  --shadow-sm:0 1px 2px rgba(27,31,38,.05);
+  --shadow-md:0 8px 24px rgba(27,31,38,.08);
+  --shadow-lg:0 24px 60px rgba(27,31,38,.15);
+  --radius:14px;
+  --radius-sm:8px;
+  --radius-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-2);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+/* Stage + slide */
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding:24px;}
+.slide{
+  width:min(96vw,1500px);aspect-ratio:16/9;max-height:94vh;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  display:none;
+}
+.slide.active{display:flex;flex-direction:column;}
+.slide-inner{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:64px 84px;gap:8px;
+}
+
+/* Top bar inside slide */
+.top{
+  position:absolute;top:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.12em;text-transform:uppercase;
+  pointer-events:none;
+}
+.top .left{display:flex;gap:14px;align-items:center;}
+.top .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-soft);}
+
+/* Progress at bottom */
+.progress{
+  position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--border-soft);
+}
+.progress .bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--purple));width:0;transition:width .35s var(--ease);}
+
+/* Footer */
+.foot{
+  position:absolute;bottom:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.08em;
+}
+.foot .count span{color:var(--teal);font-weight:600;}
+.foot .keys{display:flex;gap:6px;align-items:center;}
+.foot .k{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:4px;
+  border:1px solid var(--border);background:var(--panel);color:var(--muted);
+  font-size:10px;letter-spacing:0;
+}
+
+/* Typography */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:var(--teal);letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  margin-bottom:18px;
+}
+h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(40px,5.6vw,80px);line-height:1.02;font-weight:800;
+  letter-spacing:-.025em;color:var(--ink);text-wrap:balance;
+}
+h1.hero{
+  font-size:clamp(56px,7.5vw,108px);line-height:.96;font-weight:900;
+  letter-spacing:-.035em;max-width:18ch;
+}
+h1 .accent{color:var(--teal);}
+h1 .purple{color:var(--purple);}
+h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(28px,3.2vw,44px);line-height:1.12;font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);text-wrap:balance;
+}
+h3{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(20px,2.2vw,28px);line-height:1.2;font-weight:700;
+  color:var(--ink);
+}
+.lead{
+  font-size:clamp(19px,1.6vw,25px);line-height:1.55;color:var(--ink-2);
+  max-width:60ch;text-wrap:pretty;margin-top:14px;
+}
+.kicker{
+  font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.smallcaps{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+}
+
+/* Components */
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;
+  border:1px solid var(--border);background:var(--panel);
+  border-radius:var(--radius-pill);font-size:14.5px;color:var(--ink-2);
+  font-weight:500;
+}
+.pill .mark{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);font-size:13px;}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:var(--shadow-sm);
+}
+.card .num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple);
+  font-weight:700;letter-spacing:.1em;
+}
+.card .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:17px;color:var(--ink);line-height:1.25;}
+.card .d{font-size:15px;color:var(--muted);line-height:1.5;}
+
+/* Quote big */
+.bigquote{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(54px,7vw,108px);line-height:1.02;letter-spacing:-.03em;
+  text-wrap:balance;color:var(--ink);
+}
+.bigquote .mute{color:var(--muted-2);}
+.q-cap{
+  margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:15px;
+  color:var(--muted);letter-spacing:.06em;
+}
+
+/* Terminal mock */
+.term{
+  background:#1B1F26;border-radius:12px;border:1px solid #2A2F38;
+  box-shadow:var(--shadow-lg);overflow:hidden;font-family:'JetBrains Mono',monospace;
+  color:#E6E2D5;font-size:14.5px;line-height:1.65;
+}
+.term-bar{
+  display:flex;align-items:center;gap:8px;padding:9px 14px;background:#23272F;
+  border-bottom:1px solid #2A2F38;
+}
+.term-bar .d{width:11px;height:11px;border-radius:50%;}
+.term-bar .r{background:#ff5f56;} .term-bar .y{background:#ffbd2e;} .term-bar .g{background:#27c93f;}
+.term-bar .ttl{margin-left:8px;font-size:11.5px;color:#9298A4;letter-spacing:.05em;}
+.term-body{padding:18px 22px;white-space:pre-wrap;}
+.term .pmt{color:#7ED9C9;}
+.term .cmt{color:#7d8290;font-style:italic;}
+.term .acc{color:#C9A8FF;}
+.term .ok{color:#7BD389;}
+.term .arr{color:#FFB75C;}
+.term .h{color:#F58CB0;font-weight:600;}
+
+/* Two-col layouts */
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;}
+.two.right-heavy{grid-template-columns:.85fr 1.15fr;}
+.qs{
+  list-style:none;display:flex;flex-direction:column;gap:14px;
+}
+.qs li{
+  display:flex;gap:14px;align-items:flex-start;font-size:18px;color:var(--ink-2);
+  line-height:1.45;
+}
+.qs li .n{
+  flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+  background:var(--teal-soft);color:var(--teal-2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+  margin-top:1px;
+}
+
+/* Output card mock */
+.out-mock{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 24px;box-shadow:var(--shadow-md);
+}
+.out-mock .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+.out-mock h3{font-size:20px;}
+.out-mock .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;}
+.uc{
+  display:grid;grid-template-columns:1fr auto auto;gap:14px;
+  padding:12px 0;border-top:1px solid var(--border-soft);align-items:center;
+}
+.uc:first-of-type{border-top:none;}
+.uc .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:17px;color:var(--ink);}
+.uc .why{font-size:14px;color:var(--muted);margin-top:2px;}
+.uc .badges{display:flex;gap:6px;}
+.uc .b{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+  padding:3px 8px;border-radius:var(--radius-pill);
+  background:var(--bg-2);color:var(--muted);letter-spacing:.06em;
+}
+.uc .b.s{color:var(--teal-2);background:var(--teal-soft);}
+.uc .b.m{color:var(--amber);background:rgba(181,133,26,.12);}
+.uc .b.l{color:var(--pink);background:rgba(199,69,122,.10);}
+.uc.start{background:linear-gradient(90deg,var(--teal-soft),transparent);border-radius:8px;padding:14px 14px;margin-top:6px;border-top:none;}
+.uc.start .ribbon{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;font-weight:700;
+  color:var(--teal-2);text-transform:uppercase;margin-bottom:4px;
+}
+
+/* Otto card */
+.otto-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 30px;display:flex;gap:22px;align-items:center;box-shadow:var(--shadow-md);
+}
+.otto-av{
+  width:84px;height:84px;border-radius:22px;
+  background:linear-gradient(135deg,var(--teal),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:34px;color:#fff;font-weight:700;
+  flex-shrink:0;box-shadow:var(--shadow-md);
+}
+.otto-card .name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;}
+.otto-card .role{font-size:15px;color:var(--muted);margin-top:2px;}
+.otto-card .desc{font-size:16px;color:var(--ink-2);margin-top:10px;line-height:1.5;max-width:48ch;}
+
+/* Take-home */
+.takehome{
+  background:linear-gradient(135deg,var(--teal-soft),var(--purple-soft));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 32px;margin-top:18px;
+}
+.takehome .tag{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal-2);
+  letter-spacing:.16em;font-weight:700;text-transform:uppercase;
+}
+.takehome h2{margin-top:6px;}
+.takehome p{margin-top:10px;color:var(--ink-2);font-size:17px;line-height:1.5;max-width:54ch;}
+
+/* Next teaser */
+.next{
+  display:flex;align-items:center;gap:32px;margin-top:24px;
+}
+.next .when{
+  font-family:'JetBrains Mono',monospace;color:var(--purple);
+  font-size:14px;letter-spacing:.1em;font-weight:600;
+}
+.next .arrow{color:var(--muted);font-size:32px;line-height:1;}
+
+/* Refrain */
+.refrain{
+  margin-top:32px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
+  font-size:clamp(22px,2.4vw,32px);color:var(--ink);line-height:1.2;letter-spacing:-.015em;
+}
+.refrain .small{display:block;font-weight:500;font-size:.78em;color:var(--muted);margin-top:6px;}
+
+/* Speaker notes - hidden in deck mode */
+.notes{display:none;}
+
+/* Popup banner */
+#popup-blocked{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:#fff5f5;border:1px solid #f0a8a8;color:#a52a2a;
+  padding:10px 16px;border-radius:8px;z-index:200;
+  font-size:13px;display:none;box-shadow:var(--shadow-md);
+}
+
+/* Hero title slide */
+.hero-slide .slide-inner{justify-content:center;gap:0;}
+.hero-meta{
+  margin-top:46px;display:flex;gap:32px;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.hero-meta .b{color:var(--ink-2);font-weight:600;}
+
+/* ============= PRESENTER VIEW STYLES ============= */
+body.presenter{background:#0E1118;color:#E5E7EB;overflow:hidden;padding:18px;}
+body.presenter .stage{display:none;}
+.pres-root{display:none;}
+body.presenter .pres-root{
+  display:grid;grid-template-columns:var(--pres-left-w,56%) 10px 1fr;gap:14px;height:calc(100vh - 36px);
+  font-family:'Inter',sans-serif;min-height:0;
+}
+.pres-left{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;}
+.pres-split{
+  align-self:stretch;width:10px;cursor:col-resize;border-radius:5px;
+  background:#23272F;border:1px solid #2A2F38;
+  display:flex;align-items:center;justify-content:center;touch-action:none;
+}
+.pres-split:hover,.pres-split.dragging{background:#2F3640;border-color:#3B4250;}
+.pres-split::after{content:'';width:2px;height:30px;border-radius:2px;background:#525a66;}
+.pres-thumb{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;overflow:hidden;
+  flex:1;min-height:0;position:relative;
+}
+.pres-thumb iframe,.pres-thumb-next iframe{
+  position:absolute;top:0;left:0;
+  width:1600px;height:900px;border:0;background:var(--bg);
+  transform-origin:0 0;pointer-events:none;
+}
+.pres-thumb-next{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:8px;overflow:hidden;
+  position:relative;aspect-ratio:16/9;width:100%;margin:0 0 12px;
+}
+.pres-status{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;
+  padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9CA3AF;
+  letter-spacing:.06em;flex-shrink:0;
+}
+.pres-status .now{color:#7ED9C9;font-weight:700;}
+.pres-status .clk{color:#E5E7EB;font-weight:600;}
+.pres-right{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;overflow:auto;}
+.pres-block{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;padding:18px 20px;
+}
+.pres-block h4{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;margin-bottom:8px;
+}
+.pres-block.pres-next h4{color:#C9A8FF;}
+.pres-block h3{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;
+  color:#F3F4F6;margin-bottom:12px;line-height:1.25;
+}
+.pres-do{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#7ED9C9;font-weight:600;
+  line-height:1.55;margin-bottom:14px;padding:10px 12px;
+  background:rgba(126,217,201,.06);border-left:2px solid #7ED9C9;border-radius:4px;
+  white-space:pre-wrap;
+}
+.pres-do::before{
+  content:'DO';display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.14em;color:#7ED9C9;margin-right:8px;opacity:.7;
+}
+.pres-say{
+  font-family:'Inter',sans-serif;font-size:22px;line-height:1.55;font-weight:400;
+  color:#E5E7EB;white-space:pre-wrap;
+}
+.pres-copy{display:flex;flex-direction:column;gap:8px;margin:0 0 16px;}
+.pres-copy .pc-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;opacity:.8;margin-bottom:2px;
+}
+.copy-chip{
+  display:flex;align-items:center;gap:10px;background:#11151C;
+  border:1px solid #2A2F38;border-radius:8px;padding:7px 7px 7px 12px;
+}
+.copy-chip .cc-text{
+  flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:#E5E7EB;white-space:pre-wrap;word-break:break-word;line-height:1.4;
+}
+.copy-chip .cc-btn{
+  flex-shrink:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#0E1118;
+  background:#7ED9C9;border:0;border-radius:6px;padding:7px 13px;transition:background .12s;
+}
+.copy-chip .cc-btn:hover{background:#9BE7DA;}
+.copy-chip .cc-btn.ok{background:#3FB950;color:#06210F;}
+.pres-block.pres-next .pres-do{color:#C9A8FF;background:rgba(201,168,255,.06);border-left-color:#C9A8FF;}
+.pres-block.pres-next .pres-do::before{color:#C9A8FF;content:'NEXT DO';}
+.pres-block.pres-next .pres-say{font-size:15px;color:#9CA3AF;}
+.pres-controls{
+  display:flex;gap:8px;justify-content:flex-end;font-size:12px;color:#6B7280;
+  font-family:'JetBrains Mono',monospace;
+}
+.pres-controls button{
+  background:#23272F;border:1px solid #2A2F38;color:#E5E7EB;
+  padding:6px 12px;border-radius:6px;font-family:inherit;font-size:12px;cursor:pointer;
+}
+.pres-controls button:hover{border-color:#3B4250;}
+@media (max-width: 900px){
+  body.presenter .pres-root{grid-template-columns:1fr;grid-template-rows:35vh 1fr;}
+  body.presenter .pres-split{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="popup-blocked">Presenter window blocked. Allow popups for this page, then try again.</div>
+
+<!-- ============= DECK ============= -->
+<div class="stage" id="stage">
+
+  <!-- SLIDE 1: Title -->
+  <section class="slide hero-slide" data-title="Title">
+    <div class="top"><div class="left"><span class="dot"></span><span>Operator Hour · S1E4</span></div><div>Jun 16 2026</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Season 1 · Episode 4</div>
+      <h1 class="hero">Show, <span class="accent">not tell.</span></h1>
+      <h2 style="margin-top:18px;color:var(--muted);font-weight:600;">A working thing beats a slide about the thing.</h2>
+      <div class="hero-meta">
+        <span><span class="b">30 min</span> · live</span>
+        <span>Tuesdays <span class="b">10:30 CET</span></span>
+        <span>Made for <span class="b">EMEA EPS + GCPS</span></span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>1</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Cold open on the stalled-meeting story. Slow, let them recognise it. Then the promise: today we build a working prototype live, and end by talking to one. 75 seconds.
+
+SAY: You know that meeting. You did the homework. The deck was good, the architecture slide made sense, you even rehearsed. And at the end the customer leans back and says: looks interesting. Send us the deck.
+
+That's a no. With good manners.
+
+I've collected a few of those. So this episode is about what I do instead now. We take a real customer problem, and instead of describing the solution, we build one. Live, while you watch. By the end of this call you'll watch me talk to it.</aside>
+  </section>
+
+  <!-- SLIDE 2: The pain -->
+  <section class="slide" data-title="The pain">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · The feeling</span></div><div>02</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">You know this meeting</div>
+      <h1>The deck asked them <span class="accent">to imagine.</span></h1>
+      <p class="lead">The idea was good. The slides were fine. But a slide asks the room to picture something that doesn't exist yet, and rooms are bad at that. So the idea stayed abstract, and the decision did too.</p>
+      <div class="pill-row">
+        <span class="pill"><span class="mark">✕</span> "Send us the deck"</span>
+        <span class="pill"><span class="mark">✕</span> "Let's circle back"</span>
+        <span class="pill"><span class="mark">✕</span> "Maybe next quarter"</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>2</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Get a hands-up. "Who has heard 'send us the deck' and then heard nothing for a month?" Let the pills land. Keep it light, this is the relatable open. 60 seconds.
+
+SAY: Everyone partner-facing on this call has lived this. The conversation goes fine, everyone nods, and then it dissolves into one of these three sentences. Not because the idea was bad. Because we asked a room full of busy people to imagine something. They won't. Not their job.</aside>
+  </section>
+
+  <!-- SLIDE 3: The shift -->
+  <section class="slide" data-title="The shift">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · The shift</span></div><div>03</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The shift</div>
+      <div class="bigquote">A slide says trust me.<br><span class="mute">A prototype says try it.</span></div>
+      <p class="q-cap">The fastest way to move a room is to put a working thing in front of them and let them poke at it.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>3</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: The core reframe. Pause after the big line. Then the cost argument: this used to be a week of engineering, now it's twenty minutes, which changes when you can afford to do it. 60 seconds.
+
+SAY: This is the whole episode in one line. A slide asks for trust. A prototype hands over the keyboard. And the reason this matters now is cost. A clickable prototype used to mean a week of someone's sprint, so you saved it for the big deals. Twenty minutes changes the math. Now it fits inside the prep for a normal Tuesday meeting.</aside>
+  </section>
+
+  <!-- SLIDE 4: The recipe -->
+  <section class="slide" data-title="The recipe">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · The recipe</span></div><div>04</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The recipe</div>
+      <h1>Problem in. <span class="accent">Prototype out.</span></h1>
+      <p class="lead">Five steps, the same every time. You bring the customer's problem and their words. Copilot does the typing. You stay the one deciding.</p>
+      <ul class="qs" style="margin-top:22px;">
+        <li><span class="n">1</span><span><strong style="color:var(--ink);">Frame the problem.</strong> The one moment the prototype has to prove. Not the platform.</span></li>
+        <li><span class="n">2</span><span><strong style="color:var(--ink);">Feed it substance.</strong> Their meeting notes, their data shape, their words. The part a generic demo can't fake.</span></li>
+        <li><span class="n">3</span><span><strong style="color:var(--ink);">Build something clickable.</strong> Plain language in, one HTML file out. No installs.</span></li>
+        <li><span class="n">4</span><span><strong style="color:var(--ink);">Show it. Let them click.</strong> Demo it the way you'd show a customer.</span></li>
+        <li><span class="n">5</span><span><strong style="color:var(--ink);">Hand it over clean.</strong> README plus infrastructure-as-code, so an engineer takes it from there.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><div class="count">Slide <span>4</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Walk the five steps fast, they'll see all of them live in the next twenty minutes. Linger only on step 2, that's the one people skip. 75 seconds.
+
+SAY: The recipe. Five steps, and you're about to watch all five happen for real. The one people skip is step two. Substance. A prototype built from nothing looks like every other AI demo. A prototype built from the customer's own meeting notes and their own product list feels like theirs on first click. That's the difference between a cute demo and a leaning-in customer. Everything else is just asking.</aside>
+  </section>
+
+  <!-- SLIDE 5: Today's case -->
+  <section class="slide" data-title="Today's case">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · The case</span></div><div>05</div></div>
+    <div class="slide-inner">
+      <div class="two right-heavy">
+        <div>
+          <div class="eyebrow">Today's case</div>
+          <h2>A real one. <span style="color:var(--teal-2);">Names changed.</span></h2>
+          <p class="lead">A retail telecom, call them Helios, wants an in-store assistant that helps walk-in customers pick a plan. They gave us until Thursday to show something working. If it holds up, an eight-week pilot. If not, the project dies.</p>
+          <p class="kicker" style="margin-top:22px;">The input: one page of meeting notes, one file of plans.</p>
+        </div>
+        <div>
+          <div class="out-mock">
+            <div class="head"><h3>Tuesday's call · recap</h3><span class="meta">HELIOS · 30 MIN</span></div>
+            <div class="uc">
+              <div>
+                <div class="t">Noisy store floor</div>
+                <div class="why">"If it doesn't work above 65 dB ambient, we don't have a product."</div>
+              </div>
+              <div class="badges"><span class="b m">RISK</span></div>
+            </div>
+            <div class="uc">
+              <div>
+                <div class="t">No personal data. EU only.</div>
+                <div class="why">Conversations end with the session. Anything binding goes to a human advisor.</div>
+              </div>
+              <div class="badges"><span class="b s">RULE</span></div>
+            </div>
+            <div class="uc">
+              <div>
+                <div class="t">Three languages at launch</div>
+                <div class="why">English, Swedish, French. Their copy, their words.</div>
+              </div>
+              <div class="badges"><span class="b">SCOPE</span></div>
+            </div>
+            <div class="uc start">
+              <div>
+                <div class="ribbon">▸ The gate</div>
+                <div class="t">Thursday 16:00 · demo or die</div>
+                <div class="why">Working prototype in front of their CTO, or the engagement stops.</div>
+              </div>
+              <div class="badges"><span class="b l">GATE</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>5</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Set the stakes. This is an anonymized version of a real feasibility prototype, and say that out loud, it buys credibility. Point at the recap card: the entire input is one page of notes plus a product list. 75 seconds.
+
+SAY: Today's case is a real one. Names changed, constraints kept. A retail telecom wants an avatar in their flagship stores helping walk-ins pick a mobile plan. Noisy floors. Strict no-personal-data policy. Humans take over for anything binding. And a Thursday deadline: show the CTO something working, or the whole thing stops.
+
+Look at what we've got to work with. One page of recap from Tuesday's call. Their plan catalog as a file. That's it. And honestly, that's plenty.</aside>
+  </section>
+
+  <!-- SLIDE 6: Live build -->
+  <section class="slide" data-title="Live build">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Live</span></div><div>06</div></div>
+    <div class="slide-inner" style="justify-content:center;">
+      <div class="eyebrow">Live now</div>
+      <h1 class="hero">Watch it become <span class="accent">clickable.</span></h1>
+      <p class="lead" style="font-size:24px;margin-top:24px;">One page of notes. One file of plans. One prompt.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>6</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: LIVE BUILD. 8-10 minutes.
+
+ALREADY DONE (off-stage, before the call):
+- Split screen: Terminal left, browser right.
+- Demo folder ready: helios-recap.md + plans.csv in operator-hour/s1e4/demo. Delete any kiosk-mock.html from earlier dry runs.
+- kiosk-fallback.html tested and one Ctrl+click away.
+- One full dry run this morning so the prompt is proven.
+- terminal-demo.html already open in a background window for the next slide.
+
+ON STAGE (3 steps):
+1. Paste the /cwd line, enter.
+2. Paste the build prompt, enter, approve. Then TALK over the build, don't read the terminal.
+3. When it opens the file: click through it slowly. Languages, choices, plan cards, advisor button. Let the room react before you say anything.
+
+WHILE IT BUILDS, SAY THE THREE THINGS: it's reading their recap (substance), it's using their plan names (their words), and I haven't typed a line of code (the point).
+
+FALLBACK: if the build stalls past ~3 minutes, open kiosk-fallback.html and say "this is this morning's run of the same prompt" and keep moving. Never debug live.
+
+COPY: /cwd C:\Users\jwallquist\projects\cli-intro-share\operator-hour\s1e4\demo
+COPY: Read helios-recap.md and plans.csv. Build me a clickable mock of the in-store kiosk as one HTML file, kiosk-mock.html. A warm welcome screen in Helios colours, three big choices (a plan for me, a plan for the family, smart home), plan cards from the CSV, and a "talk to a Helios advisor" button for anything binding. Greeting in English, Swedish and French. No installs, no frameworks, one file. Open it in the browser when you're done.
+COPY: start kiosk-fallback.html
+
+SAY: Okay. Live part. Everything I'm using is on the screen: the recap from Tuesday, the plan catalog, and a terminal. I'm going to describe the kiosk in plain language, once, and we'll see what comes back.
+
+There's the prompt. Read it with me. No code in there. It's the same description I'd give a designer, except this one types two hundred words a second.
+
+While it works, three things. One, it's reading their meeting notes, so the kiosk will speak their language, not mine. Two, every plan name comes from their file. Three, I have not written a line of code, and I won't.
+
+And there it is. Let's click. Three languages, because the notes said three languages. The family plans, from their file. And the advisor button, because their legal said a human takes anything binding. Twenty minutes ago this was a paragraph in a recap.</aside>
+  </section>
+
+  <!-- SLIDE 7: The replay -->
+  <section class="slide" data-title="The replay">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · The replay</span></div><div>07</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The rest of the run · compressed replay</div>
+      <h1>From clickable mock to <span class="accent">talking kiosk.</span></h1>
+      <p class="lead">The mock was live. The next part ran for real last week, and you get the replay with the waiting cut out. Research, a plan, a two-letter approval, and a deploy.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>7</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: TERMINAL DEMO. Alt-tab to the terminal-demo.html window (already open). Drive it with space. It has its own presenter view on the second screen (press P in that window). Be explicit with the room that this is a compressed replay of the real run, that honesty is the trust beat. When the demo exits, alt-tab back here and go straight to slide 8.
+
+COPY: file:///C:/Users/jwallquist/projects/cli-intro-share/operator-hour/s1e4/terminal-demo.html
+
+SAY: Now, a clickable mock is step three of five. The real run kept going: can the voice tech survive a noisy store floor, what does it cost, and a deploy to a live URL. That part took most of an hour, and watching a deploy bar is nobody's idea of a Tuesday. So you get the replay. Same prompts, real run, waiting removed. Watch what I type, and more importantly, where I stop.</aside>
+  </section>
+
+  <!-- SLIDE 8: The switch -->
+  <section class="slide" data-title="Walk up and ask">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Live again</span></div><div>08</div></div>
+    <div class="slide-inner" style="justify-content:center;">
+      <div class="eyebrow">Live again</div>
+      <h1 class="hero">Walk up <span class="accent">and ask it.</span></h1>
+      <p class="lead" style="font-size:24px;margin-top:24px;">The same prototype, deployed. Voice in, voice out, transcript on screen.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>8</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: THE PAYOFF. Alt-tab to the live kiosk tab (avatar.jwtechhub.com, already open and mic-tested). Push to talk, ask for a family mobile plan, let it answer. One question, maybe two. Don't milk it. FALLBACK: if mic or network misbehaves, play the desktop recording and keep the energy up.
+
+COPY: https://avatar.jwtechhub.com
+
+SAY: And this is where it ends up. Same prototype, kept alive, deployed on Azure. Let me just... ask it something.
+
+(Walk-up. "Hi, I'm looking for a family mobile plan.")
+
+That's the thing the customer clicks on Thursday. Not a slide about an avatar. The avatar. And every step between the paragraph and this voice, you just watched.</aside>
+  </section>
+
+  <!-- SLIDE 9: Handover -->
+  <section class="slide" data-title="Hand it over">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Handover</span></div><div>09</div></div>
+    <div class="slide-inner">
+      <div class="two">
+        <div>
+          <div class="eyebrow">Hand it over clean</div>
+          <h2>The prototype is <span style="color:var(--teal-2);">the first commit.</span></h2>
+          <p class="lead">A prototype trapped on your laptop is a dead end. One that lives in a repo, with a README and infrastructure-as-code, is something an engineer can stand up in their own subscription and keep building. Ask for the handover in the same conversation.</p>
+        </div>
+        <div>
+          <div class="term">
+            <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="ttl">copilot · helios-kiosk</span></div>
+            <div class="term-body"><span class="pmt">›</span> <span class="acc">Write the handover. A README an</span>
+engineer can follow cold, and the
+infrastructure as code so they can
+deploy it to their own subscription.
+
+<span class="cmt"># Copilot</span>
+<span class="arr">→</span> Reading the project structure...
+<span class="ok">✓</span> Wrote <span class="h">README.md</span> · setup, run, deploy
+<span class="ok">✓</span> Wrote <span class="h">infra/main.bicep</span>
+<span class="ok">✓</span> Verified: azd up from a clean clone
+<span class="pmt">›</span> <span class="acc">_</span>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>9</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: The "it doesn't end on my laptop" beat. This is what separates a stunt from an asset. Talk to the partner-facing reality: your customer's engineers will ask "and then what?", and this is the answer. 75 seconds.
+
+SAY: One more prompt and this stops being mine. Write the handover. A README someone can follow cold, and the infrastructure as code so their team deploys it to their own subscription, their own rules. That's the answer to the question every engineer in the customer's room is about to ask: nice demo, and then what? Then this. Clone it, deploy it, keep going. The prototype isn't the end of the conversation. It's the first commit.</aside>
+  </section>
+
+  <!-- SLIDE 10: Three rules -->
+  <section class="slide" data-title="Three rules">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Keep it honest</span></div><div>10</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Demo-grade, and say so</div>
+      <h1>Three rules keep <span class="accent">it honest.</span></h1>
+      <p class="lead">A prototype earns trust by being clear about what it is. Three rules, no exceptions.</p>
+      <ul class="qs" style="margin-top:22px;">
+        <li><span class="n">1</span><span><strong style="color:var(--ink);">Fictional data only.</strong> The customer's shape, never the customer's records. Invent the rows.</span></li>
+        <li><span class="n">2</span><span><strong style="color:var(--ink);">Say it's a prototype.</strong> On the screen, in the footer, and out loud in the room.</span></li>
+        <li><span class="n">3</span><span><strong style="color:var(--ink);">Engineers take it to production.</strong> It gets there through a repo and a review. Never straight from your demo laptop.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><div class="count">Slide <span>10</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: The trust slide, same role as E3's three rules. Read all three slowly. Rule 1 is the one that keeps people out of trouble, lean on it. 60 seconds.
+
+SAY: Before you all run off and build, three rules. One: fictional data, always. You want their data shape and their vocabulary, never their actual records. Invent the rows, keep the structure. Two: label it. The footer on my kiosk says prototype, and I say it out loud in every demo. Nobody should find out later they clicked a mock. And three: it reaches production through engineers, a repo and a review. Our job is to start the conversation, not to sneak something into an estate.</aside>
+  </section>
+
+  <!-- SLIDE 11: The kit -->
+  <section class="slide" data-title="The kit">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Take it home</span></div><div>11</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Take it home</div>
+      <h1>The Prototype <span class="accent">Kit.</span></h1>
+      <div class="takehome">
+        <div class="tag">▸ Copy & run</div>
+        <h2>The build prompt. The handover prompt. The notes template. The rules.</h2>
+        <p>Everything from today, ready to reuse on your own customer case. <a href="https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e4/prototype-kit.html" target="_blank" rel="noopener" style="color:var(--teal);">Kit link in the chat</a>. Swap in your customer's notes and their data shape, and the same recipe runs.</p>
+        <p style="font-size:14px;color:var(--ink-2);margin-top:14px;">Everything else lives at <a href="https://jw-sthlm.github.io/cli-intro-share/" target="_blank" rel="noopener" style="color:var(--teal);">jw-sthlm.github.io/cli-intro-share</a>. Course, all sessions, every prompt. Bookmark it.</p>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>11</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Point at the kit as the one thing to grab. Drop the link in the chat now. 45 seconds.
+
+COPY: https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e4/prototype-kit.html
+
+SAY: Everything from today is in one place. The Prototype Kit. The exact build prompt, the handover prompt, a template for the meeting notes, and the three rules. Link's in the chat. Swap in your own customer's notes and the same recipe runs on your case tomorrow.</aside>
+  </section>
+
+  <!-- SLIDE 12: AMA -->
+  <section class="slide" data-title="AMA with Otto">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · AMA</span></div><div>12</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Ask anything · 5 min</div>
+      <h1>AMA. <span class="purple">Otto is in the room.</span></h1>
+      <p class="lead">Drop questions in chat. Otto answers what it can, I take the rest. Stuck on the prompt, the handover, or what counts as a good first case? Now's the time.</p>
+      <div class="otto-card" style="margin-top:30px;">
+        <div class="otto-av">@</div>
+        <div>
+          <div class="name">Otto</div>
+          <div class="role">AI-first sidekick · in this chat, every Tuesday</div>
+          <div class="desc">Knows today's build, the kiosk prompt, the handover prompt, and the season schedule. Logs everything else for next week.</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>12</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Open the floor. Let Otto take the first one or two in chat, read aloud, correct if needed. 5 minutes. If it's quiet, seed one. Move on if nothing lands.
+
+COPY: Otto, what makes a good first prototype case?
+
+SAY: Five minutes for questions. Otto is in the chat and knows today's build, both prompts and the kit. Ask it anything. If it gets something wrong, that's on tape and we fix it before next week.</aside>
+  </section>
+
+  <!-- SLIDE 13: What's next -->
+  <section class="slide" data-title="What's next">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Next</span></div><div>13</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Next Tuesday</div>
+      <h1>E5. <span class="purple">Sound like yourself, at scale.</span></h1>
+      <div class="next">
+        <span class="when">Tue Jun 23 · 10:30 CET</span>
+        <span class="arrow">→</span>
+        <span style="font-size:17px;color:var(--ink-2);">Build one prototype this week. Bring what the customer said.</span>
+      </div>
+      <div class="refrain">
+        Still not a developer.
+        <span class="small">Just started bringing the thing instead of the slide about the thing.</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>13</span> / 13</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Close. Land the refrain. Hold the smile. Mention the recap and recording land on the same page tonight.
+
+SAY: This week, pick one stalled conversation and run the recipe on it. One page of notes, one prompt, twenty minutes. Then show it to someone and watch what happens. Bring what the customer said to next week. Next Tuesday we teach the machine to write like you, not like a press release. Still not a developer. I just started bringing the thing instead of the slide about the thing.</aside>
+  </section>
+
+</div>
+
+<!-- ============= PRESENTER VIEW ============= -->
+<div class="pres-root">
+  <div class="pres-left">
+    <div class="pres-thumb"><iframe id="presIframe"></iframe></div>
+    <div class="pres-status">
+      <div>Now: <span class="now" id="presNow">1 / 13</span> · <span id="presTitle">Title</span></div>
+      <div class="clk" id="presClock">00:00</div>
+    </div>
+  </div>
+  <div class="pres-split" id="presSplit" title="Drag to resize"></div>
+  <div class="pres-right">
+    <div class="pres-block">
+      <h4>Current</h4>
+      <h3 id="curTitle">Title</h3>
+      <div id="curDo" class="pres-do" style="display:none;"></div>
+      <div id="curCopy" class="pres-copy" style="display:none;"></div>
+      <div id="curSay" class="pres-say"></div>
+    </div>
+    <div class="pres-block pres-next">
+      <h4>Next up</h4>
+      <div class="pres-thumb-next"><iframe id="presIframeNext"></iframe></div>
+      <h3 id="nxtTitle">...</h3>
+      <div id="nxtDo" class="pres-do" style="display:none;"></div>
+      <div id="nxtSay" class="pres-say"></div>
+    </div>
+    <div class="pres-controls">
+      <button onclick="postNav('prev')">← Prev</button>
+      <button onclick="postNav('next')">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const isPresenter = params.get('presenter') === 'notes';
+  const isThumb = params.get('presenter') === 'thumb';
+  const channelName = 'operator-hour-s1e4';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+
+  function show(i, silent){
+    idx = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('active', k === idx));
+    const pct = ((idx + 1) / total) * 100;
+    document.querySelectorAll('.progress .bar').forEach(b => b.style.width = pct + '%');
+    if (silent) return;
+    try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+    try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+  }
+
+  // BroadcastChannel sync
+  let bc = null;
+  try { bc = new BroadcastChannel(channelName); } catch(e){}
+
+  // Thumb iframe mode: render the slide for this channel (cur or nxt), listen silently.
+  if (isThumb) {
+    const ch = params.get('ch') || 'cur';
+    const key = channelName + ':thumb:' + ch;
+    document.body.style.background = '#fff';
+    document.querySelector('.stage').style.padding = '6px';
+    let tbc = null;
+    try { tbc = new BroadcastChannel(key); } catch(e){}
+    if (tbc) tbc.onmessage = (e) => { if (e.data && typeof e.data.idx === 'number') show(e.data.idx, true); };
+    window.addEventListener('storage', (e) => {
+      if (e.key === key && e.newValue) {
+        try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
+      }
+    });
+    try { const v = localStorage.getItem(key); if (v) show(JSON.parse(v).idx, true); else show(0, true); } catch(_){ show(0, true); }
+    return;
+  }
+
+  // Presenter mode
+  if (isPresenter) {
+    document.body.classList.add('presenter');
+    document.title = 'Notes · Operator Hour · S1E4';
+    // Thumbnail channels: current slide and next slide
+    let thumbBcCur = null, thumbBcNxt = null;
+    try { thumbBcCur = new BroadcastChannel(channelName + ':thumb:cur'); } catch(e){}
+    try { thumbBcNxt = new BroadcastChannel(channelName + ':thumb:nxt'); } catch(e){}
+    function pushThumbs(i){
+      const cur = i, nxt = Math.min(total - 1, i + 1);
+      try { thumbBcCur && thumbBcCur.postMessage({ idx: cur }); } catch(e){}
+      try { thumbBcNxt && thumbBcNxt.postMessage({ idx: nxt }); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:cur', JSON.stringify({ idx: cur, t: Date.now() })); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:nxt', JSON.stringify({ idx: nxt, t: Date.now() })); } catch(e){}
+    }
+
+    // Load the thumbnail iframes inside the notes window
+    const ifr = document.getElementById('presIframe');
+    const ifrNext = document.getElementById('presIframeNext');
+    if (ifr && !ifr.src) ifr.src = '?presenter=thumb&ch=cur';
+    if (ifrNext && !ifrNext.src) ifrNext.src = '?presenter=thumb&ch=nxt';
+
+    // Scale thumbnail iframes to fit their containers while preserving 16:9
+    const THUMB_W = 1600, THUMB_H = 900;
+    function scaleOne(wrap, frame){
+      if (!wrap || !frame) return;
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (w <= 0 || h <= 0) return;
+      const s = Math.min(w / THUMB_W, h / THUMB_H);
+      frame.style.transform = 'scale(' + s + ')';
+      frame.style.left = Math.round((w - THUMB_W * s) / 2) + 'px';
+      frame.style.top  = Math.round((h - THUMB_H * s) / 2) + 'px';
+    }
+    function scaleThumb(){
+      scaleOne(document.querySelector('.pres-thumb'), ifr);
+      scaleOne(document.querySelector('.pres-thumb-next'), ifrNext);
+    }
+    window.addEventListener('resize', scaleThumb);
+    if (window.ResizeObserver){
+      const ro = new ResizeObserver(scaleThumb);
+      const tn = document.querySelector('.pres-thumb');
+      const tx = document.querySelector('.pres-thumb-next');
+      if (tn) ro.observe(tn);
+      if (tx) ro.observe(tx);
+    }
+    if (ifr) ifr.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
+    if (ifrNext) ifrNext.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
+    setTimeout(scaleThumb, 50);
+    setTimeout(scaleThumb, 400);
+
+    const titles = slides.map(s => s.dataset.title || '');
+    const rawNotes = slides.map(s => {
+      const n = s.querySelector('.notes');
+      return n ? n.textContent.trim() : '';
+    });
+
+    function parseNotes(raw){
+      const copies = [];
+      raw = raw.replace(/^[ \t]*COPY:[ \t]*(.+)$/gim, function(_, txt){ copies.push(txt.trim()); return ''; });
+      raw = raw.replace(/\n{3,}/g, '\n\n').trim();
+      let doText = '', sayText = raw;
+      const m = raw.match(/^DO:\s*([\s\S]*?)\s*SAY:\s*/i);
+      if (m){ doText = m[1].trim(); sayText = raw.substring(m[0].length).trim(); }
+      else { const sm = raw.match(/^SAY:\s*/i); if (sm) sayText = raw.substring(sm[0].length).trim(); }
+      return { doText, sayText, copies };
+    }
+
+    function copyText(text, btn){
+      function flash(ok){
+        if (!btn) return;
+        const orig = btn.textContent;
+        btn.textContent = ok ? 'Copied' : 'Ctrl+C';
+        btn.classList.toggle('ok', ok);
+        setTimeout(function(){ btn.textContent = orig; btn.classList.remove('ok'); }, 1400);
+      }
+      function fallback(){
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta); flash(ok);
+        } catch(e){ flash(false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ flash(true); }, fallback);
+      } else { fallback(); }
+    }
+
+    function renderCopies(list){
+      const box = document.getElementById('curCopy');
+      if (!box) return;
+      box.innerHTML = '';
+      if (!list || !list.length){ box.style.display = 'none'; return; }
+      box.style.display = '';
+      const label = document.createElement('div');
+      label.className = 'pc-label';
+      label.textContent = list.length > 1 ? 'Paste · ' + list.length : 'Paste';
+      box.appendChild(label);
+      list.forEach(function(text){
+        const chip = document.createElement('div');
+        chip.className = 'copy-chip';
+        const code = document.createElement('span');
+        code.className = 'cc-text'; code.textContent = text;
+        const btn = document.createElement('button');
+        btn.className = 'cc-btn'; btn.type = 'button'; btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){ copyText(text, btn); });
+        chip.appendChild(code); chip.appendChild(btn);
+        box.appendChild(chip);
+      });
+    }
+
+    function setBlock(prefix, i){
+      const t = titles[i] || '';
+      const { doText, sayText, copies } = parseNotes(rawNotes[i] || '');
+      document.getElementById(prefix + 'Title').textContent = t;
+      const doEl = document.getElementById(prefix + 'Do');
+      const sayEl = document.getElementById(prefix + 'Say');
+      if (doText){ doEl.textContent = doText; doEl.style.display = ''; } else { doEl.style.display = 'none'; }
+      sayEl.textContent = sayText || '';
+      if (prefix === 'cur') renderCopies(copies);
+    }
+
+    function render(i){
+      idx = i;
+      document.getElementById('presNow').textContent = (i + 1) + ' / ' + total;
+      document.getElementById('presTitle').textContent = titles[i] || '';
+      setBlock('cur', i);
+      const nx = i + 1 < total ? i + 1 : null;
+      if (nx !== null){
+        setBlock('nxt', nx);
+      } else {
+        document.getElementById('nxtTitle').textContent = 'End of deck';
+        document.getElementById('nxtDo').style.display = 'none';
+        document.getElementById('nxtSay').textContent = '';
+      }
+      pushThumbs(i);
+      scaleThumb();
+    }
+
+    function postNav(action){
+      const newIdx = action === 'next' ? Math.min(total - 1, idx + 1)
+                    : action === 'prev' ? Math.max(0, idx - 1)
+                    : action === 'first' ? 0
+                    : action === 'last' ? total - 1
+                    : idx;
+      idx = newIdx;
+      try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+      try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+      render(idx);
+    }
+    window.postNav = postNav;
+
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); postNav('next'); }
+      else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); postNav('prev'); }
+      else if (e.key === 'Home') { postNav('first'); }
+      else if (e.key === 'End') { postNav('last'); }
+    });
+
+    // Clock
+    const startT = Date.now();
+    function updClock(){
+      const s = Math.floor((Date.now() - startT) / 1000);
+      const mm = String(Math.floor(s / 60)).padStart(2, '0');
+      const ss = String(s % 60).padStart(2, '0');
+      document.getElementById('presClock').textContent = mm + ':' + ss;
+    }
+    setInterval(updClock, 1000);
+
+    // Receive state from deck
+    if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') render(e.data.idx); };
+    window.addEventListener('storage', (e) => {
+      if (e.key === channelName + ':state' && e.newValue) {
+        try { render(JSON.parse(e.newValue).idx); } catch(_){}
+      }
+    });
+
+    // Resizable split between preview and notes (drag the divider)
+    (function(){
+      const root = document.querySelector('.pres-root');
+      const sp = document.getElementById('presSplit');
+      if (!root || !sp) return;
+      try { const sv = localStorage.getItem(channelName + ':split'); if (sv) root.style.setProperty('--pres-left-w', sv); } catch(e){}
+      let dragging = false;
+      sp.addEventListener('pointerdown', (e) => {
+        dragging = true; sp.classList.add('dragging');
+        try { sp.setPointerCapture(e.pointerId); } catch(_){}
+        e.preventDefault();
+      });
+      sp.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const r = root.getBoundingClientRect();
+        let pct = ((e.clientX - r.left) / r.width) * 100;
+        pct = Math.max(25, Math.min(75, pct));
+        root.style.setProperty('--pres-left-w', pct.toFixed(1) + '%');
+        scaleThumb();
+      });
+      function end(){
+        if (!dragging) return;
+        dragging = false; sp.classList.remove('dragging');
+        try { localStorage.setItem(channelName + ':split', root.style.getPropertyValue('--pres-left-w')); } catch(e){}
+        scaleThumb();
+      }
+      sp.addEventListener('pointerup', end);
+      sp.addEventListener('pointercancel', end);
+    })();
+
+    render(0);
+    return;
+  }
+
+  // Deck mode
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); show(idx + 1); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(total - 1); }
+    else if (e.key === 'p' || e.key === 'P') { openPresenter(); }
+  });
+
+  function openPresenter(){
+    const url = location.pathname + '?presenter=notes' + location.hash;
+    const w = window.open(url, 'op-hour-presenter',
+      'popup=yes,resizable=yes,scrollbars=yes,width=1280,height=820,menubar=0,toolbar=0,location=0,status=0');
+    if (!w) {
+      document.getElementById('popup-blocked').style.display = 'block';
+      setTimeout(() => { document.getElementById('popup-blocked').style.display = 'none'; }, 5000);
+      return;
+    }
+    // Send current state once the notes window has loaded and its iframe has subscribed
+    setTimeout(() => {
+      try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+      try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+    }, 600);
+  }
+
+  // Deck mode receives state updates silently (the notes window can send nav back)
+  if (bc) bc.onmessage = (e) => { if (e.data && e.data.type === 'state') show(e.data.idx, true); };
+  window.addEventListener('storage', (e) => {
+    if (e.key === channelName + ':state' && e.newValue) {
+      try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
+    }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

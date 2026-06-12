@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Helios · In-store assistant (prototype)</title>
+<style>
+  :root{
+    --navy:#0B1B33; --navy-2:#122747; --panel:#16305A; --line:#27457A;
+    --sun:#FFA62B; --sun-soft:rgba(255,166,43,.14);
+    --text:#F2F6FC; --muted:#9FB2CC;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:radial-gradient(1100px 700px at 70% -10%,var(--navy-2),var(--navy) 65%);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:26px 40px;}
+  .brand{display:flex;align-items:center;gap:14px;font-size:26px;font-weight:700;letter-spacing:-.01em;}
+  .brand .sun{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFD58A,var(--sun));box-shadow:0 0 24px rgba(255,166,43,.5);}
+  .langs{display:flex;gap:8px;}
+  .langs button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer;}
+  .langs button.on{background:var(--sun);border-color:var(--sun);color:#21160a;font-weight:700;}
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 40px 40px;text-align:center;}
+  .greet{font-size:clamp(30px,4.5vw,52px);font-weight:800;letter-spacing:-.02em;max-width:18ch;line-height:1.1;}
+  .greet .accent{color:var(--sun);}
+  .sub{color:var(--muted);font-size:clamp(16px,1.6vw,20px);margin-top:14px;max-width:46ch;}
+  .choices{display:grid;grid-template-columns:repeat(3,minmax(200px,260px));gap:18px;margin-top:44px;}
+  @media(max-width:760px){.choices{grid-template-columns:1fr;}}
+  .choice{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px;cursor:pointer;color:var(--text);font-size:18px;font-weight:600;transition:transform .15s,border-color .15s;}
+  .choice:hover{transform:translateY(-3px);border-color:var(--sun);}
+  .choice .ico{font-size:34px;display:block;margin-bottom:12px;}
+  .choice small{display:block;color:var(--muted);font-weight:400;font-size:14px;margin-top:6px;}
+  .plans{display:none;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:36px;max-width:980px;width:100%;}
+  .plan{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;text-align:left;position:relative;}
+  .plan.best{border-color:var(--sun);box-shadow:0 0 0 1px var(--sun);}
+  .plan .flag{position:absolute;top:-11px;left:20px;background:var(--sun);color:#21160a;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;}
+  .plan h3{font-size:20px;}
+  .plan .price{font-size:30px;font-weight:800;color:var(--sun);margin:8px 0 2px;}
+  .plan .price small{font-size:13px;color:var(--muted);font-weight:400;}
+  .plan .data{color:var(--text);font-size:14px;margin-bottom:10px;}
+  .plan ul{list-style:none;color:var(--muted);font-size:13.5px;line-height:1.7;}
+  .plan ul li::before{content:"·";color:var(--sun);margin-right:8px;font-weight:800;}
+  .back{display:none;margin-top:30px;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:10px 22px;font-size:14px;cursor:pointer;}
+  .back:hover{color:var(--text);border-color:var(--muted);}
+  .advisor{margin-top:26px;display:inline-flex;align-items:center;gap:10px;background:var(--sun-soft);border:1px solid var(--sun);color:var(--text);border-radius:999px;padding:13px 26px;font-size:16px;font-weight:600;cursor:pointer;}
+  .advisor:hover{background:rgba(255,166,43,.24);}
+  footer{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;color:var(--muted);font-size:12.5px;border-top:1px solid rgba(255,255,255,.06);}
+  footer .credit{opacity:.7;}
+  .pii{display:flex;align-items:center;gap:8px;}
+  .pii .dot{width:8px;height:8px;border-radius:50%;background:#3FB950;}
+  dialog{border:1px solid var(--line);border-radius:var(--radius);background:var(--navy-2);color:var(--text);padding:36px;max-width:420px;text-align:center;}
+  dialog::backdrop{background:rgba(4,9,18,.7);}
+  dialog h3{font-size:22px;margin-bottom:10px;}
+  dialog p{color:var(--muted);font-size:15px;line-height:1.6;}
+  dialog button{margin-top:22px;background:var(--sun);border:0;color:#21160a;font-weight:700;border-radius:999px;padding:11px 26px;font-size:15px;cursor:pointer;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="sun"></span> Helios</div>
+  <div class="langs">
+    <button class="on" data-lang="en">EN</button>
+    <button data-lang="sv">SV</button>
+    <button data-lang="fr">FR</button>
+  </div>
+</header>
+
+<main>
+  <h1 class="greet" id="greet">Hi! What brings you <span class="accent">in today?</span></h1>
+  <p class="sub" id="greetSub">Tap a topic and I'll show you what fits. A Helios advisor is one tap away the whole time.</p>
+
+  <div class="choices" id="choices">
+    <button class="choice" data-cat="consumer"><span class="ico">📱</span> A plan for me<small>Consumer mobile plans</small></button>
+    <button class="choice" data-cat="family"><span class="ico">👨‍👩‍👧‍👦</span> A plan for the family<small>Shared data, one bill</small></button>
+    <button class="choice" data-cat="smarthome"><span class="ico">🏠</span> Smart home<small>Router, failover, smart plugs</small></button>
+  </div>
+
+  <div class="plans" id="plans"></div>
+  <button class="back" id="back">← Start over</button>
+  <button class="advisor" id="advisor">🙋 Talk to a Helios advisor</button>
+</main>
+
+<footer>
+  <span class="pii"><span class="dot"></span> No personal data stored · session ends when you walk away</span>
+  <span class="credit">Prototype · deployed by Aurora</span>
+</footer>
+
+<dialog id="advisorDlg">
+  <h3>An advisor is on the way</h3>
+  <p>For anything binding, like signing up or changing a contract, a Helios colleague takes over from here. Hold tight.</p>
+  <button onclick="document.getElementById('advisorDlg').close()">Back to browsing</button>
+</dialog>
+
+<script>
+const PLANS = [
+  {cat:"consumer", name:"Helios Go",   price:12, data:"10 GB",     best:false, points:["EU roaming included","eSIM ready","Light users, second phone"]},
+  {cat:"consumer", name:"Helios Flow", price:19, data:"50 GB",     best:true,  points:["EU roaming included","Hotspot allowed","Most popular consumer plan"]},
+  {cat:"consumer", name:"Helios Max",  price:29, data:"Unlimited", best:false, points:["5G priority","EU + UK roaming","Heavy streamers, remote workers"]},
+  {cat:"family", name:"Helios Family Duo",  price:35, data:"2× 40 GB", best:false, points:["Two SIMs, one bill","Shared data top-up","Parental controls"]},
+  {cat:"family", name:"Helios Family Four", price:59, data:"4× 40 GB", best:true,  points:["Four SIMs, one bill","Parental controls","Free SIM swaps"]},
+  {cat:"smarthome", name:"Helios Home Base", price:24, data:"Wi-Fi 6 + 4G failover", best:true,  points:["App-managed guest network","Apartments, home office"]},
+  {cat:"smarthome", name:"Helios Home Plus", price:34, data:"Wi-Fi 6 + 4G failover", best:false, points:["3 smart plugs included","Energy insights","Smart-home starters"]},
+  {cat:"smarthome", name:"Helios Mesh Point", price:6, data:"Coverage add-on",       best:false, points:["Adds coverage per room","Plug and play","Larger homes, thick walls"]}
+];
+const GREETS = {
+  en:{h:'Hi! What brings you <span class="accent">in today?</span>', s:"Tap a topic and I'll show you what fits. A Helios advisor is one tap away the whole time."},
+  sv:{h:'Hej! Vad kan jag <span class="accent">hjälpa till med?</span>', s:"Tryck på ett ämne så visar jag vad som passar. En Helios-rådgivare finns ett tryck bort hela tiden."},
+  fr:{h:'Bonjour ! Qu\u2019est-ce qui vous <span class="accent">amène ?</span>', s:"Touchez un sujet et je vous montre ce qui convient. Un conseiller Helios reste à un geste de vous."}
+};
+const choices = document.getElementById('choices');
+const plansEl = document.getElementById('plans');
+const backBtn = document.getElementById('back');
+
+choices.addEventListener('click', e => {
+  const btn = e.target.closest('.choice'); if (!btn) return;
+  const cat = btn.dataset.cat;
+  plansEl.innerHTML = PLANS.filter(p => p.cat === cat).map(p => `
+    <div class="plan${p.best ? ' best' : ''}">
+      ${p.best ? '<span class="flag">Most chosen</span>' : ''}
+      <h3>${p.name}</h3>
+      <div class="price">€${p.price}<small> /month</small></div>
+      <div class="data">${p.data}</div>
+      <ul>${p.points.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>`).join('');
+  choices.style.display = 'none';
+  plansEl.style.display = 'grid';
+  backBtn.style.display = 'inline-block';
+});
+backBtn.addEventListener('click', () => {
+  plansEl.style.display = 'none';
+  backBtn.style.display = 'none';
+  choices.style.display = 'grid';
+});
+document.getElementById('advisor').addEventListener('click', () => document.getElementById('advisorDlg').showModal());
+document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.langs button').forEach(x => x.classList.toggle('on', x === b));
+  const g = GREETS[b.dataset.lang];
+  document.getElementById('greet').innerHTML = g.h;
+  document.getElementById('greetSub').textContent = g.s;
+}));
+</script>
+</body>
+</html>
