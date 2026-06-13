@@ -397,6 +397,25 @@ body.presenter .pres-root{
   body.presenter .pres-split{display:none;}
 }
 
+/* Live demo pill (red, pulsing) — used on the live-build slide */
+.live-pill{
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:#E5484D;
+  background:rgba(229,72,77,.10);border:1px solid rgba(229,72,77,.45);
+  border-radius:999px;padding:7px 14px;margin-bottom:18px;
+}
+.live-pill .ld{
+  width:9px;height:9px;border-radius:50%;background:#E5484D;
+  box-shadow:0 0 0 0 rgba(229,72,77,.55);animation:livepulse 1.6s ease-out infinite;
+}
+@keyframes livepulse{
+  0%{box-shadow:0 0 0 0 rgba(229,72,77,.55);}
+  70%{box-shadow:0 0 0 7px rgba(229,72,77,0);}
+  100%{box-shadow:0 0 0 0 rgba(229,72,77,0);}
+}
+@media (prefers-reduced-motion: reduce){ .live-pill .ld{animation:none;} }
+
 /* ============= EMBEDDED TERMINAL DEMO ============= */
 /* The demo runs as a transparent full-window iframe in a borderless dialog.
    The engine (embed mode) draws its own dark scrim over the slide behind. */
@@ -589,7 +608,7 @@ Look at what we've got to work with. One page of recap from Tuesday's call. Thei
   <section class="slide" data-title="Live build">
     <div class="top"><div class="left"><span class="dot"></span><span>S1E4 · Live</span></div><div>06</div></div>
     <div class="slide-inner" style="justify-content:center;">
-      <div class="eyebrow">Live now</div>
+      <span class="live-pill"><span class="ld"></span>Live demo</span>
       <h1 class="hero">Watch it become <span class="accent">clickable.</span></h1>
       <p class="lead" style="font-size:24px;margin-top:24px;">One page of notes. One file of plans. One prompt.</p>
     </div>
