@@ -48,6 +48,7 @@
 
   pre.prompt{background:#020409;border:1px solid var(--border);border-radius:10px;padding:22px 26px;color:#D5DEE8;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;margin:0 0 28px;}
   pre.prompt .ph{color:var(--amber);}
+  code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:#020409;border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:var(--teal);}
 
   .files{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 18px;}
   .files a{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:7px 12px;text-decoration:none;}
@@ -80,8 +81,8 @@
   <div class="rungs">
     <div class="rung-pill">
       <span class="n">Step 1 · the substance</span>
-      <strong>Capture their words</strong>
-      <span>One page of notes in the customer's own language. This is what makes it theirs.</span>
+      <strong>Start from the recap</strong>
+      <span>Teams already wrote it. Grab the call recap, in the customer's own words.</span>
     </div>
     <div class="rung-pill">
       <span class="n">Step 2 · the build</span>
@@ -99,50 +100,41 @@
 
   <!-- ───────────────────────── STEP 1 ───────────────────────── -->
   <div class="sec-label">Step 1 · the substance</div>
-  <h2 class="rung">Capture their words <span class="badge teal">start here</span></h2>
-  <p class="sec-lead">A prototype built from nothing looks like every other AI demo. Build it from the customer's own meeting notes and it feels like theirs on first click. Easiest source: the Teams recap from your last call with them. Or fill this template in five minutes.</p>
-
-  <div class="prompt-head">
-    <span class="label">Template · customer-notes.md</span>
-    <button class="copy-btn" onclick="copyPrompt('notesTpl', this)">Copy template</button>
-  </div>
-<pre class="prompt" id="notesTpl"># [Customer] · [The thing] · Discovery call
-
-**When:** [date · 30 min]
-**Who:** [names and roles · theirs and yours]
-
-## The problem in one sentence
-[What stalls today, in their words.]
-
-## What they said
-- [Constraint 1 · the environment, the policy, the deadline]
-- [Constraint 2]
-- [In scope / out of scope for a first version]
-
-## Their words
-[Quote three to five phrases they actually used.
-The prototype should speak these back to them.]
-
-## The moment to prove
-[The single interaction that makes them lean in.
-Not the platform. The moment.]</pre>
+  <h2 class="rung">Start from the recap <span class="badge teal">start here</span></h2>
+  <p class="sec-lead">The substance is already written for you. Teams makes an AI recap of every call: the summary, the decisions, the action items, all in the customer's own words. So don't sit and fill in a template from memory. Grab that recap, drop it in your project folder as <code>recap.md</code>, and let the build read it straight. That is what makes the prototype feel like theirs.</p>
 
   <div class="note">
-    <strong>Got data?</strong> Ask for their catalog, price list, or product table as a file, even a rough one. If you can't get it, invent rows that match their shape. Real structure, fictional records. Never paste actual customer data into a prototype.
+    <strong>Got their data?</strong> Drop in their catalog, price list, or product table as a file too, even a rough one. No file? Invent rows that match their shape. Real structure, fictional records, never their actual data.
   </div>
+
+  <p class="sec-lead" style="margin-top:20px;">Only got a long transcript instead of a clean recap? Run this first to boil it down to what a prototype actually needs.</p>
+
+  <div class="prompt-head">
+    <span class="label">Prompt 0 · distil the call (optional)</span>
+    <button class="copy-btn" onclick="copyPrompt('distilPrompt', this)">Copy prompt</button>
+  </div>
+<pre class="prompt" id="distilPrompt">Read transcript.md. Pull out only what I'd need to build a prototype,
+and write it to recap.md:
+
+- The problem in one sentence, in their words.
+- The three or four hard constraints (environment, policy, deadline, scope).
+- Five phrases they actually used, so the prototype speaks their language.
+- The one moment that would make them lean in.
+
+Keep it to one page. No filler.</pre>
 
   <hr class="div">
 
   <!-- ───────────────────────── STEP 2 ───────────────────────── -->
   <div class="sec-label">Step 2 · the build</div>
   <h2 class="rung">The build prompt <span class="badge teal">the engine</span></h2>
-  <p class="sec-lead">Open Copilot CLI in the folder with your notes and data file, paste this, and adjust the bracketed parts. The constraints at the end are what keep the output simple enough to demo: one file, no installs, opens in any browser.</p>
+  <p class="sec-lead">Open Copilot CLI in the folder with your recap and data file, paste this, and adjust the bracketed parts. The constraints at the end are what keep the output simple enough to demo: one file, no installs, opens in any browser.</p>
 
   <div class="prompt-head">
     <span class="label">Prompt A · build the prototype</span>
     <button class="copy-btn" onclick="copyPrompt('buildPrompt', this)">Copy prompt</button>
   </div>
-<pre class="prompt" id="buildPrompt">Read customer-notes.md and [data file].
+<pre class="prompt" id="buildPrompt">Read recap.md and [data file].
 
 Build me a clickable mock of [the thing] as one HTML file, prototype.html:
 
@@ -154,7 +146,7 @@ Build me a clickable mock of [the thing] as one HTML file, prototype.html:
 No installs, no frameworks, one file. Open it in the browser when you're done.</pre>
 
   <div class="note">
-    <strong>Today's worked example:</strong> the exact prompt from the session built an in-store kiosk for a retail telecom from one page of notes and a plans file. The case files are below, so you can replay the whole build yourself.
+    <strong>Today's worked example:</strong> the exact prompt from the session built an in-store kiosk for a retail telecom from one Teams recap and a plans file. The case files are below, so you can replay the whole build yourself. The recap is a real Teams Copilot recap, names changed.
   </div>
 
   <div class="files">
@@ -191,7 +183,7 @@ Then verify the README by following it yourself from a clean folder.</pre>
 
   <div class="next">
     <h3>What to do this week</h3>
-    <p>Pick one conversation that stalled on a slide. Fill the notes template from memory or the Teams recap.</p>
+    <p>Pick one conversation that stalled on a slide. Grab the Teams recap from that call and drop it in a folder as <code>recap.md</code>.</p>
     <p>Run <strong>Prompt A</strong>. Twenty minutes. Show the result to one colleague before you show a customer.</p>
     <p>Bring what the customer said to <a href="../">Episode 5</a>.</p>
     <p>Stuck? Ask <strong>@otto</strong> in the meeting chat.</p>
