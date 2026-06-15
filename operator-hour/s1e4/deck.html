@@ -484,11 +484,11 @@ body.presenter #tdTakeover.active{
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Cold open on the stalled-meeting story. Slow, let them recognise it. Then the promise: today we build a working prototype live, and end by talking to one. 75 seconds.
 
-SAY: So you all know that meeting. You've done your homework, the deck looks good, the architecture slide actually makes sense for once, you've even rehearsed it a bit. And then you get to the end and the customer kind of leans back and goes, yeah, looks interesting, send us the deck.
+SAY: So you know that meeting. You've done the homework, the deck looks good, the architecture slide actually makes sense, you've even rehearsed. And then you get to the end, and the customer leans back and says, looks interesting, send us the deck.
 
-And that's a no. Just a really polite one.
+That's a no. A polite one, but a no.
 
-And I've collected a few of those over the years, so at some point I kind of stopped doing it that way. So what I do now, and what we're going to do today, live, is take a real customer problem, and instead of talking about a solution, we just build one. Right here, while we talk. And by the end of this I'll actually walk up and talk to the thing we built.</aside>
+I've collected a few of those over the years, so I stopped pitching that way. What I do now, and what we'll do today, live, is take a real customer problem and build something instead of describing it. Right here, while we talk. And by the end, I'll walk up and talk to the thing we built.</aside>
   </section>
 
   <!-- SLIDE 2: The pain -->
@@ -508,7 +508,7 @@ And I've collected a few of those over the years, so at some point I kind of sto
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Get a hands-up. "Who has heard 'send us the deck' and then heard nothing for a month?" Let the pills land. Keep it light, this is the relatable open. 60 seconds.
 
-SAY: So everyone here who works with partners has lived this, right? The meeting goes fine, everyone's nodding along, and then it just kind of dissolves into one of these three sentences. And it's not because the idea was bad. It's because we asked a room full of really busy people to imagine something that doesn't exist yet. And they won't. You know, it's not really their job to sit there and picture it. That part is on us.</aside>
+SAY: Everyone here who works with partners has lived this. The meeting goes fine, everyone nods, and then it dissolves into one of these three sentences. It's not that the idea was bad. We just asked a room full of busy people to imagine something that doesn't exist yet, and they won't. That part is on us, not them.</aside>
   </section>
 
   <!-- SLIDE 3: The shift -->
@@ -523,7 +523,7 @@ SAY: So everyone here who works with partners has lived this, right? The meeting
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: The core reframe. Pause after the big line. Then the cost argument: this used to be a week of engineering, now it's twenty minutes, which changes when you can afford to do it. 60 seconds.
 
-SAY: So this is kind of the whole episode in one line. A slide asks for trust. A prototype just hands them the keyboard. And the reason this matters right now is cost, honestly. Because a clickable prototype, that used to be like a week of someone's sprint, so you'd save it for the really big deals only. But now it's twenty minutes. So it kind of changes the math. Now it fits inside the prep for a totally normal Tuesday meeting, you know.</aside>
+SAY: This is the whole episode in one line. A slide asks for trust. A prototype hands over the keyboard. And the reason it matters now is cost. A clickable prototype used to be a week of someone's sprint, so you saved it for the big deals. Now it's twenty minutes. That changes the math. It fits inside the prep for a normal Tuesday meeting.</aside>
   </section>
 
   <!-- SLIDE 4: The recipe -->
@@ -545,7 +545,7 @@ SAY: So this is kind of the whole episode in one line. A slide asks for trust. A
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Walk the five steps fast, they'll see all of them live in the next twenty minutes. Linger only on step 2, that's the one people skip. 75 seconds.
 
-SAY: So this is the recipe. Five steps, and you're literally about to watch all five of them happen for real in a minute. The one people skip is step two, the substance. Because a prototype you build from nothing, it just looks like every other AI demo, right. But a prototype you build from the customer's own meeting notes and their own product list, that one feels like theirs the second they click it. And that's kind of the whole difference between a cute little demo and a customer actually leaning in. Everything else here is honestly just asking for it.</aside>
+SAY: Five steps, and you're about to watch every one of them happen for real. The one people skip is step two, the substance. A prototype built from nothing looks like every other AI demo. Build it from the customer's own notes and their own product list, and it feels like theirs the moment they click. That's the difference between a cute demo and a customer leaning in. The rest is just asking.</aside>
   </section>
 
   <!-- SLIDE 5: Today's case -->
@@ -599,9 +599,9 @@ SAY: So this is the recipe. Five steps, and you're literally about to watch all 
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Set the stakes. This is an anonymized version of a real feasibility prototype, and say that out loud, it buys credibility. Point at the recap card: the entire input is one page of notes plus a product list. 75 seconds.
 
-SAY: So today's case is a real one. Names changed, but the constraints are all kept. It's a retail telecom, and they want an avatar in their flagship stores that helps walk-in customers pick a mobile plan. So you've got noisy store floors, a really strict no-personal-data policy, and a human has to take over for anything binding. And then there's a Thursday deadline, you know, show the CTO something working or the whole thing just stops.
+SAY: Today's case is real. Names changed, constraints kept. A retail telecom wants an avatar in their flagship stores that helps walk-in customers pick a plan. Noisy floors. A strict no-personal-data policy. A human takes over for anything binding. And a Thursday deadline: show the CTO something working, or the project stops.
 
-And look at what we've actually got to work with here. One page of recap from Tuesday's call, and their plan catalog as a file. That's it. And honestly, that's kind of plenty.</aside>
+Look at what we've got to work with. One page of recap from Tuesday's call, and their plan list as a file. That's it. And honestly, that's plenty.</aside>
   </section>
 
   <!-- SLIDE 6: Live build -->
@@ -636,13 +636,13 @@ COPY: /cwd C:\Users\jwallquist\projects\cli-intro-share\operator-hour\s1e4\demo
 COPY: Read helios-recap.md and plans.csv. Build me a clickable mock of the in-store kiosk as one HTML file, kiosk-mock.html. A warm welcome screen in Helios colours, three big choices (a plan for me, a plan for the family, smart home), plan cards from the CSV, and a "talk to a Helios advisor" button for anything binding. Greeting in English, Swedish and French. No installs, no frameworks, one file. Open it in the browser when you're done.
 COPY: start kiosk-fallback.html
 
-SAY: Okay, so this is the live part. Everything I'm using is right here on the screen, the recap from Tuesday, the plan catalog, and just a terminal. And I'm going to describe the kiosk in plain language, once, and we'll kind of see what comes back.
+SAY: This is the live part. Everything I'm using is on screen: the recap from Tuesday, the plan list, and a terminal. I'll describe the kiosk in plain language, once, and we'll see what comes back.
 
-So there's the prompt. Read it with me. There's no code in there at all. It's honestly the same description I'd give a designer, except this one types like two hundred words a second.
+There's the prompt. Read it with me. No code in there. It's the same brief I'd give a designer, except this one types two hundred words a second.
 
-And while it's working, three quick things. One, it's reading their actual meeting notes, so the kiosk is going to speak their language, not mine. Two, every plan name you'll see comes straight from their file. And three, I have not written a single line of code here, and I'm not going to.
+While it works, three things. It's reading their actual notes, so the kiosk speaks their language, not mine. Every plan name comes straight from their file. And I haven't written a line of code, and I won't.
 
-And there it is. So let's click around. Three languages, because the notes said three languages. The family plans, those are from their file. And the advisor button, because their legal team said a human has to take anything binding. So twenty minutes ago, this was just a paragraph sitting in a recap.</aside>
+And there it is. Let's click around. Three languages, because the notes asked for three. The family plans, from their file. The advisor button, because their legal team wants a human on anything binding. Twenty minutes ago, this was a paragraph in a recap.</aside>
   </section>
 
   <!-- SLIDE 7: The replay · hosts the embedded terminal demo -->
@@ -657,7 +657,7 @@ And there it is. So let's click around. Three languages, because the notes said 
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: EMBEDDED TERMINAL DEMO. Press space once and the terminal slides in over this slide, in the same window. No tab switch, no second presenter. This presenter view tracks every step (the rail and the phase pill take over below). Drive the whole thing with space. Each move is three presses: armed, typed, fired. Be explicit with the room that this is a compressed replay of the real run, and that the honesty is the point. On the "Now it answers" screen, alt-tab to the live avatar and do the walk-up, then come back and press on for the ping. One more press closes the terminal and lands on Handover. Press R inside the demo to replay, Esc to bail out.
 
-SAY: So a clickable mock, that's really just step three of five. The real run kept going, you know, can the voice tech actually survive a noisy store floor, what does it cost, and then a deploy to a live URL. And that part took most of an hour, and honestly watching a deploy bar tick along is nobody's idea of a fun Tuesday. So you get the replay instead. Same prompts, the real run, I've just cut out the waiting. So watch what I type, and maybe more importantly, watch where I stop.</aside>
+SAY: A clickable mock is step three of five. The real run kept going: can the voice tech survive a noisy store floor, what does it cost, and a deploy to a live URL. That took most of an hour, and watching a deploy bar is nobody's idea of a good time. So here's the replay. Same prompts, the real run, just with the waiting cut out. Watch what I type, and watch where I stop.</aside>
   </section>
 
   <!-- SLIDE 8: Handover -->
@@ -693,7 +693,7 @@ deploy it to their own subscription.
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: The "it doesn't end on my laptop" beat. This is what separates a stunt from an asset. Talk to the partner-facing reality: your customer's engineers will ask "and then what?", and this is the answer. 75 seconds.
 
-SAY: So one more prompt and this kind of stops being mine. Write the handover. A README someone can follow cold, and the infrastructure as code so their team can deploy it to their own subscription, their own rules. And that's really the answer to the question every engineer in the customer's room is about to ask, which is, okay, nice demo, and then what? Well, then this. They clone it, they deploy it, they keep building. So the prototype isn't the end of the conversation. It's kind of the first commit.</aside>
+SAY: One more prompt, and this stops being mine. Write the handover. A README someone can follow cold, and the infrastructure as code so their team deploys it to their own subscription. That's the answer to the question every engineer in the room is about to ask: nice demo, and then what? Then this. They clone it, deploy it, keep building. The prototype isn't the end of the conversation. It's the first commit.</aside>
   </section>
 
   <!-- SLIDE 10: Three rules -->
@@ -713,7 +713,7 @@ SAY: So one more prompt and this kind of stops being mine. Write the handover. A
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: The trust slide, same role as E3's three rules. Read all three slowly. Rule 1 is the one that keeps people out of trouble, lean on it. 60 seconds.
 
-SAY: So before you all run off and build something, just three quick rules. One, fictional data, always. You want their data shape and their vocabulary, you know, but never their actual records. So invent the rows, keep the structure. Two, label it. The footer on my kiosk literally says prototype, and I say it out loud in every single demo. Nobody should find out later that the thing they were clicking was a mock. And three, it reaches production through engineers, through a repo and a review. Because our job here is to start the conversation, not to kind of sneak something into someone's estate.</aside>
+SAY: Before you all go and build, three rules. One, fictional data, always. Their data shape and their words, never their actual records. Invent the rows, keep the structure. Two, label it. The footer on my kiosk says prototype, and I say it out loud every time. Nobody should find out later they clicked a mock. Three, it reaches production through engineers, a repo and a review. Our job is to start the conversation, not to sneak something into their estate.</aside>
   </section>
 
   <!-- SLIDE 11: The kit -->
@@ -735,7 +735,7 @@ SAY: So before you all run off and build something, just three quick rules. One,
 
 COPY: https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e4/prototype-kit.html
 
-SAY: So everything from today is in one place, the Prototype Kit. You get the exact build prompt, the handover prompt, a little template for the meeting notes, and the three rules. I'll put the link in the chat. So just swap in your own customer's notes and the same recipe runs on your case tomorrow.</aside>
+SAY: Everything from today is in one place, the Prototype Kit. The build prompt, the handover prompt, a template for the notes, and the three rules. I'll drop the link in the chat. Swap in your own customer's notes, and the same recipe runs on your case tomorrow.</aside>
   </section>
 
   <!-- SLIDE 12: AMA -->
@@ -760,7 +760,7 @@ SAY: So everything from today is in one place, the Prototype Kit. You get the ex
 
 COPY: Otto, what makes a good first prototype case?
 
-SAY: So we've got about five minutes for questions. Otto's in the chat and he knows today's build, both prompts and the kit, so ask him anything. And if he gets something wrong, well, that's on tape and we'll fix it before next week.</aside>
+SAY: Five minutes for questions. Otto's in the chat and knows today's build, both prompts and the kit, so ask him anything. If he gets something wrong, it's on tape and we'll fix it before next week.</aside>
   </section>
 
   <!-- SLIDE 13: What's next -->
@@ -783,7 +783,7 @@ SAY: So we've got about five minutes for questions. Otto's in the chat and he kn
     <div class="progress"><div class="bar"></div></div>
     <aside class="notes">DO: Close. Land the refrain. Hold the smile. Mention the recap and recording land on the same page tonight.
 
-SAY: So this week, just pick one conversation that stalled on you, and run the recipe on it. One page of notes, one prompt, twenty minutes. And then show it to someone and kind of watch what happens. Bring what the customer said back to next week. Next Tuesday we're going to teach the machine to write like you, you know, not like a press release. Still not a developer. I just started bringing the actual thing instead of a slide about the thing.</aside>
+SAY: This week, pick one conversation that stalled, and run the recipe on it. One page of notes, one prompt, twenty minutes. Then show it to someone and watch what happens. Bring what the customer said to next week. Next Tuesday, we teach the machine to write like you, not like a press release. Still not a developer. I just started bringing the thing instead of a slide about the thing.</aside>
   </section>
 
 </div>
