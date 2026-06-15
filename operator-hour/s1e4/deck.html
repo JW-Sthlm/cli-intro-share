@@ -1035,11 +1035,14 @@ SAY: This week, pick one stalled conversation and run the recipe on it. One page
       scaleThumb();
     }
 
+    let navSeq = 0;
     function postNav(action){
       // The deck window owns navigation (including the embedded-demo trap).
-      // Send the intent; the deck decides and broadcasts the resulting state.
-      try { bc && bc.postMessage({ type: 'nav', action }); } catch(e){}
-      try { localStorage.setItem(channelName + ':nav', JSON.stringify({ action, t: Date.now() })); } catch(e){}
+      // Send the intent over both transports, each tagged with a unique id so
+      // the deck processes it once even though it arrives twice.
+      const id = (++navSeq) + '.' + Date.now();
+      try { bc && bc.postMessage({ type: 'nav', action, id }); } catch(e){}
+      try { localStorage.setItem(channelName + ':nav', JSON.stringify({ action, id, t: Date.now() })); } catch(e){}
     }
     window.postNav = postNav;
 
@@ -1230,24 +1233,24 @@ SAY: This week, pick one stalled conversation and run the recipe on it. One page
   }
 
   // Deck mode receives nav INTENTS from the presenter window and owns the result.
+  // Each intent arrives over BOTH BroadcastChannel and localStorage, so dedup by
+  // id to avoid processing (and double-advancing) the same keypress twice.
+  let lastNavId = null;
+  function handleNavIntent(action, id){
+    if (id && id === lastNavId) return;
+    lastNavId = id || null;
+    if (action === 'next') navNext();
+    else if (action === 'prev') navPrev();
+    else if (action === 'first') navTo(0);
+    else if (action === 'last') navTo(total - 1);
+  }
   if (bc) bc.onmessage = (e) => {
     const d = e.data; if (!d) return;
-    if (d.type === 'nav'){
-      if (d.action === 'next') navNext();
-      else if (d.action === 'prev') navPrev();
-      else if (d.action === 'first') navTo(0);
-      else if (d.action === 'last') navTo(total - 1);
-    }
+    if (d.type === 'nav'){ handleNavIntent(d.action, d.id); }
   };
   window.addEventListener('storage', (e) => {
     if (e.key === channelName + ':nav' && e.newValue) {
-      try {
-        const action = JSON.parse(e.newValue).action;
-        if (action === 'next') navNext();
-        else if (action === 'prev') navPrev();
-        else if (action === 'first') navTo(0);
-        else if (action === 'last') navTo(total - 1);
-      } catch(_){}
+      try { const v = JSON.parse(e.newValue); handleNavIntent(v.action, v.id); } catch(_){}
     }
   });
 
