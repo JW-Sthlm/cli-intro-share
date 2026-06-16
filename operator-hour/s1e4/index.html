@@ -54,74 +54,77 @@
 <body>
 <div class="wrap">
   <div class="crumb"><a href="../">← Operator Hour</a></div>
-  <span class="tag">S1 · Episode 4 · Tue Jun 16 2026 · 10:30 CET · preview</span>
+  <span class="tag">S1 · Episode 4 · Tue Jun 16 2026 · recap</span>
   <h1>Prototypes that <span class="accent">show, not tell.</span></h1>
-  <p class="sub">A working thing beats a slide about the thing. We take a real customer problem and build a small prototype you can click, live in the room. Then hand it over clean, so an engineer can pick it up and take it the rest of the way.</p>
+  <p class="sub">A working thing beats a slide about the thing. We took a real customer problem and built a clickable prototype live, in plain language, then handed it over clean so an engineer can take it the rest of the way. By the end we walked up and talked to it.</p>
 
-  <div class="section-label">What we'll cover</div>
-  <ol class="steps">
-    <li>
-      <strong>Start from the customer problem</strong>
-      <span>Frame the one thing the prototype has to prove. Not the whole platform. The single moment that makes a customer lean in.</span>
-    </li>
-    <li>
-      <strong>Research into substance</strong>
-      <span>Pull the real context the prototype needs, the part a generic demo can't fake. Their data shape, their workflow, their words.</span>
-    </li>
-    <li>
-      <strong>Build something clickable</strong>
-      <span>A working prototype, not a mockup. We describe it in plain language and Copilot builds it while we talk through the choices.</span>
-    </li>
-    <li>
-      <strong>Show, don't tell</strong>
-      <span>Demo it the way you'd show a customer. Let them click. A slide asks them to imagine. A prototype lets them try.</span>
-    </li>
-    <li>
-      <strong>Hand it over clean</strong>
-      <span>Infrastructure-as-code so an engineer can stand it up and run with it. The prototype isn't a dead end, it's the first commit.</span>
-    </li>
-  </ol>
-
-  <div class="pull">
-    <span class="lbl">The shift</span>
-    A slide says trust me. A prototype says try it. The fastest way to get a room aligned is to put a working thing in front of them and let them poke at it, instead of describing what it would do one day.
+  <div class="section-label">Recap</div>
+  <div class="lede">
+    <p>You know the meeting. You did the homework, the deck was good, the architecture slide made sense, you even rehearsed. And then the customer leans back and says, looks interesting, send us the deck. That is a no. A polite one, but a no. Not because the idea was bad, but because we asked a room full of busy people to imagine something that doesn't exist yet. That part is on us.</p>
+    <p><strong>A slide says trust me. A prototype says try it.</strong> The reason this matters now is cost. A clickable prototype used to be a week of someone's sprint, so you saved it for the big deals. Now it is twenty minutes, which means it fits inside the prep for a normal Tuesday meeting. Five steps, the same every time: frame the problem, feed it substance, build something clickable, show it, hand it over clean.</p>
+    <p><strong>The live build.</strong> The case was a retail telecom, names changed, constraints kept: an in-store avatar that helps walk-in customers pick a plan, noisy floors, a strict no-personal-data policy, a human for anything binding, and a Thursday deadline. Our whole input was one Teams recap from the call and their plan list as a file. One plain-language prompt, and a clickable kiosk appeared, in their colours, greeting in three languages because the notes asked for three, plan cards pulled straight from their file, and an advisor button because their legal team wanted a human on anything binding. No code written, and none needed.</p>
+    <div class="pull">
+      <span class="lbl">The shift</span>
+      Twenty minutes ago this was a paragraph in a recap. Now it is a thing the customer can click on Thursday. A slide asks them to imagine. A prototype lets them try.
+    </div>
+    <p><strong>From mock to real, then clean handover.</strong> The terminal demo showed the rest of the real run, compressed: research whether the voice tech survives a noisy floor, a short plan, a two-letter approval, and a deploy to a live URL. Then we walked up to the deployed avatar and asked it for a family plan, and it answered. The last prompt wrote the handover: a README an engineer can follow cold, plus infrastructure-as-code, so their team stands it up in their own subscription. The prototype isn't the end of the conversation. It's the first commit.</p>
+    <p><strong>The operator move:</strong> pick one conversation that stalled on a slide, grab the Teams recap from that call, drop it in a folder as recap.md, and run the build prompt. Twenty minutes. One honest note from the room: keep it demo-grade and say so. Fictional data, their shape but never their records. Label it a prototype on screen and out loud. And let it reach production through engineers, a repo and a review, never straight from your demo laptop.</p>
   </div>
 
-  <div class="section-label">Bring this</div>
+  <div class="section-label">Take-home this week</div>
   <div class="bring">
-    <h3>Bring the conversation that stalled on a slide</h3>
-    <p>Pick a customer or partner conversation that didn't land because it stayed abstract. Bring the <strong>problem</strong>, not a solution. We'll build a prototype against it live, and you'll leave with the start of something you can actually show.</p>
-    <p>Set up your morning routine from E3 yet? <a class="inline" href="../s1e3/">Five minutes</a>, then bring what it got wrong.</p>
+    <h3>Turn one stalled conversation into something they can click</h3>
+    <p>Pick a customer or partner conversation that stayed abstract. Grab the <strong>Teams recap</strong> from that call, drop it in a folder, and run the build prompt from the kit. Block <strong>20 minutes</strong>. Show the result to one colleague before you show a customer. Bring what the customer said to E5.</p>
+    <p>Didn't grab the kit yet? <a class="inline" href="prototype-kit.html">The Prototype Kit</a> has the build prompt, the handover prompt, and the three rules.</p>
   </div>
 
-  <div class="section-label">Format</div>
-  <p style="color:var(--muted);font-size:14px;margin:-4px 0 12px;"><strong style="color:var(--text);font-weight:600;">5 + 20 + 10 + 5.</strong> Five on the frame. Twenty on the live build, mess included. Ten on the AMA with Otto. Five on your move for next week.</p>
-
-  <div class="section-label">Useful before the session</div>
+  <div class="section-label">Resources from this episode</div>
   <div class="cards">
-    <a class="card" href="../s1e3/">
-      <span class="icon">📺</span>
-      <h2>E3 recap</h2>
-      <p>If you missed last week. The morning inbox sort, the brief, and the three dumb rules that keep it safe.</p>
-      <span class="card-tag teal">watch · 30 min</span>
+    <!-- RECORDING LINK · TODO: paste the "People in Microsoft with the link can view"
+         Stream share URL for the Jun 16 recording (Share → People in Microsoft → Copy link).
+         Until then this card points at the kit so it is never a dead click. -->
+    <a class="card" href="prototype-kit.html">
+      <span class="icon">🎬</span>
+      <h2>Recording</h2>
+      <p>The full session, Jun 16 2026. Share link is added in the broadcast wave; until then, the Prototype Kit below has everything you need to replay it yourself.</p>
+      <span class="card-tag amber">link added shortly</span>
+    </a>
+    <a class="card" href="prototype-kit.html">
+      <span class="icon">🧰</span>
+      <h2>Prototype Kit</h2>
+      <p>Start from the Teams recap, the build prompt, the handover prompt, and the three rules. Plus the worked Helios kiosk case, so you can replay the whole build.</p>
+      <span class="card-tag teal">copy &amp; run · take-home kit</span>
     </a>
     <a class="card" href="../use-case-finder.html">
       <span class="icon">🎯</span>
       <h2>Use Case Finder prompt</h2>
-      <p>The five-question interview. Run it on yourself if you haven't. A stuck customer demo is often near the top of the list.</p>
+      <p>The five-question interview. A stalled customer demo is often near the top of the list, and it makes a perfect first prototype.</p>
       <span class="card-tag teal">on-ramp · 5 min</span>
     </a>
   </div>
 
-  <div class="section-label">Not on the calendar?</div>
-  <p style="color:var(--muted);font-size:14px;line-height:1.55;margin:-4px 0 12px;">Anyone at Microsoft is welcome. <a class="inline" href="https://teams.microsoft.com/l/team/19%3Ar5cJ0CKN1kn-T3gjeTALqlLO-4Emu6CUjbVLBNophHg1%40thread.tacv2/conversations?groupId=5c2280c6-aa1c-4480-954c-958a2949d50e&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener">Join the cohort team</a> and post "add me", or <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20%E2%80%94%20add%20me%20to%20the%20invite">email the host</a>. You'll be on the invite before Tuesday.</p>
+  <div class="section-label">What's next</div>
+  <div class="cards">
+    <a class="card" href="../s1e5/">
+      <span class="icon">📅</span>
+      <h2>E5 · Sound like yourself, at scale</h2>
+      <p>Tue Jun 23. Turn a session log into a post that sounds like you, not a press release. Bring something you actually did this week.</p>
+      <span class="card-tag amber">next Tuesday</span>
+    </a>
+    <a class="card" href="../../course/">
+      <span class="icon">🎓</span>
+      <h2>Self-service course</h2>
+      <p>Eight lessons, self-paced. Work through between episodes for depth on the CLI itself.</p>
+      <span class="card-tag teal">self-paced</span>
+    </a>
+  </div>
 
-  <p class="refrain"><strong>Still not a developer.</strong> Just stopped describing the thing when I could hand someone the thing.</p>
+  <p class="refrain"><strong>Still not a developer.</strong> I just build the thing now, and hand the keyboard to someone who makes it real.</p>
 
   <div class="meta">
     <p><strong>Episode:</strong> S1E4 · Jun 16 2026 · 30 min · EMEA EPS + GCPS</p>
     <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">LinkedIn</a></p>
-    <p><strong>Recap + recording:</strong> this page upgrades from preview to recap on Tuesday evening. Same URL.</p>
+    <p><strong>Recap + recording:</strong> both live on this page.</p>
   </div>
 </div>
 </body>
