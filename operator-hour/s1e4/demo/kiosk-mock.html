@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helios kiosk mock</title>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  overflow-x: hidden;
+}
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(32px);
+  z-index: 0;
+}
+body::before {
+  width: 26rem;
+  height: 26rem;
+  top: -7rem;
+  right: -6rem;
+  background: var(--cp-warning);
+  opacity: 0.20;
+}
+body::after {
+  width: 22rem;
+  height: 22rem;
+  left: -7rem;
+  bottom: -6rem;
+  background: var(--cp-accent);
+  opacity: 0.09;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.topbar,
+.hero,
+.stage,
+.catalog,
+.footer-row {
+  width: 100%;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.brand-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--cp-warning);
+  box-shadow: 0 0 0 6px var(--cp-highlight);
+}
+
+.brand small,
+.status small,
+.muted {
+  color: var(--cp-text-muted);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--cp-border);
+  background: var(--cp-panel);
+  color: var(--cp-text-muted);
+  font-size: 0.875rem;
+}
+
+.status .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--cp-success);
+  box-shadow: 0 0 0 4px var(--cp-accent-soft);
+}
+
+.langs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+button {
+  font: inherit;
+}
+
+.lang-btn,
+.secondary-btn,
+.choice-btn,
+.advisor-btn,
+.plan-btn,
+.link-btn {
+  border-radius: 0.625rem;
+  border: 1px solid var(--cp-border);
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.lang-btn,
+.secondary-btn,
+.choice-btn,
+.plan-btn,
+.link-btn {
+  background: var(--cp-surface);
+  color: var(--cp-text);
+}
+
+.lang-btn,
+.secondary-btn,
+.link-btn {
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.lang-btn {
+  min-width: 56px;
+  font-weight: 700;
+  color: var(--cp-text-muted);
+}
+
+.lang-btn[aria-pressed="true"] {
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  border-color: var(--cp-accent);
+  box-shadow: 0 0 0 3px var(--cp-accent-soft);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(340px, 0.9fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+
+.hero-main {
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-main::after {
+  content: "";
+  position: absolute;
+  inset: auto -5rem -5rem auto;
+  width: 20rem;
+  height: 20rem;
+  border-radius: 999px;
+  background: var(--cp-warning);
+  opacity: 0.13;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 18px;
+}
+
+.hero-kicker strong {
+  color: var(--cp-text);
+}
+
+.hero-kicker .pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cp-warning);
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.4rem, 4vw, 4.6rem);
+  line-height: 0.97;
+  letter-spacing: -0.05em;
+}
+
+.hero h1 .accent {
+  color: var(--cp-accent);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 58ch;
+  margin-top: 18px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--cp-text-muted);
+}
+
+.hero-copy strong {
+  color: var(--cp-text);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  align-items: center;
+}
+
+.advisor-btn {
+  padding: 14px 18px;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  border-color: var(--cp-accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.advisor-btn:hover,
+.lang-btn:hover,
+.secondary-btn:hover,
+.choice-btn:hover,
+.plan-btn:hover,
+.link-btn:hover {
+  transform: translateY(-1px);
+}
+
+.secondary-btn,
+.choice-btn,
+.plan-btn,
+.link-btn {
+  cursor: pointer;
+}
+
+.secondary-btn {
+  padding: 14px 18px;
+  color: var(--cp-text);
+  background: var(--cp-surface);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.panel-note {
+  color: var(--cp-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.choice-btn {
+  text-align: left;
+  padding: 18px;
+  min-height: 168px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.choice-btn[aria-pressed="true"] {
+  border-color: var(--cp-accent);
+  box-shadow: 0 0 0 3px var(--cp-accent-soft);
+}
+
+.choice-badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+  font-weight: 800;
+}
+
+.choice-btn h3,
+.detail h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+}
+
+.choice-btn p,
+.detail p,
+.plan-meta,
+.plan-fit,
+.count,
+.detail-list {
+  color: var(--cp-text-muted);
+}
+
+.choice-btn p {
+  margin: 10px 0 0;
+  line-height: 1.45;
+}
+
+.choice-btn .path {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  color: var(--cp-text-soft);
+}
+
+.detail {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.detail-top {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  width: fit-content;
+}
+
+.detail-flag .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--cp-warning);
+}
+
+.detail-cta {
+  display: grid;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.detail .advisor-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.detail .secondary-btn {
+  width: 100%;
+}
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.catalog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  padding: 0 2px;
+}
+
+.catalog-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.catalog-head .count {
+  font-size: 0.95rem;
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.plan-btn {
+  padding: 18px;
+  text-align: left;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plan-btn[aria-pressed="true"] {
+  border-color: var(--cp-accent);
+  box-shadow: 0 0 0 3px var(--cp-accent-soft);
+}
+
+.plan-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.plan-name {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.pill.popular {
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.price strong {
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.price span {
+  color: var(--cp-text-muted);
+}
+
+.plan-meta {
+  line-height: 1.45;
+  font-size: 0.96rem;
+}
+
+.plan-bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.plan-bullets li {
+  display: flex;
+  gap: 8px;
+  color: var(--cp-text-muted);
+  line-height: 1.4;
+}
+
+.plan-bullets li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--cp-warning);
+  margin-top: 0.45em;
+  flex: 0 0 auto;
+}
+
+.plan-fit {
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 0.92rem;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 2px 0;
+  color: var(--cp-text-muted);
+  font-size: 0.88rem;
+  flex-wrap: wrap;
+}
+
+.footer-row a {
+  color: var(--cp-link);
+  text-decoration: none;
+}
+
+.footer-row a:hover {
+  text-decoration: underline;
+}
+
+dialog {
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-panel-strong);
+  color: var(--cp-text);
+  padding: 0;
+  width: min(460px, calc(100vw - 32px));
+  box-shadow: var(--cp-shadow);
+}
+
+dialog::backdrop {
+  background: var(--cp-overlay);
+}
+
+.dialog-body {
+  padding: 24px;
+}
+
+.dialog-body h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.dialog-body p {
+  margin: 12px 0 0;
+  color: var(--cp-text-muted);
+  line-height: 1.55;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.dialog-actions .secondary-btn,
+.dialog-actions .advisor-btn {
+  flex: 1 1 180px;
+  justify-content: center;
+}
+
+@media (max-width: 1100px) {
+  .hero,
+  .stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar,
+  .catalog-head,
+  .footer-row {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .hero-main,
+  .panel,
+  .plan-btn,
+  .choice-btn,
+  .dialog-body {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        Helios <small>in-store kiosk mock</small>
+      </div>
+    </div>
+    <div class="status" aria-live="polite">
+      <span class="dot" aria-hidden="true"></span>
+      <span id="statusText">Session only. Nothing saved after you leave.</span>
+    </div>
+    <div class="langs" role="group" aria-label="Language switch">
+      <button class="lang-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lang-btn" type="button" data-lang="sv" aria-pressed="false">SV</button>
+      <button class="lang-btn" type="button" data-lang="fr" aria-pressed="false">FR</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="card hero-main">
+      <div class="hero-kicker">
+        <span class="pip" aria-hidden="true"></span>
+        <strong id="kickerText">Warm welcome</strong>
+        <span id="kickerMeta">English, Svenska, Français</span>
+      </div>
+      <h1 id="heroTitle">Hi. Let us find the right setup.</h1>
+      <p class="hero-copy" id="heroCopy">
+        Pick one of the three paths, then tap a plan card to see what fits. For anything binding, a Helios advisor takes over.
+      </p>
+      <div class="hero-actions">
+        <button class="advisor-btn" type="button" id="openAdvisorTop">Talk to a Helios advisor</button>
+        <button class="secondary-btn" type="button" id="showAll">Show all plans</button>
+      </div>
+    </div>
+
+    <aside class="card panel detail">
+      <div class="detail-top">
+        <div class="detail-flag"><span class="dot" aria-hidden="true"></span><span id="detailFlag">Tap a plan card to see details</span></div>
+        <h3 id="detailTitle">Plan details</h3>
+        <p id="detailText">You can compare plans on the screen. If it turns into a contract change, signup, or anything binding, hand off to a Helios advisor.</p>
+      </div>
+      <div class="detail-cta">
+        <button class="advisor-btn" type="button" id="openAdvisorSide">Talk to a Helios advisor</button>
+        <button class="secondary-btn" type="button" id="clearSelection">Clear selection</button>
+      </div>
+    </aside>
+  </section>
+
+  <section class="stage">
+    <div class="card panel">
+      <div class="panel-head">
+        <div>
+          <h2>Three big choices</h2>
+          <div class="panel-note" id="choiceNote">Start with the path that feels closest. The cards below follow that choice.</div>
+        </div>
+        <div class="status" style="padding: 6px 10px;">
+          <span class="dot" aria-hidden="true"></span>
+          <small id="choiceState">All plans visible</small>
+        </div>
+      </div>
+      <div class="choice-grid" id="choiceGrid">
+        <button class="choice-btn" type="button" data-filter="all" aria-pressed="true">
+          <span class="choice-badge">01</span>
+          <div>
+            <h3>A plan for me</h3>
+            <p>Consumer mobile plans for light use, daily use, or power users who want more data.</p>
+            <div class="path">Shows: Helios Go, Flow, Max</div>
+          </div>
+        </button>
+        <button class="choice-btn" type="button" data-filter="family" aria-pressed="false">
+          <span class="choice-badge">02</span>
+          <div>
+            <h3>A plan for the family</h3>
+            <p>Shared data, one bill, and a plan shape that works when more than one person is joining.</p>
+            <div class="path">Shows: Helios Family Duo, Family Four</div>
+          </div>
+        </button>
+        <button class="choice-btn" type="button" data-filter="smarthome" aria-pressed="false">
+          <span class="choice-badge">03</span>
+          <div>
+            <h3>Smart home</h3>
+            <p>Router, failover, mesh coverage, and starter bundles for a home that needs to stay online.</p>
+            <div class="path">Shows: Home Base, Home Plus, Mesh Point</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="card panel detail">
+      <div class="detail-top">
+        <div class="detail-flag"><span class="dot" aria-hidden="true"></span><span id="filterLabel">Browse all plans</span></div>
+        <h3 id="filterTitle">8 cards from the catalog</h3>
+        <p id="filterText">Tap a choice to narrow the view, or keep all cards visible and compare across the whole range.</p>
+      </div>
+      <div class="detail-cta">
+        <div class="panel-note" id="bindingNote">Anything binding, like a contract change or a new signup, must go through a Helios advisor.</div>
+        <button class="link-btn" type="button" id="scrollPlans">Jump to plan cards</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog">
+    <div class="catalog-head">
+      <div>
+        <h2>Plan cards from the catalog</h2>
+        <div class="count" id="countText">8 plans shown</div>
+      </div>
+      <div class="status" style="padding: 6px 10px;">
+        <span class="dot" aria-hidden="true"></span>
+        <small id="handOffText">Helios advisor handles anything binding</small>
+      </div>
+    </div>
+    <div class="plan-grid" id="planGrid" aria-live="polite"></div>
+  </section>
+
+  <div class="footer-row">
+    <div>Mocked for Helios Telecom. Session-only content, no personal data.</div>
+    <div>Built as one HTML file. <a href="#" id="topLink">Back to top</a></div>
+  </div>
+</div>
+
+<dialog id="advisorDialog">
+  <div class="dialog-body">
+    <h3>Talk to a Helios advisor</h3>
+    <p id="advisorText">I can show the options, but a Helios advisor has to handle anything binding. That includes signup, contract changes, and anything a customer needs confirmed by a person.</p>
+    <div class="dialog-actions">
+      <button class="advisor-btn" type="button" id="advisorDone">Understood</button>
+      <button class="secondary-btn" type="button" id="advisorBrowse">Keep browsing</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const CSV = `product,category,name,price_eur_month,data,highlights,fit_for
+mobile,consumer,Helios Go,12,10 GB,"EU roaming included, eSIM ready","Light users, second phone"
+mobile,consumer,Helios Flow,19,50 GB,"EU roaming included, hotspot allowed, eSIM ready","Most popular consumer plan"
+mobile,consumer,Helios Max,29,Unlimited,"5G priority, EU + UK roaming, hotspot allowed","Heavy streamers, remote workers"
+mobile,family,Helios Family Duo,35,2x 40 GB,"Two SIMs one bill, shared data top-up, parental controls","Couples, parent + teen"
+mobile,family,Helios Family Four,59,4x 40 GB,"Four SIMs one bill, parental controls, free SIM swaps","Families with kids"
+smarthome,bundle,Helios Home Base,24,n/a,"Wi-Fi 6 router, 4G failover, app-managed guest network","Apartments, home office"
+smarthome,bundle,Helios Home Plus,34,n/a,"Wi-Fi 6 router, 4G failover, 3 smart plugs, energy insights","Houses, smart-home starters"
+smarthome,addon,Helios Mesh Point,6,n/a,"Adds coverage per room, plug and play","Larger homes, thick walls"`;
+
+  const LANG = {
+    en: {
+      title: "Hi. Let us find the right setup.",
+      copy: "Pick one of the three paths, then tap a plan card to see what fits. For anything binding, a Helios advisor takes over.",
+      kicker: "Warm welcome",
+      kickerMeta: "English, Svenska, Français",
+      status: "Session only. Nothing saved after you leave.",
+      choiceNote: "Start with the path that feels closest. The cards below follow that choice.",
+      choiceState: "All plans visible",
+      filterLabel: "Browse all plans",
+      filterTitle: "8 cards from the catalog",
+      filterText: "Tap a choice to narrow the view, or keep all cards visible and compare across the whole range.",
+      countText: (count) => `${count} plan${count === 1 ? "" : "s"} shown`,
+      handOffText: "Helios advisor handles anything binding",
+      detailFlag: "Tap a plan card to see details",
+      detailTitle: "Plan details",
+      detailText: "You can compare plans on the screen. If it turns into a contract change, signup, or anything binding, hand off to a Helios advisor.",
+      advisorText: "I can show the options, but a Helios advisor has to handle anything binding. That includes signup, contract changes, and anything a customer needs confirmed by a person.",
+      dialogTitle: "Talk to a Helios advisor",
+      showAll: "Show all plans",
+      clearSelection: "Clear selection",
+      jump: "Jump to plan cards",
+      choices: {
+        all: "All plans visible",
+        family: "Family plans only",
+        smarthome: "Smart home plans only"
+      },
+      filterTitles: {
+        all: "8 cards from the catalog",
+        family: "2 family cards from the catalog",
+        smarthome: "3 smart home cards from the catalog"
+      }
+    },
+    sv: {
+      title: "Hej. Vi hittar rätt upplägg.",
+      copy: "Välj ett av de tre spåren och tryck på ett kort för att se vad som passar. Allt som är bindande går till en Helios-rådgivare.",
+      kicker: "Varmt välkommen",
+      kickerMeta: "English, Svenska, Français",
+      status: "Endast för sessionen. Inget sparas när du går därifrån.",
+      choiceNote: "Börja med det spår som känns närmast. Korten nedan följer det valet.",
+      choiceState: "Alla planer visas",
+      filterLabel: "Bläddra bland alla planer",
+      filterTitle: "8 kort från katalogen",
+      filterText: "Tryck på ett val för att smalna av vyn, eller behåll alla kort synliga och jämför hela utbudet.",
+      countText: (count) => `${count} plan${count === 1 ? "" : "er"} visas`,
+      handOffText: "Helios-rådgivare tar allt som är bindande",
+      detailFlag: "Tryck på ett plan-kort för att se detaljer",
+      detailTitle: "Plan-detaljer",
+      detailText: "Du kan jämföra planerna på skärmen. Om det blir ett kontraktsbyte, en beställning eller något bindande, lämna över till en Helios-rådgivare.",
+      advisorText: "Jag kan visa alternativen, men en Helios-rådgivare måste hantera allt som är bindande. Det gäller beställning, kontraktsändringar och allt som en person behöver bekräfta.",
+      dialogTitle: "Prata med en Helios-rådgivare",
+      showAll: "Visa alla planer",
+      clearSelection: "Rensa val",
+      jump: "Hoppa till plan-korten",
+      choices: {
+        all: "Alla planer visas",
+        family: "Endast familjeplaner",
+        smarthome: "Endast smart home"
+      },
+      filterTitles: {
+        all: "8 kort från katalogen",
+        family: "2 familjekort från katalogen",
+        smarthome: "3 smart home-kort från katalogen"
+      }
+    },
+    fr: {
+      title: "Bonjour. Trouvons la bonne formule.",
+      copy: "Choisissez l’un des trois parcours, puis touchez une carte pour voir ce qui convient. Pour tout engagement, un conseiller Helios prend le relais.",
+      kicker: "Bienvenue",
+      kickerMeta: "English, Svenska, Français",
+      status: "Session uniquement. Rien n’est conservé quand vous partez.",
+      choiceNote: "Commencez par le parcours le plus proche. Les cartes ci-dessous suivent ce choix.",
+      choiceState: "Tous les plans sont visibles",
+      filterLabel: "Parcourir tous les plans",
+      filterTitle: "8 cartes du catalogue",
+      filterText: "Touchez un choix pour réduire l’affichage, ou gardez toutes les cartes visibles pour comparer toute la gamme.",
+      countText: (count) => `${count} plan${count === 1 ? "" : "s"} affiché${count === 1 ? "" : "s"}`,
+      handOffText: "Un conseiller Helios traite tout ce qui est contraignant",
+      detailFlag: "Touchez une carte pour voir les détails",
+      detailTitle: "Détails du plan",
+      detailText: "Vous pouvez comparer les plans sur l’écran. Si cela devient un changement de contrat, une inscription ou quelque chose de contraignant, passez le relais à un conseiller Helios.",
+      advisorText: "Je peux montrer les options, mais un conseiller Helios doit gérer tout ce qui est contraignant. Cela inclut une inscription, un changement de contrat et tout ce qu’une personne doit confirmer.",
+      dialogTitle: "Parler à un conseiller Helios",
+      showAll: "Afficher tous les plans",
+      clearSelection: "Effacer la sélection",
+      jump: "Aller aux cartes",
+      choices: {
+        all: "Tous les plans sont visibles",
+        family: "Plans famille uniquement",
+        smarthome: "Plans maison connectée uniquement"
+      },
+      filterTitles: {
+        all: "8 cartes du catalogue",
+        family: "2 cartes famille du catalogue",
+        smarthome: "3 cartes maison connectée du catalogue"
+      }
+    }
+  };
+
+  const CATEGORY_COPY = {
+    consumer: {
+      label: "Mobile",
+      tint: "popular"
+    },
+    family: {
+      label: "Family mobile",
+      tint: "popular"
+    },
+    bundle: {
+      label: "Smart home",
+      tint: ""
+    },
+    addon: {
+      label: "Smart home add-on",
+      tint: ""
+    }
+  };
+
+  const PLAN_KIND = {
+    consumer: "a plan for me",
+    family: "a plan for the family",
+    smarthome: "smart home"
+  };
+
+  const state = {
+    lang: "en",
+    filter: "all",
+    selected: null,
+    plans: parseCsv(CSV)
+  };
+
+  const els = {
+    title: document.getElementById("heroTitle"),
+    copy: document.getElementById("heroCopy"),
+    kicker: document.getElementById("kickerText"),
+    kickerMeta: document.getElementById("kickerMeta"),
+    status: document.getElementById("statusText"),
+    choiceNote: document.getElementById("choiceNote"),
+    choiceState: document.getElementById("choiceState"),
+    filterLabel: document.getElementById("filterLabel"),
+    filterTitle: document.getElementById("filterTitle"),
+    filterText: document.getElementById("filterText"),
+    countText: document.getElementById("countText"),
+    handOffText: document.getElementById("handOffText"),
+    detailFlag: document.getElementById("detailFlag"),
+    detailTitle: document.getElementById("detailTitle"),
+    detailText: document.getElementById("detailText"),
+    advisorText: document.getElementById("advisorText"),
+    planGrid: document.getElementById("planGrid"),
+    choiceGrid: document.getElementById("choiceGrid"),
+    advisorDialog: document.getElementById("advisorDialog"),
+    dialogTitle: document.querySelector("#advisorDialog h3"),
+    topLink: document.getElementById("topLink")
+  };
+
+  function parseCsv(text) {
+    const lines = text.trim().split(/\r?\n/);
+    const headers = splitCsvLine(lines[0]);
+    return lines.slice(1).map((line) => {
+      const cols = splitCsvLine(line);
+      const row = {};
+      headers.forEach((header, index) => {
+        row[header] = cols[index] ?? "";
+      });
+      return {
+        product: row.product,
+        category: row.category,
+        name: row.name,
+        price: Number(row.price_eur_month),
+        data: row.data,
+        highlights: row.highlights.split(",").map((item) => item.trim()).filter(Boolean),
+        fitFor: row.fit_for
+      };
+    });
+  }
+
+  function splitCsvLine(line) {
+    const parts = [];
+    let current = "";
+    let quoted = false;
+    for (let i = 0; i < line.length; i += 1) {
+      const char = line[i];
+      if (char === '"') {
+        if (quoted && line[i + 1] === '"') {
+          current += '"';
+          i += 1;
+        } else {
+          quoted = !quoted;
+        }
+        continue;
+      }
+      if (char === "," && !quoted) {
+        parts.push(current);
+        current = "";
+        continue;
+      }
+      current += char;
+    }
+    parts.push(current);
+    return parts;
+  }
+
+  function langCopy() {
+    return LANG[state.lang];
+  }
+
+  function groupForChoice(choice) {
+    if (choice === "family") return ["family"];
+    if (choice === "smarthome") return ["bundle", "addon"];
+    return ["consumer"];
+  }
+
+  function visiblePlans() {
+    if (state.filter === "all") return state.plans;
+    const allowed = groupForChoice(state.filter);
+    return state.plans.filter((plan) => allowed.includes(plan.category));
+  }
+
+  function formatPlan(plan) {
+    const copy = CATEGORY_COPY[plan.category];
+    const price = `€${plan.price}`;
+    const categoryLabel = copy.label;
+    const topPill = plan.category === "consumer" ? "popular" : "";
+    return `
+      <button class="plan-btn" type="button" aria-pressed="${state.selected === plan.name ? "true" : "false"}" data-plan="${plan.name}">
+        <div class="plan-top">
+          <div>
+            <div class="pill${topPill ? " popular" : ""}">${categoryLabel}</div>
+            <h3 class="plan-name">${plan.name}</h3>
+          </div>
+          ${plan.category === "consumer" && plan.name === "Helios Flow" ? '<div class="pill popular">Most chosen</div>' : ""}
+          ${plan.category === "family" && plan.name === "Helios Family Four" ? '<div class="pill popular">Family favorite</div>' : ""}
+          ${plan.category === "bundle" && plan.name === "Helios Home Plus" ? '<div class="pill popular">Starter bundle</div>' : ""}
+        </div>
+        <div class="price"><strong>${price}</strong><span>/ month</span></div>
+        <div class="plan-meta"><strong>${plan.data}</strong><br>${plan.highlights.join(" · ")}</div>
+        <ul class="plan-bullets">
+          ${plan.highlights.map((item) => `<li>${item}</li>`).join("")}
+        </ul>
+        <div class="plan-fit">Fits: ${plan.fitFor}</div>
+      </button>
+    `;
+  }
+
+  function renderPlans() {
+    const plans = visiblePlans();
+    els.planGrid.innerHTML = plans.map(formatPlan).join("");
+    els.countText.textContent = langCopy().countText(plans.length);
+    els.choiceState.textContent = langCopy().choices[state.filter];
+    els.filterLabel.textContent = state.filter === "all" ? langCopy().filterLabel : langCopy().choices[state.filter];
+    els.filterTitle.textContent = state.filter === "all"
+      ? langCopy().filterTitles.all
+      : langCopy().filterTitles[state.filter];
+    els.filterText.textContent = state.filter === "all"
+      ? langCopy().filterText
+      : langCopy().filterText;
+    els.handOffText.textContent = langCopy().handOffText;
+    bindPlanClicks();
+    syncSelection();
+  }
+
+  function syncLanguage() {
+    const copy = langCopy();
+    document.documentElement.lang = state.lang;
+    els.title.textContent = copy.title;
+    els.copy.textContent = copy.copy;
+    els.kicker.textContent = copy.kicker;
+    els.kickerMeta.textContent = copy.kickerMeta;
+    els.status.textContent = copy.status;
+    els.choiceNote.textContent = copy.choiceNote;
+    els.choiceState.textContent = copy.choices[state.filter];
+    els.filterLabel.textContent = state.filter === "all" ? copy.filterLabel : copy.choices[state.filter];
+    els.filterTitle.textContent = state.filter === "all" ? copy.filterTitles.all : copy.filterTitles[state.filter];
+    els.filterText.textContent = copy.filterText;
+    els.countText.textContent = copy.countText(visiblePlans().length);
+    els.handOffText.textContent = copy.handOffText;
+    els.detailFlag.textContent = state.selected ? planByName(state.selected).name : copy.detailFlag;
+    els.detailTitle.textContent = state.selected ? selectedPlanTitle() : copy.detailTitle;
+    els.detailText.textContent = state.selected ? selectedPlanText() : copy.detailText;
+    els.advisorText.textContent = copy.advisorText;
+    els.dialogTitle.textContent = copy.dialogTitle;
+    document.getElementById("openAdvisorTop").textContent = copy.dialogTitle;
+    document.getElementById("openAdvisorSide").textContent = copy.dialogTitle;
+    document.getElementById("clearSelection").textContent = copy.clearSelection;
+    document.getElementById("showAll").textContent = copy.showAll;
+    document.getElementById("scrollPlans").textContent = copy.jump;
+    document.getElementById("advisorDone").textContent = copy.clearSelection;
+    document.getElementById("advisorBrowse").textContent = copy.showAll;
+    updateLangButtons();
+    updateChoiceButtons();
+  }
+
+  function updateLangButtons() {
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.lang === state.lang));
+    });
+  }
+
+  function updateChoiceButtons() {
+    document.querySelectorAll(".choice-btn").forEach((btn) => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.filter === state.filter));
+    });
+  }
+
+  function bindPlanClicks() {
+    document.querySelectorAll(".plan-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.selected = btn.dataset.plan;
+        syncSelection();
+        renderPlans();
+      });
+    });
+  }
+
+  function planByName(name) {
+    return state.plans.find((plan) => plan.name === name);
+  }
+
+  function selectedPlanTitle() {
+    const plan = planByName(state.selected);
+    if (!plan) return langCopy().detailTitle;
+    return `${plan.name} · €${plan.price}/month`;
+  }
+
+  function selectedPlanText() {
+    const plan = planByName(state.selected);
+    if (!plan) return langCopy().detailText;
+    return `${plan.highlights.join(". ")}. Fits: ${plan.fitFor}. For anything binding, a Helios advisor takes over.`;
+  }
+
+  function syncSelection() {
+    const copy = langCopy();
+    if (!state.selected) {
+      els.detailFlag.textContent = copy.detailFlag;
+      els.detailTitle.textContent = copy.detailTitle;
+      els.detailText.textContent = copy.detailText;
+      return;
+    }
+    const plan = planByName(state.selected);
+    els.detailFlag.textContent = plan.name;
+    els.detailTitle.textContent = `${plan.name} · €${plan.price}/month`;
+    els.detailText.textContent = `${plan.highlights.join(". ")}. Fits: ${plan.fitFor}. For anything binding, a Helios advisor takes over.`;
+  }
+
+  function setFilter(filter) {
+    state.filter = filter;
+    if (filter !== "all" && state.selected) {
+      const selectedPlan = planByName(state.selected);
+      if (!selectedPlan || !groupForChoice(filter).includes(selectedPlan.category)) {
+        state.selected = null;
+      }
+    }
+    syncLanguage();
+    renderPlans();
+    document.querySelector(".catalog").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  document.getElementById("choiceGrid").addEventListener("click", (event) => {
+    const button = event.target.closest(".choice-btn");
+    if (!button) return;
+    setFilter(button.dataset.filter);
+  });
+
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.lang = button.dataset.lang;
+      syncLanguage();
+      renderPlans();
+    });
+  });
+
+  document.getElementById("showAll").addEventListener("click", () => setFilter("all"));
+  document.getElementById("clearSelection").addEventListener("click", () => {
+    state.selected = null;
+    syncLanguage();
+    renderPlans();
+  });
+  document.getElementById("scrollPlans").addEventListener("click", () => {
+    document.querySelector(".catalog").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  document.getElementById("topLink").addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  function openAdvisor() {
+    syncLanguage();
+    if (typeof els.advisorDialog.showModal === "function") {
+      els.advisorDialog.showModal();
+    }
+  }
+
+  document.getElementById("openAdvisorTop").addEventListener("click", openAdvisor);
+  document.getElementById("openAdvisorSide").addEventListener("click", openAdvisor);
+  document.getElementById("advisorDone").addEventListener("click", () => {
+    els.advisorDialog.close();
+    state.selected = null;
+    syncLanguage();
+    renderPlans();
+  });
+  document.getElementById("advisorBrowse").addEventListener("click", () => {
+    els.advisorDialog.close();
+  });
+
+  renderPlans();
+  syncLanguage();
+</script>
+</body>
+</html>
