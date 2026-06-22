@@ -62,18 +62,18 @@
   <div class="crumb"><a href="../">All resources</a> &nbsp;›&nbsp; <a href="./">Operator Hour</a> &nbsp;›&nbsp; Voice Kit</div>
   <span class="tag">Episode 5 · Take-home kit</span>
   <h1>Sound like <span class="accent">yourself.</span></h1>
-  <p class="sub">Build your voice profile once. After that, every real thing you do can become a post you would actually publish, in minutes, in your own voice. Start from work, draft, strip the robot, ship.</p>
+  <p class="sub">Build your voice profile once, from emails you've already sent. After that, every WinWire, Connect, vTeam update, escalation, or post starts in your own voice instead of from a blank page. Harvest, profile, draft, strip the robot, send.</p>
 
   <div class="rungs">
     <div class="rung-pill">
       <span class="n">Step 1 · the profile</span>
       <strong>Teach it your voice</strong>
-      <span>Build once from your own writing. The thing that makes drafts sound like you.</span>
+      <span>Build once from your sent emails and chats. No blog required.</span>
     </div>
     <div class="rung-pill">
       <span class="n">Step 2 · the draft</span>
-      <strong>Real work to a post</strong>
-      <span>Point it at a session, a call, a build. Eighty percent in seconds.</span>
+      <strong>Real work to a draft</strong>
+      <span>Point it at a win or an update. Eighty percent in seconds.</span>
     </div>
     <div class="rung-pill">
       <span class="n">Step 3 · the pass</span>
@@ -87,13 +87,24 @@
   <!-- STEP 1 -->
   <div class="sec-label">Step 1 · the profile</div>
   <h2 class="rung">Build your voice profile <span class="badge teal">do this once</span></h2>
-  <p class="sec-lead">This is the piece that does the work. The agent can't sound like you if it has never read you. Give it five or six of your own posts, emails, or notes, and let it pull out the pattern. Then you correct it. The profile is plain rules in a file you reuse forever.</p>
+  <p class="sec-lead">This is the piece that does the work, and it's the part people skip because they think they need a back catalogue of writing. You don't. You've already written your voice down thousands of times, in your sent folder and your Teams chats. Grab a handful of those, the ones that sound like you, and let the agent pull out the pattern. Then you correct it. The profile is plain rules in a file you reuse forever.</p>
+
+  <div class="how">
+    <h3>Get your samples (5 minutes)</h3>
+    <ol>
+      <li><strong>Sent emails:</strong> open 6 to 8 of your own sent emails that sound like you (not forwards, not one-liners). Copy each body into one file, <code>samples/my-writing.md</code>, one after another.</li>
+      <li><strong>Teams messages:</strong> add a few longer Teams messages you wrote. Same file is fine.</li>
+      <li><strong>Mix it up:</strong> a WinWire you were proud of, a good update, a post. Variety helps the agent hear the real you, not one mode.</li>
+      <li>Keep it to your own words only. Strip anything confidential or about a specific customer, the agent only needs the <em>style</em>, not the content.</li>
+    </ol>
+  </div>
 
   <div class="prompt-head">
     <span class="label">Prompt A · build the profile</span>
     <button class="copy-btn" onclick="copyPrompt('profilePrompt', this)">Copy prompt</button>
   </div>
-<pre class="prompt" id="profilePrompt">Read the writing samples in this folder, [my-posts/].
+<pre class="prompt" id="profilePrompt">Read the writing samples in samples/. These are things I've written:
+sent emails, Teams messages, the odd post.
 
 Build me a voice profile as voice-profile.md. Don't summarise the topics.
 Pull out HOW I write:
@@ -108,32 +119,31 @@ Then show me three lines from my samples that prove each pattern.
 I'll correct anything that's off.</pre>
 
   <div class="note">
-    <strong>No samples handy?</strong> Use anything you've written that sounds like you: a few LinkedIn posts, a couple of long emails, a Teams message you were proud of. Five is plenty. The profile gets sharper every time you correct a draft.
+    <strong>It gets sharper over time.</strong> The first profile is good. Every time you correct a draft ("I'd never say that", "tighten this"), feed the fix back into voice-profile.md. After a few rounds it's eerily you.
   </div>
 
   <hr class="div">
 
   <!-- STEP 2 -->
   <div class="sec-label">Step 2 · the draft</div>
-  <h2 class="rung">Real work to a post <span class="badge teal">the engine</span></h2>
-  <p class="sec-lead">Don't start from a blank page. Start from something that already happened. Drop your session notes (or a Teams recap, or a quick voice memo you transcribed) in the folder next to the profile, and ask for one line first, then the draft.</p>
+  <h2 class="rung">Real work to a draft <span class="badge teal">the engine</span></h2>
+  <p class="sec-lead">Don't start from a blank page. Start from something that already happened. Drop your notes (a win, an update, a Teams recap, a quick voice memo you transcribed) in the folder next to the profile, and ask for the draft. This example writes a WinWire, but swap that for a Connect update, a vTeam summary, an escalation note, a partner abstract, or a post. Same move.</p>
 
   <div class="prompt-head">
     <span class="label">Prompt B · draft in your voice</span>
     <button class="copy-btn" onclick="copyPrompt('draftPrompt', this)">Copy prompt</button>
   </div>
-<pre class="prompt" id="draftPrompt">Read session-notes.md and voice-profile.md.
+<pre class="prompt" id="draftPrompt">Read win-notes.md and voice-profile.md.
 
-First, one line: what's the actual story here, the thing another person
-would lean in on? Not "what I built", but why it matters. Wait for my go.
+Draft a [WinWire / Connect update / vTeam update / post] from the notes,
+in my voice from the profile:
 
-Then draft a LinkedIn post in my voice from the profile:
-- 900 to 1200 characters.
-- Open with tension, not a definition.
-- One clear point. End with a question or a simple ask.
-- 4 to 5 hashtags on their own line, last.
+- Open with the outcome, not a wind-up.
+- One clear point. Plain language. No filler.
+- Keep it the length the channel expects, no padding.
+- End with the ask or the next step.
 
-Don't publish anything. Hand me the draft to edit.</pre>
+Don't send anything. Hand me the draft to edit.</pre>
 
   <div class="note">
     <strong>The last twenty percent is yours.</strong> The draft gets you most of the way. Then you add the detail only you were in the room for, cut the line that's almost true, and decide what you actually want to say. That part is the writing, and no model can do it for you.
@@ -169,17 +179,17 @@ Show me what you changed and why. Then give me the clean version.</pre>
   <!-- STEP 4 -->
   <div class="sec-label">Make it a system</div>
   <h2 class="rung">From sprint to habit <span class="badge amber">level up</span></h2>
-  <p class="sec-lead">The hard version is remembering to do it at all. So you let an engine watch your week and the feeds, score what's worth saying, and hand you a shortlist of idea cards every Monday morning. Then posting is a five-minute edit from a card, not a heroic afternoon. That's the signal engine behind today's demo. Ask Otto how to set up a lightweight version.</p>
+  <p class="sec-lead">The hard version is remembering to do it at all. So you let an engine watch your week, your wins and the threads you're in, and hand you a shortlist of drafts every Monday: the vTeam update, a WinWire or two, the post you keep meaning to write. Then it's a five-minute edit from a draft, not a heroic afternoon. Ask Otto how to set up a lightweight version.</p>
 
   <div class="next">
     <h3>What to do this week</h3>
-    <p>Build your voice profile from a handful of your own posts. <strong>Prompt A</strong>, one time.</p>
-    <p>Pick one real thing you did. Run <strong>Prompt B</strong>, then <strong>Prompt C</strong>. Do the last twenty percent. Ship it.</p>
-    <p>Bring the link to the <a href="../">finale, E6</a>.</p>
+    <p>Pull a handful of your own sent emails into a folder. Build your voice profile with <strong>Prompt A</strong>, one time.</p>
+    <p>Pick one real thing: a win, an update, a post. Run <strong>Prompt B</strong>, then <strong>Prompt C</strong>. Do the last twenty percent. Send it.</p>
+    <p>Bring it to the <a href="../">finale, E6</a>.</p>
     <p>Stuck? Ask <strong>@otto</strong> in the meeting chat.</p>
   </div>
 
-  <p class="refrain"><strong>Still not a developer.</strong> Just refusing to let good work stay invisible.</p>
+  <p class="refrain"><strong>Still not a developer.</strong> Just refusing to let the writing be the reason it doesn't get said.</p>
 
   <div class="meta">
     <p><strong>Series:</strong> <a href="../" style="color:var(--teal);text-decoration:none;">Operator Hour</a> · Tuesdays 10:30 CET · May 26 to Jun 30 2026</p>

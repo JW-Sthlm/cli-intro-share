@@ -453,27 +453,27 @@
 window.DEMO_SPEC = {
   config: {
     demoId: "operator-hour-s1e5-signal",
-    title: "From a session to a post",
-    cwd: "~/projects/signal",
+    title: "Teach it your voice, then use it",
+    cwd: "~/projects/voice",
     model: "claude-fable-5",
     bootCmd: "copilot --allow-all",
     cliVer: "v1.0.61",
     typeBoot: 34, typeAsk: 22, lineGap: 480, bootGap: 230,
     bootLines: [
       "Loaded env: .github/copilot-instructions.md",
-      "Loaded context: voice profile \u00b7 stories.yaml \u00b7 this week's idea cards",
-      "Skill ready: signal-polish \u00b7 content-humanizer"
+      "Loaded context: samples/ (my sent emails + chats) \u00b7 win-notes.md",
+      "Skill ready: content-humanizer"
     ]
   },
   launchSlide: {
-    kick: "The build \u00b7 real work to a post",
-    h1: "One thing I did this week, <span class=\"amber\">in my own voice.</span>",
-    sub: "I point it at a real session. It drafts. The robot gets stripped out. I edit for two minutes."
+    kick: "The build \u00b7 teach it your voice, then use it",
+    h1: "My voice, <span class=\"amber\">from my own emails.</span>",
+    sub: "First I build the profile from real sent mail. Then I draft a WinWire and strip the robot out."
   },
   exitSlide: {
     kick: "Draft to done",
     h1: "Sounds like <span class=\"amber\">me.</span>",
-    sub: "Nobody can tell a machine touched it. That's the whole point."
+    sub: "A WinWire I'd actually send. Nobody can tell a machine helped."
   },
   theme: {
     vars: {
@@ -495,70 +495,73 @@ window.DEMO_SPEC = {
       ".app-name small{color:#6A7180}"
   },
   moves: [
-    { title:"Pick the moment", est:"~30 s",
-      ask:"Read my notes from this morning's build session. In one line, what's the actual story here, the thing another partner would lean in on? Don't write the post yet.",
+    { title:"Build my voice profile", est:"~40 s",
+      ask:"Read the emails and chats in samples/. Don't summarise what they're about. Pull out HOW I write: my openings, my sentence rhythm, the words I'd never use, my tics. Write it to voice-profile.md, with a few quotes that prove each one.",
       lines:[
         {k:"mode", t:"Research"},
-        {k:"tool", tag:"read",  t:"session-notes.md \u00b7 the kiosk build, in my words"},
-        {k:"tool", tag:"read",  t:"stories.yaml \u00b7 how I've framed wins before"},
-        {k:"res",  t:"the story isn't the avatar \u00b7 it's that a stalled deck became a thing they clicked"},
+        {k:"tool", tag:"read",  t:"samples/ \u00b7 8 sent emails + 4 Teams messages"},
+        {k:"think", t:"not what he writes about. how he writes\u2026"},
+        {k:"res",  t:"short opener, then a long line \u00b7 dry asides \u00b7 never 'leverage' or 'exciting'"},
+        {k:"mode", t:"Write"},
+        {k:"tool", tag:"write", t:"voice-profile.md \u00b7 the pattern, with quotes that prove it"},
         {k:"card", kind:"doc", data:{
-          url:"angle \u00b7 the one line",
-          title:"What another partner leans in on",
+          url:"voice-profile.md \u00b7 built from my writing",
+          title:"How I actually write",
           paras:[
-            "Not \"I built an avatar.\" That reads as a flex.",
-            "The story: a meeting that died on a slide, alive again as a prototype.",
-            "The hook the room feels: send us the deck means no.",
-            "One moment to prove, not the whole platform."
+            "Opens with tension or a plain fact. Never \"Exciting news\".",
+            "Rhythm: a short punch, then a longer line that earns it.",
+            "Hard rule: zero em dashes. Dry, not corporate.",
+            "Keeps the refrain: \"Still not a developer.\""
           ],
-          foot:"angle locked \u00b7 waiting for go"
+          foot:"built from 12 samples \u00b7 waiting for go"
         }}
       ]},
-    { title:"Draft, then strip the robot", est:"~60 s",
-      ask:"Good. Draft it in my voice from the voice profile. Then run content-humanizer on it and show me what it caught.",
+    { title:"Draft the WinWire, strip the robot", est:"~60 s",
+      ask:"Good. Now use voice-profile.md. Draft the Helios WinWire from win-notes.md, in my voice. Then run content-humanizer on it and show me what it caught.",
       lines:[
         {k:"mode", t:"Autopilot"},
-        {k:"tool", tag:"write",  t:"draft \u00b7 ~1100 chars, my cadence"},
-        {k:"tool", tag:"skill",  t:"content-humanizer \u00b7 scanning for AI tells"},
+        {k:"tool", tag:"read",  t:"win-notes.md \u00b7 the Helios pilot, in my words"},
+        {k:"tool", tag:"write", t:"draft \u00b7 the WinWire in my cadence"},
+        {k:"tool", tag:"skill", t:"content-humanizer \u00b7 scanning for AI tells"},
         {k:"res",  t:"caught: 2 em dashes, 1 rule-of-three, 1 'not just X but Y'"},
         {k:"res",  t:"rewritten \u00b7 sentence length varied, openers fixed"},
-        {k:"tool", tag:"open",   t:"post-final.md \u00b7 opening in your default browser"},
+        {k:"tool", tag:"open",  t:"winwire.md \u00b7 opening in your default browser"},
         {k:"card", kind:"doc", frame:"browser", data:{
-          url:"file:///~/projects/signal/post-final.md",
-          tab:"post-final.md \u00b7 ready to paste",
+          url:"file:///~/projects/voice/winwire.md",
+          tab:"winwire.md \u00b7 ready to send",
           light:true,
-          title:"Still not a developer.",
+          title:"WinWire \u00b7 Helios kiosk to 8-week pilot",
           paras:[
-            "Last week a customer told me \"send us the deck.\" That's a polite no.",
-            "So this week I stopped sending decks. I built the thing instead.",
-            "Twenty minutes, one prompt, a working prototype they could click.",
-            "You don't need to code. You need to stop asking rooms to imagine."
+            "A partner deck stalled on \"send us the deck.\" We built the thing instead.",
+            "One prompt, a working kiosk the customer clicked. Twice, before the call ended.",
+            "Pilot signed Thursday. Three flagship stores.",
+            "Still not a developer. Just stopped asking rooms to imagine."
           ],
-          foot:"~1100 chars \u00b7 4 hashtags \u00b7 zero em dashes"
+          foot:"WinWire-ready \u00b7 zero em dashes \u00b7 reads like me"
         }}
       ]}
   ],
   notes: [
-    { step:"Setup", est:"", title:"From a session to a post", ask:null,
-      say:"Frame the problem before anything moves. You did good work this morning, the prototype from last week. Almost nobody will hear about it. This is the part that fixes that, and it takes about two minutes of your time, not an afternoon." },
-    { step:"Terminal", est:"", title:"The folder that knows my voice", ask:null,
-      say:"Terminal over the slide. This folder has my voice profile, my stories, and this week's idea cards already on disk. The agent isn't guessing how I write. It's been told." },
+    { step:"Setup", est:"", title:"Teach it your voice, then use it", ask:null,
+      say:"Frame the two parts before anything moves. First we teach the agent my voice from writing I already have. Then we point it at a real win and let it draft the WinWire. The first part is the bit nobody shows you, and it's the whole game." },
+    { step:"Terminal", est:"", title:"A folder of my own writing", ask:null,
+      say:"Terminal over the slide. This folder has a samples directory, just a handful of my own sent emails and Teams messages, plus my notes from a real win. Nothing fancy. The point is, you already have all of this." },
     { step:"Boot", est:"", title:"copilot --allow-all", ask:"copilot --allow-all",
-      say:"Boot it like always. Point at the context line. The voice profile and the content-humanizer skill load up front, so the writing starts from how I actually talk, not generic LinkedIn cadence.\n\nCommand's typed, nothing sent. One beat. Same CLI as every other episode. Nothing special for the writing demo.\n\nFire it. Briefed and ready. Now the one thing that turns a session into a post." },
-    { step:"Move 1", est:"~30 s", title:"Pick the moment", ask:null,
-      say:"Frame it before you type. The mistake everyone makes is starting from the blank page. So we don't. We start from a thing I already did, and we ask one question first: what's the actual story.\n\nRead the prompt with them. I'm not asking for a post yet. I'm asking what another partner would lean in on. The agent reads my notes and how I've framed wins before.\n\nIt lands the angle. The story isn't the avatar, that reads as a flex. It's that a meeting that died on a slide came back as something they could click. Stop talking, let the room read the angle." },
-    { step:"Move 2", est:"~60 s", title:"Draft, then strip the robot", ask:null,
-      say:"Set up the two-part move. Draft in my voice, then immediately run the humanizer. The humanizer is the bit I want this room to remember.\n\nTyped. Go. It drafts about eleven hundred characters in my cadence, then content-humanizer scans it. Watch what it catches, two em dashes, a rule-of-three, a 'not just X but Y'. The exact tells that make a post smell like AI.\n\nIt rewrites those, varies the sentence length, fixes the repeated openers. And there's the finished post, ready to paste. Read the top line. That sounds like me. Nobody would guess a machine was anywhere near it." },
+      say:"Boot it like always. Point at the context line. It's seen my samples folder and the win notes, nothing else. No magic profile yet, we're about to build that live.\n\nCommand's typed, nothing sent. One beat. Same CLI as every other episode.\n\nFire it. Briefed and ready. Now part one, teaching it how I write." },
+    { step:"Move 1", est:"~40 s", title:"Build my voice profile", ask:null,
+      say:"This is the part most people are missing. They think they need a blog. You don't. You've written your voice down thousands of times already, it's sitting in your sent folder.\n\nRead the prompt with them. I'm not asking what my emails are about. I'm asking HOW I write. My openings, my rhythm, the words I'd never use. Read a handful, find the pattern.\n\nIt reads them and writes my voice profile, with quotes that prove each rule. Short opener then a long line. Dry, never 'leverage'. Zero em dashes. That file is the whole asset, and I just built it from old emails in forty seconds. Stop talking, let the room read it." },
+    { step:"Move 2", est:"~60 s", title:"Draft the WinWire, strip the robot", ask:null,
+      say:"Now part two. Use that profile on a real win. This is a WinWire, but it's the same move for a Connect, a vTeam update, an escalation, a partner abstract.\n\nTyped. Go. It reads my win notes, drafts the WinWire in my cadence, then content-humanizer scans it. Watch what it catches, two em dashes, a rule-of-three, a 'not just X but Y'. The exact tells that make writing smell like AI.\n\nIt rewrites those, varies the sentence length, fixes the openers. And there's the WinWire, ready to send. Read the top line. That sounds like me, not like a template. Nobody would guess a machine was near it." },
     { step:"Switch", est:"", title:"Draft to done", ask:null,
-      say:"That's draft to done in about two minutes. One more press closes back to the deck. The point to land: the agent got me to eighty percent. I spend my time on the twenty that makes it mine, not staring at a cursor." },
+      say:"That's a profile built and a WinWire drafted, in about two minutes. One more press closes back to the deck. The point to land: I built the voice profile once, from emails I already had. Now every WinWire, every update, starts in my voice instead of from a blank page." },
     { step:"Ping", est:"", title:"The system, not the sprint", ask:null,
-      say:"One last click. This is the part that makes it scale. The engine already ran overnight, watched my week and the feeds, and left me idea cards. So Monday morning I don't start from nothing. I start from a shortlist. Posting becomes a five-minute edit, not a heroic afternoon once a quarter." }
+      say:"One last click. This is where it scales. The agent already watched my week, my wins and my threads, and drafted the updates I'd owe anyway. So I don't start Monday from nothing. I start from drafts in my own voice, and I just edit. The writing stops being the reason things don't get said." }
   ],
   closingPing: {
     app: "Teams",
-    from: "Signal \u00b7 weekly digest",
-    msg: "5 idea cards ready from your week. <b>Top pick: the kiosk build.</b> Want me to polish it?",
-    note: "The payoff ping: the engine running on a schedule, handing back ready-to-edit drafts."
+    from: "Otto \u00b7 weekly drafts",
+    msg: "3 drafts ready from your week: <b>the vTeam update and 2 WinWires.</b> Want them?",
+    note: "The payoff ping: the engine drafting your weekly comms, in your voice, ready to edit."
   }
 };
 /* =====================================================================
