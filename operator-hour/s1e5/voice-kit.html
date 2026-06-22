@@ -91,23 +91,27 @@
   <!-- STEP 1 -->
   <div class="sec-label">Step 1 · the profile</div>
   <h2 class="rung">Build your voice profile <span class="badge teal">do this once</span></h2>
-  <p class="sec-lead">This is the piece that does the work, and it's the part people skip because they think they need a back catalogue of writing. You don't. You've already written your voice down thousands of times, in your sent folder and your Teams chats. Grab a handful of those, the ones that sound like you, and let the agent pull out the pattern. Then you correct it. The profile is plain rules in a file you reuse forever.</p>
+  <p class="sec-lead">This is the piece that does the work, and it's the part people skip because they think they need a back catalogue of writing. You don't. You've already written your voice down thousands of times in your sent folder and Teams chats. The quickest way to get that writing into a file is Prompt 0 below: one prompt, WorkIQ finds it for you. No manual copy-paste. Then Prompt A builds the profile from whatever landed in that file. Correct anything that's off, and you're done once.</p>
 
-  <div class="how">
-    <h3>Get your samples (5 minutes)</h3>
-    <ol>
-      <li><strong>Sent emails:</strong> open 6 to 8 of your own sent emails that sound like you (not forwards, not one-liners). Copy each body into one file, <code>samples/my-writing.md</code>, one after another.</li>
-      <li><strong>Teams messages:</strong> add a few longer Teams messages you wrote. Same file is fine.</li>
-      <li><strong>Mix it up:</strong> a WinWire you were proud of, a good update, a post. Variety helps the agent hear the real you, not one mode.</li>
-      <li>Keep it to your own words only. Strip anything confidential or about a specific customer, the agent only needs the <em>style</em>, not the content.</li>
-    </ol>
+  <div class="prompt-head">
+    <span class="label">Prompt 0 · gather your writing (WorkIQ)</span>
+    <button class="copy-btn" onclick="copyPrompt('gatherPrompt', this)">Copy prompt</button>
+  </div>
+<pre class="prompt" id="gatherPrompt">Use WorkIQ to find my writing. Pull my 6 to 8 most recently sent emails where I actually wrote something, not forwards or one-liners. Add any longer Teams messages from the last few weeks. Save everything to samples/my-writing.md.
+
+If I have a blog post or article URL, fetch just the text I wrote from it and add it to the same file.
+
+Keep it to my words only. Strip anything confidential, the agent only needs the style, not the content.</pre>
+
+  <div class="note">
+    <strong>No WorkIQ? No problem.</strong> Open 6 to 8 sent emails and a few longer Teams messages you wrote. Copy the bodies into <code>samples/my-writing.md</code>, one after another. Add a WinWire or post you were proud of. Same result, just a bit more manual.
   </div>
 
   <div class="prompt-head">
     <span class="label">Prompt A · build the profile</span>
     <button class="copy-btn" onclick="copyPrompt('profilePrompt', this)">Copy prompt</button>
   </div>
-<pre class="prompt" id="profilePrompt">Read the writing samples in samples/. These are things I've written:
+<pre class="prompt" id="profilePrompt">Read the writing samples in samples/my-writing.md. These are things I've written:
 sent emails, Teams messages, the odd post.
 
 Build me a voice profile as voice-profile.md. Don't summarise the topics.
@@ -187,7 +191,7 @@ Show me what you changed and why. Then give me the clean version.</pre>
 
   <div class="next">
     <h3>What to do this week</h3>
-    <p>Pull a handful of your own sent emails into a folder. Build your voice profile with <strong>Prompt A</strong>, one time.</p>
+    <p>Run <strong>Prompt 0</strong> to let WorkIQ collect your sent emails and Teams messages. Then build your voice profile with <strong>Prompt A</strong>, one time.</p>
     <p>Pick one real thing: a win, an update, a post. Run <strong>Prompt B</strong>, then <strong>Prompt C</strong>. Do the last twenty percent. Send it.</p>
     <p>Bring it to the <a href="../">finale, E6</a>.</p>
     <p>Stuck? Ask <strong>@otto</strong> in the meeting chat.</p>

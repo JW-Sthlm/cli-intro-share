@@ -453,7 +453,7 @@
 window.DEMO_SPEC = {
   config: {
     demoId: "operator-hour-s1e5-signal",
-    title: "Teach it your voice, then use it",
+    title: "WorkIQ finds your voice",
     cwd: "~/projects/voice",
     model: "claude-fable-5",
     bootCmd: "copilot --allow-all",
@@ -461,14 +461,14 @@ window.DEMO_SPEC = {
     typeBoot: 34, typeAsk: 22, lineGap: 480, bootGap: 230,
     bootLines: [
       "Loaded env: .github/copilot-instructions.md",
-      "Loaded context: samples/ (my sent emails + chats) \u00b7 win-notes.md",
-      "Skill ready: content-humanizer"
+      "Loaded context: win-notes.md",
+      "Skill ready: content-humanizer \u00b7 MCP: WorkIQ"
     ]
   },
   launchSlide: {
-    kick: "The build \u00b7 teach it your voice, then use it",
-    h1: "My voice, <span class=\"amber\">from my own emails.</span>",
-    sub: "First I build the profile from real sent mail. Then I draft a WinWire and strip the robot out."
+    kick: "The build \u00b7 three moves",
+    h1: "WorkIQ finds my writing. <span class=\"amber\">Then we use it.</span>",
+    sub: "WorkIQ pulls my sent emails and Teams messages. I build the voice profile. Then the WinWire."
   },
   exitSlide: {
     kick: "Draft to done",
@@ -495,11 +495,32 @@ window.DEMO_SPEC = {
       ".app-name small{color:#6A7180}"
   },
   moves: [
-    { title:"Build my voice profile", est:"~40 s",
-      ask:"Read the emails and chats in samples/. Don't summarise what they're about. Pull out HOW I write: my openings, my sentence rhythm, the words I'd never use, my tics. Write it to voice-profile.md, with a few quotes that prove each one.",
+    { title:"Gather my writing samples", est:"~30 s",
+      ask:"Use WorkIQ to find my writing. Pull my 6 to 8 most recently sent emails where I actually wrote something, not forwards or one-liners. Add any longer Teams messages from the last few weeks. Save everything to samples/my-writing.md. If I have a blog post or article URL, fetch just the text I wrote from it.",
       lines:[
         {k:"mode", t:"Research"},
-        {k:"tool", tag:"read",  t:"samples/ \u00b7 8 sent emails + 4 Teams messages"},
+        {k:"tool", tag:"workiq", t:"searching sent mail \u00b7 8 emails found, 4 Teams messages"},
+        {k:"think", t:"extracting what he wrote, not what was forwarded\u2026"},
+        {k:"res",  t:"8 emails \u00b7 4 Teams messages \u00b7 1 blog post URL fetched"},
+        {k:"mode", t:"Write"},
+        {k:"tool", tag:"write", t:"samples/my-writing.md \u00b7 2,600 words of real writing"},
+        {k:"card", kind:"doc", data:{
+          url:"samples/my-writing.md \u00b7 WorkIQ-fetched",
+          title:"My own writing, collected",
+          paras:[
+            "8 sent emails: partner notes, team updates, one escalation.",
+            "4 Teams messages: the longer ones where I wrote more than a line.",
+            "1 blog post: fetched from URL, text only.",
+            "No manual copy-paste. Ready to build the profile."
+          ],
+          foot:"2,600 words \u00b7 gathered in 30 seconds"
+        }}
+      ]},
+    { title:"Build my voice profile", est:"~40 s",
+      ask:"Read samples/my-writing.md. Don't summarise what the emails are about. Pull out HOW I write: my openings, my sentence rhythm, the words I'd never use, my tics. Write it to voice-profile.md, with a few quotes that prove each one.",
+      lines:[
+        {k:"mode", t:"Research"},
+        {k:"tool", tag:"read",  t:"samples/my-writing.md \u00b7 2,600 words of my writing"},
         {k:"think", t:"not what he writes about. how he writes\u2026"},
         {k:"res",  t:"short opener, then a long line \u00b7 dry asides \u00b7 never 'leverage' or 'exciting'"},
         {k:"mode", t:"Write"},
@@ -513,10 +534,10 @@ window.DEMO_SPEC = {
             "Hard rule: zero em dashes. Dry, not corporate.",
             "Keeps the refrain: \"Still not a developer.\""
           ],
-          foot:"built from 12 samples \u00b7 waiting for go"
+          foot:"built from 13 samples \u00b7 waiting for go"
         }}
       ]},
-    { title:"Draft the WinWire, strip the robot", est:"~60 s",
+    { title:"Draft the WinWire", est:"~60 s",
       ask:"Good. Now use voice-profile.md. Draft the Helios WinWire from win-notes.md, in my voice. Then run content-humanizer on it and show me what it caught.",
       lines:[
         {k:"mode", t:"Autopilot"},
@@ -542,19 +563,21 @@ window.DEMO_SPEC = {
       ]}
   ],
   notes: [
-    { step:"Setup", est:"", title:"Teach it your voice, then use it", ask:null,
-      say:"Frame the two parts before anything moves. First we teach the agent my voice from writing I already have. Then we point it at a real win and let it draft the WinWire. The first part is the bit nobody shows you, and it's the whole game." },
-    { step:"Terminal", est:"", title:"A folder of my own writing", ask:null,
-      say:"Terminal over the slide. This folder has a samples directory, just a handful of my own sent emails and Teams messages, plus my notes from a real win. Nothing fancy. The point is, you already have all of this." },
+    { step:"Setup", est:"", title:"Three moves", ask:null,
+      say:"Frame the three parts before anything moves. WorkIQ gathers my actual writing from sent mail and Teams. Then we build the voice profile from that. Then we point it at a real win and draft the WinWire. Nobody shows the first step. That's the bit that makes the whole thing work." },
+    { step:"Terminal", est:"", title:"Just win-notes and the tools", ask:null,
+      say:"Terminal over the slide. The only context here is win-notes.md, my notes from a real win. No pre-loaded samples folder. WorkIQ is going to find the writing for us." },
     { step:"Boot", est:"", title:"copilot --allow-all", ask:"copilot --allow-all",
-      say:"Boot it like always. Point at the context line. It's seen my samples folder and the win notes, nothing else. No magic profile yet, we're about to build that live.\n\nCommand's typed, nothing sent. One beat. Same CLI as every other episode.\n\nFire it. Briefed and ready. Now part one, teaching it how I write." },
-    { step:"Move 1", est:"~40 s", title:"Build my voice profile", ask:null,
-      say:"This is the part most people are missing. They think they need a blog. You don't. You've written your voice down thousands of times already, it's sitting in your sent folder.\n\nRead the prompt with them. I'm not asking what my emails are about. I'm asking HOW I write. My openings, my rhythm, the words I'd never use. Read a handful, find the pattern.\n\nIt reads them and writes my voice profile, with quotes that prove each rule. Short opener then a long line. Dry, never 'leverage'. Zero em dashes. That file is the whole asset, and I just built it from old emails in forty seconds. Stop talking, let the room read it." },
-    { step:"Move 2", est:"~60 s", title:"Draft the WinWire, strip the robot", ask:null,
-      say:"Now part two. Use that profile on a real win. This is a WinWire, but it's the same move for a Connect, a vTeam update, an escalation, a partner abstract.\n\nTyped. Go. It reads my win notes, drafts the WinWire in my cadence, then content-humanizer scans it. Watch what it catches, two em dashes, a rule-of-three, a 'not just X but Y'. The exact tells that make writing smell like AI.\n\nIt rewrites those, varies the sentence length, fixes the openers. And there's the WinWire, ready to send. Read the top line. That sounds like me, not like a template. Nobody would guess a machine was near it." },
-    { step:"Switch", est:"", title:"Draft to done", ask:null,
-      say:"That's a profile built and a WinWire drafted, in about two minutes. One more press closes back to the deck. The point to land: I built the voice profile once, from emails I already had. Now every WinWire, every update, starts in my voice instead of from a blank page." },
-    { step:"Ping", est:"", title:"The system, not the sprint", ask:null,
+      say:"Boot it like always. Point at the context line. It's seen the win notes, nothing else. WorkIQ is connected as an MCP tool.\n\nCommand's typed, nothing sent. One beat. Same CLI as every other episode.\n\nFire it. Ready. Now move one, gathering my writing." },
+    { step:"Move 1", est:"~30 s", title:"Gather my writing samples", ask:null,
+      say:"This is the step that used to be the annoying bit. Open Outlook, copy-paste eight emails into a doc, wonder if you picked the right ones. WorkIQ does it for you.\n\nThe prompt says: find my sent emails and Teams messages and save them to a file. It pulls the ones where I wrote something, not the one-liners and forwards. If I have a blog post URL, paste it in and it fetches just the text I wrote.\n\n2,600 words of how I actually write, with no manual work. That file is now the source material." },
+    { step:"Move 2", est:"~40 s", title:"Build the voice profile", ask:null,
+      say:"Samples are in. Now we tell it what to do with them. I'm not asking what the emails are about. I'm asking how I write. My openings, my rhythm, the words I'd never use.\n\nIt reads them and writes my voice profile, with quotes that prove each rule. Short opener then a long line. Dry, never 'leverage'. Zero em dashes. That file is the whole asset, built from real emails in forty seconds. Let the room read it." },
+    { step:"Move 3", est:"~60 s", title:"Draft the WinWire", ask:null,
+      say:"Now move three. Use that profile on a real win. Same move for a Connect, a vTeam update, an escalation, a partner abstract.\n\nTyped. Go. It reads my win notes, drafts the WinWire in my cadence, then content-humanizer scans it. Watch what it catches, two em dashes, a rule-of-three, a 'not just X but Y'. The exact tells that make writing smell like AI.\n\nIt rewrites those, varies the sentence length, fixes the openers. And there's the WinWire, ready to send. Read the top line. That sounds like me, not like a template." },
+    { step:"Switch", est:"", title:"Back to the deck", ask:null,
+      say:"That's samples gathered, a profile built, and a WinWire drafted, in about three minutes. One more press closes back to the deck. The point to land: WorkIQ did the collection. The profile is done once. Now every WinWire, every update, starts in my voice instead of from a blank page." },
+    { step:"Ping", est:"", title:"Make it a system", ask:null,
       say:"One last click. This is where it scales. The agent already watched my week, my wins and my threads, and drafted the updates I'd owe anyway. So I don't start Monday from nothing. I start from drafts in my own voice, and I just edit. The writing stops being the reason things don't get said." }
   ],
   closingPing: {
