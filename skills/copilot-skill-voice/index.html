@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Copilot Skill: Voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080a;--surface:rgba(255,255,255,.045);--border:rgba(255,255,255,.1);--border-strong:rgba(255,255,255,.18);--fg:#f4f6fb;--muted:rgba(244,246,251,.72);--weak:rgba(244,246,251,.52);--accent:#22d3ee;--accent-2:#f472b6;--accent-3:#a78bfa;--aurora:linear-gradient(135deg,#22d3ee 0%,#a78bfa 48%,#f472b6 100%);--shadow:0 18px 60px rgba(0,0,0,.38)}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{min-height:100vh;background:var(--bg);color:var(--fg);font-family:Inter,Segoe UI,sans-serif;line-height:1.55;overflow-x:hidden}body:before,body:after{content:"";position:fixed;width:48vw;height:48vw;border-radius:50%;filter:blur(130px);opacity:.18;pointer-events:none;z-index:0}body:before{background:var(--accent);top:-18vw;right:-12vw}body:after{background:var(--accent-2);bottom:-22vw;left:-14vw}a{color:inherit}.topbar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(7,8,10,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:10px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800}.mark{width:30px;height:30px;border-radius:8px;background:var(--aurora);color:#07080a;display:grid;place-items:center}.topbar nav{display:flex;gap:20px;font-size:13px;color:var(--muted)}.topbar nav a{text-decoration:none}.topbar nav a:hover{color:var(--accent)}main{position:relative;z-index:1}.hero{max-width:1180px;margin:0 auto;padding:72px 32px 44px}.eyebrow{display:inline-flex;padding:6px 12px;border:1px solid rgba(34,211,238,.3);border-radius:999px;background:rgba(34,211,238,.1);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px}h1,h2,h3{font-family:"Plus Jakarta Sans",Inter,sans-serif;margin:0;text-wrap:balance;letter-spacing:-.025em}h1{font-size:clamp(42px,6vw,78px);line-height:.98;max-width:850px}.gradient{background:var(--aurora);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.lead{font-size:clamp(19px,2.1vw,25px);color:var(--muted);max-width:760px;margin:22px 0 0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:13px 18px;text-decoration:none;font-weight:800;border:1px solid var(--border-strong);background:var(--surface);color:var(--fg)}.btn.primary{background:var(--aurora);color:#07080a;border:0}.section{max-width:1180px;margin:0 auto;padding:32px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:var(--shadow)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:16px;padding:20px}.card h3{font-size:18px;margin-bottom:8px}.card p{margin:0;color:var(--muted);font-size:14px}.steps{counter-reset:step;display:grid;gap:14px}.step{counter-increment:step;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:16px;padding:18px}.step:before{content:counter(step);width:34px;height:34px;border-radius:10px;background:var(--aurora);display:grid;place-items:center;color:#07080a;font-weight:900}.step h3{font-size:16px;margin-bottom:4px}.step p{margin:0;color:var(--muted)}pre{margin:10px 0 0;padding:16px;border-radius:12px;background:#020409;border:1px solid var(--border);overflow:auto;color:#a7f3d0;font:13px/1.55 Consolas,"Courier New",monospace;white-space:pre-wrap}code{font-family:Consolas,"Courier New",monospace;font-size:.92em}.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}.link-card{flex:1 1 220px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.035);padding:16px;text-decoration:none}.link-card strong{display:block}.link-card span{color:var(--muted);font-size:13px}.made{max-width:1180px;margin:0 auto;padding:26px 32px 60px;color:var(--weak);font-size:14px}.made a{color:var(--accent)}@media(max-width:850px){.topbar nav{display:none}.grid{grid-template-columns:1fr}.hero,.section{padding-left:20px;padding-right:20px}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="mark">✦</span><span>AI Operator Intro</span></div><nav><a href="#does">What it does</a><a href="#install">Install</a><a href="#links">Files</a><a href="../../">← Back to hub</a></nav></header>
+<main>
+  <section class="hero">
+    <span class="eyebrow">Copilot skill give-away</span>
+    <h1>Copilot Skill: <span class="gradient">Voice</span></h1>
+    <p class="lead">Teach it your voice from emails you have already sent. Then draft a WinWire, a Connect, a vTeam update, an escalation, a partner abstract, or a post that sounds like you wrote it. The robot gets stripped out before you ever see it.</p>
+    <div class="hero-actions"><a class="btn primary" href="./SKILL.md">Open SKILL.md</a><a class="btn" href="../../operator-hour/s1e5/voice-kit.html">The Voice Kit walk-through</a></div>
+  </section>
+
+  <section class="section" id="does">
+    <div class="grid">
+      <article class="card"><h3>Built from your sent folder</h3><p>No blog required. Point it at a handful of emails and chats you have already written. It learns how you actually write.</p></article>
+      <article class="card"><h3>Any channel</h3><p>WinWires, Connects, vTeam updates, escalations, partner abstracts, posts. One profile, every kind of writing.</p></article>
+      <article class="card"><h3>No robot smell</h3><p>Every draft runs through the humanizer first. Em dashes, the rule-of-three, the tells. Caught before you read it.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="install">
+    <div class="panel">
+      <span class="eyebrow">Install</span>
+      <h2>Just ask Copilot to install it.</h2>
+      <p class="lead" style="margin-top:10px;font-size:18px;">No folders, no file copying, no commands. Point Copilot at this page and let it do the fetching.</p>
+      <pre>Install the voice skill from https://jw-sthlm.github.io/cli-intro-share/skills/copilot-skill-voice/. Fetch SKILL.md and save it into my Copilot skills folder, then confirm it's available.</pre>
+      <p style="color:var(--muted);font-size:14px;margin-top:10px;">Then start a fresh session and try it: <code>Build my voice profile from the samples in samples/</code>, then <code>Draft a WinWire from win-notes.md in my voice</code>.</p>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <span class="eyebrow">Two prompts to start</span>
+      <h2>Build once. Then draft anything.</h2>
+      <div class="steps" style="margin-top:18px;">
+        <div class="step"><div><h3>Build the profile</h3><p>Drop 6 to 12 of your own sent emails and Teams messages in a <code>samples/</code> folder, then:</p><pre>Read the writing in samples/. Pull out HOW I write, my openings, my sentence rhythm, the words I'd never use, my tics. Write it to voice-profile.md with quotes that prove each one. I'll correct anything off.</pre></div></div>
+        <div class="step"><div><h3>Draft in your voice</h3><p>Point the profile at any real material:</p><pre>Read win-notes.md and voice-profile.md. Draft a WinWire from the notes in my voice. Run the humanizer pass and show me what it caught. Don't send anything.</pre></div></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <span class="eyebrow">Roll your own</span>
+      <h2>Prefer to build the skill yourself?</h2>
+      <p class="lead" style="margin-top:10px;font-size:18px;">You don't write the skill. You ask for it. Paste your favourite prompts and let Copilot scaffold a local skill from them.</p>
+      <pre>Turn these prompts into a Copilot CLI skill called "voice", with two modes (build a voice profile from samples, and draft in that voice with a humanizer pass). Write a SKILL.md with the right frontmatter and save it to my skills folder. Here are the prompts: &lt;paste yours&gt;</pre>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <span class="eyebrow">By surface</span>
+      <h2>Where it works, and how.</h2>
+      <div class="grid" style="margin-top:18px;">
+        <article class="card">
+          <h3>Copilot CLI</h3>
+          <p>The ask-Copilot install above works as-is. Skills in <code>~/.copilot/skills/</code> load when a session starts. Prefer to do it by hand?</p>
+          <pre>New-Item -ItemType Directory -Force "$HOME\.copilot\skills\copilot-skill-voice"
+Copy-Item ".\SKILL.md" "$HOME\.copilot\skills\copilot-skill-voice\SKILL.md" -Force</pre>
+        </article>
+        <article class="card">
+          <h3>Clawpilot <span style="color:var(--weak);font-weight:500;">· desktop app</span></h3>
+          <p>Same Copilot engine, so the skill runs. It does not auto-read <code>~/.copilot/skills</code>. Save <code>SKILL.md</code> into any folder, then in Clawpilot open <strong>Settings → Skills</strong>, add that folder, and start a new session.</p>
+        </article>
+        <article class="card">
+          <h3>VS Code Copilot Chat</h3>
+          <p>VS Code does not load CLI skills. Paste the contents of <code>SKILL.md</code> into <code>.github/copilot-instructions.md</code> (or <code>.github/instructions/voice.instructions.md</code>), then start a new chat and ask Copilot to follow it.</p>
+        </article>
+        <article class="card">
+          <h3>Copilot Cowork <span style="color:var(--weak);font-weight:500;">· Microsoft 365</span></h3>
+          <p>Cowork doesn't load filesystem skills. The <em>method</em> still works: paste the body of <code>SKILL.md</code> into your first message as instructions, then give it your samples. You just won't have it installed permanently.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="links">
+    <div class="panel">
+      <span class="eyebrow">Files</span>
+      <h2>Take the skill, then read the walk-through.</h2>
+      <div class="links">
+        <a class="link-card" href="./SKILL.md"><strong>Raw SKILL.md</strong><span>Copy this into your Copilot setup.</span></a>
+        <a class="link-card" href="../../operator-hour/s1e5/voice-kit.html"><strong>Voice Kit</strong><span>The step-by-step from the episode, with the prompts.</span></a>
+        <a class="link-card" href="../../operator-hour/s1e5/"><strong>S1E5 recap</strong><span>The episode this came from.</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="made">Made for the <a href="../../">AI Operator Intro</a> by Johan Wallquist, for Microsoft partner consultants. Pairs with the global content-humanizer skill, which does the final voice-cleanup pass.</footer>
+</body>
+</html>
