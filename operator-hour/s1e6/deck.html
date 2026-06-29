@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Operator Hour · S1E6 · Build the agent</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F1E5;
+  --bg-2:#F0E9D7;
+  --panel:#FFFDF7;
+  --panel-2:#F5EFE0;
+  --border:#E3DAC5;
+  --border-soft:#EDE5D0;
+  --ink:#1B1F26;
+  --ink-2:#3B4250;
+  --muted:#6A7180;
+  --muted-2:#9298A4;
+  --teal:#0F8A7A;
+  --teal-2:#0B6E62;
+  --teal-soft:rgba(15,138,122,.10);
+  --purple:#5B43C7;
+  --purple-2:#4A35A6;
+  --purple-soft:rgba(91,67,199,.10);
+  --amber:#B5851A;
+  --pink:#C7457A;
+  --shadow-sm:0 1px 2px rgba(27,31,38,.05);
+  --shadow-md:0 8px 24px rgba(27,31,38,.08);
+  --shadow-lg:0 24px 60px rgba(27,31,38,.15);
+  --radius:14px;
+  --radius-sm:8px;
+  --radius-pill:999px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-2);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+/* Stage + slide */
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding:24px;}
+.slide{
+  width:min(96vw,1500px);aspect-ratio:16/9;max-height:94vh;
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  display:none;
+}
+.slide.active{display:flex;flex-direction:column;}
+.slide-inner{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:64px 84px;gap:8px;
+}
+
+/* Top bar inside slide */
+.top{
+  position:absolute;top:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.12em;text-transform:uppercase;
+  pointer-events:none;
+}
+.top .left{display:flex;gap:14px;align-items:center;}
+.top .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px var(--teal-soft);}
+
+/* Progress at bottom */
+.progress{
+  position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--border-soft);
+}
+.progress .bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--purple));width:0;transition:width .35s var(--ease);}
+
+/* Footer */
+.foot{
+  position:absolute;bottom:18px;left:24px;right:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--muted-2);letter-spacing:.08em;
+}
+.foot .count span{color:var(--teal);font-weight:600;}
+.foot .keys{display:flex;gap:6px;align-items:center;}
+.foot .k{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 5px;border-radius:4px;
+  border:1px solid var(--border);background:var(--panel);color:var(--muted);
+  font-size:10px;letter-spacing:0;
+}
+
+/* Typography */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:var(--teal);letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  margin-bottom:18px;
+}
+h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(40px,5.6vw,80px);line-height:1.02;font-weight:800;
+  letter-spacing:-.025em;color:var(--ink);text-wrap:balance;
+}
+h1.hero{
+  font-size:clamp(56px,7.5vw,108px);line-height:.96;font-weight:900;
+  letter-spacing:-.035em;max-width:18ch;
+}
+h1 .accent{color:var(--teal);}
+h1 .purple{color:var(--purple);}
+h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(28px,3.2vw,44px);line-height:1.12;font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);text-wrap:balance;
+}
+h3{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(20px,2.2vw,28px);line-height:1.2;font-weight:700;
+  color:var(--ink);
+}
+.lead{
+  font-size:clamp(19px,1.6vw,25px);line-height:1.55;color:var(--ink-2);
+  max-width:60ch;text-wrap:pretty;margin-top:14px;
+}
+.kicker{
+  font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.smallcaps{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+}
+
+/* Components */
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;
+  border:1px solid var(--border);background:var(--panel);
+  border-radius:var(--radius-pill);font-size:14.5px;color:var(--ink-2);
+  font-weight:500;
+}
+.pill .mark{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal);font-size:13px;}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:var(--shadow-sm);
+}
+.card .num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple);
+  font-weight:700;letter-spacing:.1em;
+}
+.card .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:17px;color:var(--ink);line-height:1.25;}
+.card .d{font-size:15px;color:var(--muted);line-height:1.5;}
+
+/* Quote big */
+.bigquote{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(54px,7vw,108px);line-height:1.02;letter-spacing:-.03em;
+  text-wrap:balance;color:var(--ink);
+}
+.bigquote .mute{color:var(--muted-2);}
+.q-cap{
+  margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:15px;
+  color:var(--muted);letter-spacing:.06em;
+}
+
+/* Terminal mock */
+.term{
+  background:#1B1F26;border-radius:12px;border:1px solid #2A2F38;
+  box-shadow:var(--shadow-lg);overflow:hidden;font-family:'JetBrains Mono',monospace;
+  color:#E6E2D5;font-size:14.5px;line-height:1.65;
+}
+.term-bar{
+  display:flex;align-items:center;gap:8px;padding:9px 14px;background:#23272F;
+  border-bottom:1px solid #2A2F38;
+}
+.term-bar .d{width:11px;height:11px;border-radius:50%;}
+.term-bar .r{background:#ff5f56;} .term-bar .y{background:#ffbd2e;} .term-bar .g{background:#27c93f;}
+.term-bar .ttl{margin-left:8px;font-size:11.5px;color:#9298A4;letter-spacing:.05em;}
+.term-body{padding:18px 22px;white-space:pre-wrap;}
+.term .pmt{color:#7ED9C9;}
+.term .cmt{color:#7d8290;font-style:italic;}
+.term .acc{color:#C9A8FF;}
+.term .ok{color:#7BD389;}
+.term .arr{color:#FFB75C;}
+.term .h{color:#F58CB0;font-weight:600;}
+
+/* Two-col layouts */
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;}
+.two.right-heavy{grid-template-columns:.85fr 1.15fr;}
+.qs{
+  list-style:none;display:flex;flex-direction:column;gap:14px;
+}
+.qs li{
+  display:flex;gap:14px;align-items:flex-start;font-size:18px;color:var(--ink-2);
+  line-height:1.45;
+}
+.qs li .n{
+  flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+  background:var(--teal-soft);color:var(--teal-2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+  margin-top:1px;
+}
+
+/* Output card mock */
+.out-mock{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 24px;box-shadow:var(--shadow-md);
+}
+.out-mock .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+.out-mock h3{font-size:20px;}
+.out-mock .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;}
+.uc{
+  display:grid;grid-template-columns:1fr auto auto;gap:14px;
+  padding:12px 0;border-top:1px solid var(--border-soft);align-items:center;
+}
+.uc:first-of-type{border-top:none;}
+.uc .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:17px;color:var(--ink);}
+.uc .why{font-size:14px;color:var(--muted);margin-top:2px;}
+.uc .badges{display:flex;gap:6px;}
+.uc .b{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+  padding:3px 8px;border-radius:var(--radius-pill);
+  background:var(--bg-2);color:var(--muted);letter-spacing:.06em;
+}
+.uc .b.s{color:var(--teal-2);background:var(--teal-soft);}
+.uc .b.m{color:var(--amber);background:rgba(181,133,26,.12);}
+.uc .b.l{color:var(--pink);background:rgba(199,69,122,.10);}
+.uc.start{background:linear-gradient(90deg,var(--teal-soft),transparent);border-radius:8px;padding:14px 14px;margin-top:6px;border-top:none;}
+.uc.start .ribbon{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;font-weight:700;
+  color:var(--teal-2);text-transform:uppercase;margin-bottom:4px;
+}
+
+/* Otto card */
+.otto-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 30px;display:flex;gap:22px;align-items:center;box-shadow:var(--shadow-md);
+}
+.otto-av{
+  width:84px;height:84px;border-radius:22px;
+  background:linear-gradient(135deg,var(--teal),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:34px;color:#fff;font-weight:700;
+  flex-shrink:0;box-shadow:var(--shadow-md);
+}
+.otto-card .name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;}
+.otto-card .role{font-size:15px;color:var(--muted);margin-top:2px;}
+.otto-card .desc{font-size:16px;color:var(--ink-2);margin-top:10px;line-height:1.5;max-width:48ch;}
+
+/* Take-home */
+.takehome{
+  background:linear-gradient(135deg,var(--teal-soft),var(--purple-soft));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 32px;margin-top:18px;
+}
+.takehome .tag{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal-2);
+  letter-spacing:.16em;font-weight:700;text-transform:uppercase;
+}
+.takehome h2{margin-top:6px;}
+.takehome p{margin-top:10px;color:var(--ink-2);font-size:17px;line-height:1.5;max-width:54ch;}
+
+/* Next teaser */
+.next{
+  display:flex;align-items:center;gap:32px;margin-top:24px;
+}
+.next .when{
+  font-family:'JetBrains Mono',monospace;color:var(--purple);
+  font-size:14px;letter-spacing:.1em;font-weight:600;
+}
+.next .arrow{color:var(--muted);font-size:32px;line-height:1;}
+
+/* Refrain */
+.refrain{
+  margin-top:32px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
+  font-size:clamp(22px,2.4vw,32px);color:var(--ink);line-height:1.2;letter-spacing:-.015em;
+}
+.refrain .small{display:block;font-weight:500;font-size:.78em;color:var(--muted);margin-top:6px;}
+
+/* Speaker notes - hidden in deck mode */
+.notes{display:none;}
+
+/* Popup banner */
+#popup-blocked{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:#fff5f5;border:1px solid #f0a8a8;color:#a52a2a;
+  padding:10px 16px;border-radius:8px;z-index:200;
+  font-size:13px;display:none;box-shadow:var(--shadow-md);
+}
+
+/* Hero title slide */
+.hero-slide .slide-inner{justify-content:center;gap:0;}
+.hero-meta{
+  margin-top:46px;display:flex;gap:32px;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.hero-meta .b{color:var(--ink-2);font-weight:600;}
+
+/* ============= PRESENTER VIEW STYLES ============= */
+body.presenter{background:#0E1118;color:#E5E7EB;overflow:hidden;padding:18px;}
+body.presenter .stage{display:none;}
+.pres-root{display:none;}
+body.presenter .pres-root{
+  display:grid;grid-template-columns:var(--pres-left-w,56%) 10px 1fr;gap:14px;height:calc(100vh - 36px);
+  font-family:'Inter',sans-serif;min-height:0;
+}
+.pres-left{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;}
+.pres-split{
+  align-self:stretch;width:10px;cursor:col-resize;border-radius:5px;
+  background:#23272F;border:1px solid #2A2F38;
+  display:flex;align-items:center;justify-content:center;touch-action:none;
+}
+.pres-split:hover,.pres-split.dragging{background:#2F3640;border-color:#3B4250;}
+.pres-split::after{content:'';width:2px;height:30px;border-radius:2px;background:#525a66;}
+.pres-thumb{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;overflow:hidden;
+  flex:1;min-height:0;position:relative;
+}
+.pres-thumb iframe,.pres-thumb-next iframe{
+  position:absolute;top:0;left:0;
+  width:1600px;height:900px;border:0;background:var(--bg);
+  transform-origin:0 0;pointer-events:none;
+}
+.pres-thumb-next{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:8px;overflow:hidden;
+  position:relative;aspect-ratio:16/9;width:100%;margin:0 0 12px;
+}
+.pres-status{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;
+  padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9CA3AF;
+  letter-spacing:.06em;flex-shrink:0;
+}
+.pres-status .now{color:#7ED9C9;font-weight:700;}
+.pres-status .clk{color:#E5E7EB;font-weight:600;}
+.pres-right{display:flex;flex-direction:column;gap:14px;min-height:0;min-width:0;overflow:auto;}
+.pres-block{
+  background:#1A1E26;border:1px solid #2A2F38;border-radius:10px;padding:18px 20px;
+}
+.pres-block h4{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;margin-bottom:8px;
+}
+.pres-block.pres-next h4{color:#C9A8FF;}
+.pres-block h3{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;
+  color:#F3F4F6;margin-bottom:12px;line-height:1.25;
+}
+.pres-do{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#7ED9C9;font-weight:600;
+  line-height:1.55;margin-bottom:14px;padding:10px 12px;
+  background:rgba(126,217,201,.06);border-left:2px solid #7ED9C9;border-radius:4px;
+  white-space:pre-wrap;
+}
+.pres-do::before{
+  content:'DO';display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.14em;color:#7ED9C9;margin-right:8px;opacity:.7;
+}
+.pres-say{
+  font-family:'Inter',sans-serif;font-size:22px;line-height:1.55;font-weight:400;
+  color:#E5E7EB;white-space:pre-wrap;
+}
+.pres-copy{display:flex;flex-direction:column;gap:8px;margin:0 0 16px;}
+.pres-copy .pc-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  color:#7ED9C9;text-transform:uppercase;font-weight:700;opacity:.8;margin-bottom:2px;
+}
+.copy-chip{
+  display:flex;align-items:center;gap:10px;background:#11151C;
+  border:1px solid #2A2F38;border-radius:8px;padding:7px 7px 7px 12px;
+}
+.copy-chip .cc-text{
+  flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:#E5E7EB;white-space:pre-wrap;word-break:break-word;line-height:1.4;
+}
+.copy-chip .cc-btn{
+  flex-shrink:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#0E1118;
+  background:#7ED9C9;border:0;border-radius:6px;padding:7px 13px;transition:background .12s;
+}
+.copy-chip .cc-btn:hover{background:#9BE7DA;}
+.copy-chip .cc-btn.ok{background:#3FB950;color:#06210F;}
+.pres-block.pres-next .pres-do{color:#C9A8FF;background:rgba(201,168,255,.06);border-left-color:#C9A8FF;}
+.pres-block.pres-next .pres-do::before{color:#C9A8FF;content:'NEXT DO';}
+.pres-block.pres-next .pres-say{font-size:15px;color:#9CA3AF;}
+.pres-controls{
+  display:flex;gap:8px;justify-content:flex-end;font-size:12px;color:#6B7280;
+  font-family:'JetBrains Mono',monospace;
+}
+.pres-controls button{
+  background:#23272F;border:1px solid #2A2F38;color:#E5E7EB;
+  padding:6px 12px;border-radius:6px;font-family:inherit;font-size:12px;cursor:pointer;
+}
+.pres-controls button:hover{border-color:#3B4250;}
+@media (max-width: 900px){
+  body.presenter .pres-root{grid-template-columns:1fr;grid-template-rows:35vh 1fr;}
+  body.presenter .pres-split{display:none;}
+}
+
+/* Live demo pill (red, pulsing), used on the live-build slide */
+.live-pill{
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:#E5484D;
+  background:rgba(229,72,77,.10);border:1px solid rgba(229,72,77,.45);
+  border-radius:999px;padding:7px 14px;margin-bottom:18px;
+}
+.live-pill .ld{
+  width:9px;height:9px;border-radius:50%;background:#E5484D;
+  box-shadow:0 0 0 0 rgba(229,72,77,.55);animation:livepulse 1.6s ease-out infinite;
+}
+@keyframes livepulse{
+  0%{box-shadow:0 0 0 0 rgba(229,72,77,.55);}
+  70%{box-shadow:0 0 0 7px rgba(229,72,77,0);}
+  100%{box-shadow:0 0 0 0 rgba(229,72,77,0);}
+}
+@media (prefers-reduced-motion: reduce){ .live-pill .ld{animation:none;} }
+
+/* ============= EMBEDDED TERMINAL DEMO ============= */
+/* The demo runs as a transparent full-window iframe in a borderless dialog.
+   The engine (embed mode) draws its own dark scrim over the slide behind. */
+dialog.td-dialog{
+  position:fixed;inset:0;width:100vw;height:100vh;max-width:none;max-height:none;
+  margin:0;padding:0;border:0;background:transparent;overflow:hidden;
+}
+dialog.td-dialog::backdrop{background:transparent;}
+dialog.td-dialog iframe{width:100vw;height:100vh;border:0;display:block;background:transparent;}
+body.presenter dialog.td-dialog{display:none;}
+
+/* Presenter takeover: while a demo is active, this 1:1 mirror of the engine's
+   presenter view covers the normal slide notes. Fed by td-pv relays. */
+#tdTakeover{display:none;}
+body.presenter #tdTakeover.active{
+  display:flex;flex-direction:column;gap:14px;position:fixed;inset:18px;
+  background:#0E1118;z-index:40;padding:4px;
+}
+.tdt-top{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid #2A2F38;padding:4px 4px 14px;}
+.tdt-step{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#7ED9C9;letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+.tdt-est{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#6B7280;}
+.tdt-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#F3F4F6;letter-spacing:-.01em;}
+.tdt-phase{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.12em;
+  padding:7px 14px;border-radius:999px;text-transform:uppercase;display:none;}
+.tdt-phase.arm{display:inline-block;background:rgba(74,158,255,.18);color:#7fb8ff;border:1px solid rgba(74,158,255,.5);}
+.tdt-phase.typed{display:inline-block;background:rgba(255,179,71,.18);color:#ffc888;border:1px solid rgba(255,179,71,.5);}
+.tdt-phase.fire{display:inline-block;background:rgba(57,211,83,.18);color:#5ad17e;border:1px solid rgba(57,211,83,.5);}
+.tdt-ask{font-family:'JetBrains Mono',monospace;font-size:15px;color:#E6E8EA;background:#11151C;border:1px solid #2A2F38;
+  border-left:3px solid #F778BA;border-radius:8px;padding:13px 16px;line-height:1.5;}
+.tdt-ask .lbl{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;margin-bottom:6px;}
+.tdt-say{font-size:21px;line-height:1.55;color:#E5E7EB;overflow:auto;flex:1;min-height:0;}
+.tdt-say p{margin:0 0 14px;padding:0 0 0 14px;border-left:3px solid transparent;transition:border-color .2s;}
+.tdt-say p:last-child{margin-bottom:0;}
+.tdt-say p.active.arm{border-left-color:rgba(74,158,255,.7);}
+.tdt-say p.active.typed{border-left-color:rgba(255,179,71,.7);}
+.tdt-say p.active.fire{border-left-color:rgba(57,211,83,.7);}
+.tdt-rail{display:flex;gap:7px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #2A2F38;}
+.tdt-rail .pvr{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 11px;border-radius:999px;border:1px solid #2A2F38;color:#6B7280;}
+.tdt-rail .pvr.done{color:#5ad17e;border-color:rgba(57,211,83,.3);}
+.tdt-rail .pvr.now{color:#0E1118;background:#7ED9C9;border-color:#7ED9C9;font-weight:700;}
+.tdt-hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:#6B7280;letter-spacing:.04em;}
+.tdt-hint kbd{background:rgba(255,255,255,.06);border:1px solid #2A2F38;border-radius:4px;padding:1px 6px;color:#9CA3AF;margin:0 2px;}
+</style>
+</head>
+<body>
+
+<div id="popup-blocked">Presenter window blocked. Allow popups for this page, then try again.</div>
+
+<!-- ============= DECK ============= -->
+<div class="stage" id="stage">
+
+  <!-- SLIDE 1: Title -->
+  <section class="slide hero-slide" data-title="Title">
+    <div class="top"><div class="left"><span class="dot"></span><span>Operator Hour · S1E6</span></div><div>Jun 30 2026</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Season 1 · Episode 6 · Finale</div>
+      <h1 class="hero">Build the <span class="accent">agent.</span></h1>
+      <h2 style="margin-top:18px;color:var(--muted);font-weight:600;">The sidekick in this chat was a bot I built. Today you get the recipe and the repo.</h2>
+      <div class="hero-meta">
+        <span><span class="b">45 min</span> · live</span>
+        <span>Tuesdays <span class="b">10:30 CET</span></span>
+        <span>Made for <span class="b">EMEA EPS + GCPS</span></span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>1</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Open by @mentioning Otto in the chat live and reading its answer aloud. Then land the frame: that's a bot, I built it, today you get the recipe. This is the finale, so set the stakes. 75 seconds.
+
+SAY: For six weeks, every time you typed @otto in this chat, something answered. Setup questions, error screenshots, where's the recording. You probably stopped thinking about it.
+
+Here's the thing nobody said out loud. Otto isn't a Microsoft feature someone switched on. It's a bot. I built it. One person, no team, no engineering background that I'm willing to admit to.
+
+So this is the finale. No new use case today. Today I open the hood, show you exactly how the sidekick in this chat is built, and then build a second one live. You leave with the recipe and the repo.</aside>
+  </section>
+
+  <!-- SLIDE 2: The setup -->
+  <section class="slide" data-title="Otto was a bot">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · The honest bit</span></div><div>02</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">No reveal, just the recipe</div>
+      <h1>Otto answered you. <span class="accent">I built Otto.</span></h1>
+      <p class="lead">You knew it was a bot. You probably guessed it was me. So this isn't a magic trick. The interesting part is how little it took. No team, no engineer, no special tooling you don't already have. A repo, a few markdown files, and the same CLI you've watched all season.</p>
+      <div class="pill-row">
+        <span class="pill"><span class="mark">✓</span> One person</span>
+        <span class="pill"><span class="mark">✓</span> One repo</span>
+        <span class="pill"><span class="mark">✓</span> Under $30 a month</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>2</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Kill the fake-mystery framing fast. Nobody thought Otto was a person. The point isn't "gotcha", it's "look how small the recipe is". Land the three pills. 60 seconds.
+
+SAY: Let me get the boring honesty out of the way. Otto was always a bot, and yeah, I built it. No reveal there. What I actually want you to see is the size of the thing.
+
+There's no team behind Otto. No engineer I handed it to. No tooling you don't already have on your machine. It's a repo with a few markdown files, deployed with one command, running for less than the price of a couple of coffees a month.
+
+That's the whole story. And in twenty minutes I'm going to build a second one in front of you, so you can see there's nothing up my sleeve.</aside>
+  </section>
+
+  <!-- SLIDE 3: The shift -->
+  <section class="slide" data-title="The shift">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · The shift</span></div><div>03</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The shift</div>
+      <div class="bigquote">If I can build the sidekick,<br><span class="mute">you can build yours.</span></div>
+      <p class="q-cap">By the end of this hour you have the recipe and the repo. The agent that ran the season is the same one you'll run for your team.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>3</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: The core reframe of the finale. Pause after the big line. The shift is from "an agent is something other people build" to "an agent is a repo you fork". 60 seconds.
+
+SAY: Here's the shift for the whole season, landed on one slide. An agent used to be a thing other people built. A platform team, a vendor, someone with engineer in their title.
+
+That's the bit that just stopped being true. The sidekick that answered you all season is a repo. If I can build it, and I am very much still not a developer, then so can you.
+
+By the time we close today, you'll have the recipe and a link to the actual repo. Not a diagram of how it could work. The real thing, ready to fork.</aside>
+  </section>
+
+  <!-- SLIDE 4: The recipe -->
+  <section class="slide" data-title="Three ingredients">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · The recipe</span></div><div>04</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The whole recipe</div>
+      <h1>Three ingredients. <span class="accent">That's an agent.</span></h1>
+      <p class="lead">Strip away the jargon and an agent like Otto is three things. None of them is code you write. One of them is just the questions your team keeps asking.</p>
+      <ul class="qs" style="margin-top:22px;">
+        <li><span class="n">1</span><span><strong style="color:var(--ink);">A persona.</strong> One markdown file. How it talks, what it helps with, what it refuses to do.</span></li>
+        <li><span class="n">2</span><span><strong style="color:var(--ink);">Knowledge.</strong> Your stuff. The FAQ, the handbook, the things you explain twice a week. Markdown, not a database.</span></li>
+        <li><span class="n">3</span><span><strong style="color:var(--ink);">A place to live.</strong> A Teams chat, where your people already are. The agent shows up when you @mention it.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><div class="count">Slide <span>4</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Walk the three slowly. This is the mental model people leave with. Hammer that ingredient two is just their existing knowledge, written down. 75 seconds.
+
+SAY: Here's the recipe, and there are only three things in it. Watch how little is technical.
+
+One, a persona. That's a single markdown file. Plain English. Who the agent helps, how it talks, what it won't touch. Otto's persona is shorter than most emails I send.
+
+Two, knowledge. This is your stuff. The onboarding FAQ, the handbook, the answers you give new joiners every single week. Not a database, not a vector store you have to understand. Markdown files.
+
+Three, a place to live. For Otto that's this Teams chat. It sits there and answers when someone @mentions it. That's the whole thing. Persona, knowledge, a chat. You'll watch me assemble exactly these three in a minute.</aside>
+  </section>
+
+  <!-- SLIDE 5: The tools -->
+  <section class="slide" data-title="The tools">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · What does the work</span></div><div>05</div></div>
+    <div class="slide-inner">
+      <div class="two right-heavy">
+        <div>
+          <div class="eyebrow">You bring three files. The tools do the rest</div>
+          <h2>The hard parts are <span style="color:var(--teal-2);">already built.</span></h2>
+          <p class="lead">You don't wire up servers or write the plumbing. Copilot CLI assembles the agent. One command ships it to Azure. Teams hosts it. And if you never want to open a terminal, there's a no-code path that gets you to the same place.</p>
+          <p class="kicker" style="margin-top:22px;">Your job is the persona and the knowledge. That's it.</p>
+        </div>
+        <div>
+          <div class="out-mock">
+            <div class="head"><h3>the toolchain</h3><span class="meta">NOTHING TO INSTALL FROM SCRATCH</span></div>
+            <div class="uc">
+              <div>
+                <div class="t">Copilot CLI</div>
+                <div class="why">Builds and edits the agent from plain English. The same shell you've used all season.</div>
+              </div>
+              <div class="badges"><span class="b s">BUILD</span></div>
+            </div>
+            <div class="uc">
+              <div>
+                <div class="t">azd up</div>
+                <div class="why">One command. Provisions Azure and ships the agent. No portal clicking.</div>
+              </div>
+              <div class="badges"><span class="b m">DEPLOY</span></div>
+            </div>
+            <div class="uc">
+              <div>
+                <div class="t">Teams</div>
+                <div class="why">Where your people already are. The agent answers on @mention.</div>
+              </div>
+              <div class="badges"><span class="b l">HOST</span></div>
+            </div>
+            <div class="uc start">
+              <div>
+                <div class="ribbon">▸ No terminal? No problem</div>
+                <div class="t">Copilot Studio · M365 agents</div>
+                <div class="why">The no-code path to the same result. Point and click, same three ingredients.</div>
+              </div>
+              <div class="badges"><span class="b s">EASY MODE</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>5</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Take the fear out. People hear "deploy to Azure" and tense up. Point at the card: every hard layer is one tool, and the bottom row is the escape hatch for anyone who never wants a terminal. 75 seconds.
+
+SAY: Now the bit that scares people. "Deploy to Azure" sounds like a week of work. It isn't, because every hard layer here is already a tool.
+
+Copilot CLI builds the agent from plain English, the same way you've watched it build decks and prototypes all season. One command, azd up, ships it to Azure. Teams hosts it. You don't touch the plumbing.
+
+And look at the bottom row. If the terminal is just not your thing, Copilot Studio and the M365 agent builders get you to the exact same place by pointing and clicking. Same three ingredients, no command line. I'm doing it in the CLI because that's my season, but the recipe doesn't care which door you walk through.</aside>
+  </section>
+
+  <!-- SLIDE 6: Live build · hosts the embedded terminal demo -->
+  <section class="slide" data-title="Live build" data-demo="operator-hour-s1e6-build">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · Live</span></div><div>06</div></div>
+    <div class="slide-inner" style="justify-content:center;">
+      <span class="live-pill"><span class="ld"></span>Live demo</span>
+      <h1 class="hero">Watch me build <span class="accent">a new one.</span></h1>
+      <p class="lead" style="font-size:24px;margin-top:24px;">Otto's repo, forked into a different agent for a different team. Persona, knowledge, deploy.</p>
+    </div>
+    <div class="foot"><div class="count">Slide <span>6</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: LIVE BUILD via the embedded terminal demo. Press space once and the terminal slides in over this slide, same window. This presenter view tracks every step. Each move is three presses: armed, typed, fired. Three moves: fork Otto and rewrite the persona, swap the knowledge for a different team, deploy and test in Teams. Be upfront in move 3 that the deploy was run last night. On the "It's alive" exit screen, cut to the real second agent answering. One more press for the closing ping, then it closes onto the next slide. Press R inside the demo to replay, Esc to bail.
+
+SAY: Let's build one, live, three moves. First I fork Otto, the actual repo behind the bot in this chat, and rewrite its persona into a different agent called Remy. Then I swap out Otto's course knowledge for a different team's onboarding files. Then I deploy it and we watch it answer in a Teams chat. Move three has a deploy step that takes a few minutes, so I ran that part last night and I'll be honest about it when we get there. Everything else is happening right now.</aside>
+  </section>
+
+  <!-- SLIDE 7: Point it at your world -->
+  <section class="slide" data-title="Your world">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · Make it yours</span></div><div>07</div></div>
+    <div class="slide-inner">
+      <div class="two">
+        <div>
+          <div class="eyebrow">The same shell, your room</div>
+          <h2>Swap the knowledge, <span style="color:var(--teal-2);">get your agent.</span></h2>
+          <p class="lead">Remy knows Northwind onboarding for one reason: I dropped three markdown files in. That's the only thing that changed. Point the same repo at your onboarding guide, your partner FAQ, last quarter's playbooks, the questions you are tired of answering twice. The agent learns your room instead of mine.</p>
+        </div>
+        <div>
+          <div class="term">
+            <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="ttl">src/knowledge · the swap</span></div>
+            <div class="term-body"><span class="cmt"># Otto's knowledge, removed</span>
+<span class="arr">−</span> operator-hour-context.md, course FAQ
+<span class="cmt"># your team's knowledge, dropped in</span>
+<span class="ok">+</span> onboarding-faq.md
+<span class="ok">+</span> team-handbook.md
+<span class="ok">+</span> first-week-checklist.md
+<span class="cmt"># same code, same deploy</span>
+<span class="ok">✓</span> A new agent that knows <span class="h">your</span> world.
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>7</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: This is the "so what for me" slide. Get them picturing their own folder of stuff. Read the swap on the right top to bottom. The takeaway: you never touch code, you change the markdown. 60 seconds.
+
+SAY: Here's why this matters for you and not just for me. Remy only knows Northwind onboarding because I deleted Otto's course files and dropped three of my own in. That's the entire difference between the two agents.
+
+So think about what your team keeps re-explaining. The onboarding guide. The partner FAQ. The playbook nobody can find. The question you have answered out loud forty times. That folder is your agent's brain.
+
+You don't touch the code. You change the markdown. Same shell, same deploy, and now it answers for your room instead of mine.</aside>
+  </section>
+
+  <!-- SLIDE 8: What's real, what I prepped -->
+  <section class="slide" data-title="What's real">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · Keep it honest</span></div><div>08</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The seams, on purpose</div>
+      <h1>What's real, <span class="accent">what I prepped.</span></h1>
+      <p class="lead">A live build only earns trust if you're straight about the seams. Three things, said plainly.</p>
+      <ul class="qs" style="margin-top:22px;">
+        <li><span class="n">1</span><span><strong style="color:var(--ink);">The fork and the swap were live.</strong> The persona and the knowledge, just now, in front of you. Plain markdown, nothing hidden.</span></li>
+        <li><span class="n">2</span><span><strong style="color:var(--ink);">The deploy was real, run last night.</strong> azd up takes minutes and sometimes argues. I won't gamble a cloud deploy on stage, and neither should you.</span></li>
+        <li><span class="n">3</span><span><strong style="color:var(--ink);">What it says is on you.</strong> The agent answers from your files. Wrong file, wrong answer. You own the knowledge, so keep it true.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><div class="count">Slide <span>8</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: The honesty slide, same trust role as E4 and E5's three rules. Read all three slowly. Rule 2 is the one that keeps people from humiliating themselves in a real demo, lean on it. 60 seconds.
+
+SAY: Three honest things before we wrap the build. One, the fork and the knowledge swap happened live, right here. No smoke. Plain markdown files.
+
+Two, the deploy was real but I ran it last night. azd up takes a few minutes and occasionally picks a fight with you over quota or auth. I will not gamble a cloud deploy in front of a room, and when you do this for your team, don't either. Build ahead, demo the result.
+
+Three, and this is the one that matters most once it's running. The agent answers from your files. If the file is wrong, the answer is wrong, in front of your whole team. You own the knowledge. Keep it true, and check it the way you'd check anything going out with your name on it.</aside>
+  </section>
+
+  <!-- SLIDE 9: The kit -->
+  <section class="slide" data-title="The kit">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · Take it home</span></div><div>09</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Take it home</div>
+      <h1>The repo. <span class="accent">Yours to fork.</span></h1>
+      <div class="takehome">
+        <div class="tag">▸ Clone, swap, deploy</div>
+        <h2>Everything behind Otto and Remy is one repo. Fork it, drop in your team's markdown, ship it.</h2>
+        <p>The <a href="https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e6/kit.html" target="_blank" rel="noopener" style="color:var(--teal);">Finale Kit link is in the chat</a>. It has the repo, the three-ingredient recipe, the persona and knowledge files to copy, and the publish paths: <a href="https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e6/kit.html" target="_blank" rel="noopener" style="color:var(--teal);">Teams, Copilot Studio, or M365 agents</a>. Clone Otto once, point it at your world, and your team has a sidekick by Friday.</p>
+        <p style="font-size:14px;color:var(--ink-2);margin-top:14px;">Everything from the season lives at <a href="https://jw-sthlm.github.io/cli-intro-share/" target="_blank" rel="noopener" style="color:var(--teal);">jw-sthlm.github.io/cli-intro-share</a>. The course, all six episodes, every prompt and skill. Bookmark it.</p>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>9</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Point at the kit as the one thing to grab. Drop the link in the chat now. The headline is the repo: it's public, it's the real thing Otto runs on, fork it. 45 seconds.
+
+COPY: Finale Kit + the Otto repo: https://jw-sthlm.github.io/cli-intro-share/operator-hour/s1e6/kit.html
+
+SAY: One thing to grab today, the Finale Kit. It's got the repo link, the recipe, and the exact persona and knowledge files you just watched me swap. Clone Otto, swap the markdown for your team's stuff, deploy. The kit also lays out the three ways to publish: Teams like I did, or Copilot Studio and M365 agents if you'd rather never see a terminal. Same recipe, your pick of door.</aside>
+  </section>
+
+  <!-- SLIDE 10: AMA -->
+  <section class="slide" data-title="AMA with Otto">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · AMA</span></div><div>10</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Ask anything · 10 min · Otto's last stand</div>
+      <h1>Otto is here <span class="purple">one last time.</span></h1>
+      <p class="lead">Drop questions in chat. Otto answers what it can, I take the rest. Want to build your own agent and not sure where to start, what to put in the knowledge, or which publish path fits your team? Now's the moment. After today, the next agent in the chat is one you built.</p>
+      <div class="otto-card" style="margin-top:30px;">
+        <div class="otto-av">@</div>
+        <div>
+          <div class="name">Otto</div>
+          <div class="role">AI-first sidekick · in this chat all season</div>
+          <div class="desc">Knows the whole season, the recipe, and how it was built. Ask it how to start your own. Whatever it can't answer, it logs, and that becomes a kit update.</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>10</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Open the floor, ten minutes, the longest AMA of the season because it's the finale. Let Otto take the first one or two in chat, read aloud, correct if needed. Steer questions toward "how do I build my own" since that's the takeaway. If it's quiet, seed one.
+
+COPY: Otto, I want to build an agent for my team. What do I put in the knowledge folder first?
+
+SAY: Ten minutes, Otto's last stand. It's in the chat and it knows the whole season and how it was built. Ask it anything, especially how to start your own. The best question today isn't about Otto, it's about the agent you're going to build. After this, the next sidekick in a chat like this is yours, not mine.</aside>
+  </section>
+
+  <!-- SLIDE 11: Next -->
+  <section class="slide" data-title="What's next">
+    <div class="top"><div class="left"><span class="dot"></span><span>S1E6 · Season 2 is yours</span></div><div>11</div></div>
+    <div class="slide-inner">
+      <div class="eyebrow">Season 1 ends here · Season 2 is whoever forks it</div>
+      <h1>Now go run <span class="purple">your own room.</span></h1>
+      <div class="next">
+        <span class="when">This week</span>
+        <span class="arrow">→</span>
+        <span style="font-size:17px;color:var(--ink-2);">Fork the repo. Drop in one folder of your team's stuff. Stand up one agent.</span>
+      </div>
+      <div class="refrain">
+        Still not a developer.
+        <span class="small">I built the sidekick that ran the season, and now the repo is yours.</span>
+      </div>
+    </div>
+    <div class="foot"><div class="count">Slide <span>11</span> / 12</div><div class="keys"><span class="k">←</span><span class="k">→</span></div></div>
+    <div class="progress"><div class="bar"></div></div>
+    <aside class="notes">DO: Close the season. Land the refrain, hold the smile. Thank the room for six weeks. Mention the recap and recording land on the same page tonight, and the Finale Kit stays up. Make the ask concrete: fork it this week, one agent, one team. 60 seconds.
+
+SAY: That's Season 1. Six weeks, from never having opened a terminal to building an agent that runs in a Teams chat. Thank you for showing up every Tuesday.
+
+Here's the only homework, and it's the whole point of the season. This week, fork the repo. Pick one folder of stuff your team keeps re-explaining. Stand up one agent. You don't have to deploy it to the world, just get one working for one team.
+
+Season 2 isn't a thing I host. It's whoever in this room forks this and teaches their own. Still not a developer. I built the sidekick that ran the season, and now the repo is yours.</aside>
+  </section>
+
+</div>
+
+<!-- Embedded terminal demo · transparent iframe in a borderless dialog -->
+<dialog class="td-dialog" id="tdDialog">
+  <iframe id="tdFrame" title="Terminal demo" data-src="terminal-demo.html?embed=1" data-td-embed></iframe>
+</dialog>
+
+<!-- ============= PRESENTER VIEW ============= -->
+<div class="pres-root">
+  <div class="pres-left">
+    <div class="pres-thumb"><iframe id="presIframe"></iframe></div>
+    <div class="pres-status">
+      <div>Now: <span class="now" id="presNow">1 / 13</span> · <span id="presTitle">Title</span></div>
+      <div class="clk" id="presClock">00:00</div>
+    </div>
+  </div>
+  <div class="pres-split" id="presSplit" title="Drag to resize"></div>
+  <div class="pres-right">
+    <div class="pres-block">
+      <h4>Current</h4>
+      <h3 id="curTitle">Title</h3>
+      <div id="curDo" class="pres-do" style="display:none;"></div>
+      <div id="curCopy" class="pres-copy" style="display:none;"></div>
+      <div id="curSay" class="pres-say"></div>
+    </div>
+    <div class="pres-block pres-next">
+      <h4>Next up</h4>
+      <div class="pres-thumb-next"><iframe id="presIframeNext"></iframe></div>
+      <h3 id="nxtTitle">...</h3>
+      <div id="nxtDo" class="pres-do" style="display:none;"></div>
+      <div id="nxtSay" class="pres-say"></div>
+    </div>
+    <div class="pres-controls">
+      <button onclick="postNav('prev')">← Prev</button>
+      <button onclick="postNav('next')">Next →</button>
+    </div>
+  </div>
+
+  <!-- Terminal-demo presenter takeover (shown only while the demo is live) -->
+  <div id="tdTakeover">
+    <div class="tdt-top">
+      <span class="tdt-step" id="tdtStep"></span>
+      <span class="tdt-est" id="tdtEst"></span>
+      <span class="tdt-title" id="tdtTitle"></span>
+      <span class="tdt-phase" id="tdtPhase"></span>
+    </div>
+    <div class="tdt-ask" id="tdtAskWrap"><span class="lbl">Prompt to send</span><span id="tdtAsk"></span></div>
+    <div class="tdt-say" id="tdtSay"></div>
+    <div class="tdt-rail" id="tdtRail"></div>
+    <div class="tdt-hint"><kbd>space</kbd> advance · <kbd>←</kbd> back · each move is armed → typed → fired · the terminal closes itself at the end</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const isPresenter = params.get('presenter') === 'notes';
+  const isThumb = params.get('presenter') === 'thumb';
+  const channelName = 'operator-hour-s1e6';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+
+  // Renumber foot counts and numeric top-right markers from DOM order, so a
+  // slide can be added or removed without hand-editing every "/ N" string.
+  slides.forEach((s, k) => {
+    const count = s.querySelector('.foot .count');
+    if (count) count.innerHTML = 'Slide <span>' + (k + 1) + '</span> / ' + total;
+    const topRight = s.querySelector('.top > div:last-child');
+    if (topRight && /^\d+$/.test(topRight.textContent.trim())) {
+      topRight.textContent = String(k + 1).padStart(2, '0');
+    }
+  });
+  // Which slide hosts the embedded terminal demo (data-demo on the section).
+  const DEMO_IDX = slides.findIndex(s => s.dataset.demo);
+  const DEMO_ID = DEMO_IDX >= 0 ? slides[DEMO_IDX].dataset.demo : null;
+
+  function show(i, silent){
+    idx = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('active', k === idx));
+    const pct = ((idx + 1) / total) * 100;
+    document.querySelectorAll('.progress .bar').forEach(b => b.style.width = pct + '%');
+    if (silent) return;
+    try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+    try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+  }
+
+  // BroadcastChannel sync
+  let bc = null;
+  try { bc = new BroadcastChannel(channelName); } catch(e){}
+
+  // Thumb iframe mode: render the slide for this channel (cur or nxt), listen silently.
+  if (isThumb) {
+    const ch = params.get('ch') || 'cur';
+    const key = channelName + ':thumb:' + ch;
+    document.body.style.background = '#fff';
+    document.querySelector('.stage').style.padding = '6px';
+    let tbc = null;
+    try { tbc = new BroadcastChannel(key); } catch(e){}
+    if (tbc) tbc.onmessage = (e) => { if (e.data && typeof e.data.idx === 'number') show(e.data.idx, true); };
+    window.addEventListener('storage', (e) => {
+      if (e.key === key && e.newValue) {
+        try { show(JSON.parse(e.newValue).idx, true); } catch(_){}
+      }
+    });
+    try { const v = localStorage.getItem(key); if (v) show(JSON.parse(v).idx, true); else show(0, true); } catch(_){ show(0, true); }
+    return;
+  }
+
+  // Presenter mode
+  if (isPresenter) {
+    document.body.classList.add('presenter');
+    document.title = 'Notes · Operator Hour · S1E6';
+    // Thumbnail channels: current slide and next slide
+    let thumbBcCur = null, thumbBcNxt = null;
+    try { thumbBcCur = new BroadcastChannel(channelName + ':thumb:cur'); } catch(e){}
+    try { thumbBcNxt = new BroadcastChannel(channelName + ':thumb:nxt'); } catch(e){}
+    function pushThumbs(i){
+      const cur = i, nxt = Math.min(total - 1, i + 1);
+      try { thumbBcCur && thumbBcCur.postMessage({ idx: cur }); } catch(e){}
+      try { thumbBcNxt && thumbBcNxt.postMessage({ idx: nxt }); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:cur', JSON.stringify({ idx: cur, t: Date.now() })); } catch(e){}
+      try { localStorage.setItem(channelName + ':thumb:nxt', JSON.stringify({ idx: nxt, t: Date.now() })); } catch(e){}
+    }
+
+    // Load the thumbnail iframes inside the notes window
+    const ifr = document.getElementById('presIframe');
+    const ifrNext = document.getElementById('presIframeNext');
+    if (ifr && !ifr.src) ifr.src = '?presenter=thumb&ch=cur';
+    if (ifrNext && !ifrNext.src) ifrNext.src = '?presenter=thumb&ch=nxt';
+
+    // Scale thumbnail iframes to fit their containers while preserving 16:9
+    const THUMB_W = 1600, THUMB_H = 900;
+    function scaleOne(wrap, frame){
+      if (!wrap || !frame) return;
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (w <= 0 || h <= 0) return;
+      const s = Math.min(w / THUMB_W, h / THUMB_H);
+      frame.style.transform = 'scale(' + s + ')';
+      frame.style.left = Math.round((w - THUMB_W * s) / 2) + 'px';
+      frame.style.top  = Math.round((h - THUMB_H * s) / 2) + 'px';
+    }
+    function scaleThumb(){
+      scaleOne(document.querySelector('.pres-thumb'), ifr);
+      scaleOne(document.querySelector('.pres-thumb-next'), ifrNext);
+    }
+    window.addEventListener('resize', scaleThumb);
+    if (window.ResizeObserver){
+      const ro = new ResizeObserver(scaleThumb);
+      const tn = document.querySelector('.pres-thumb');
+      const tx = document.querySelector('.pres-thumb-next');
+      if (tn) ro.observe(tn);
+      if (tx) ro.observe(tx);
+    }
+    if (ifr) ifr.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
+    if (ifrNext) ifrNext.addEventListener('load', () => { scaleThumb(); pushThumbs(idx); });
+    setTimeout(scaleThumb, 50);
+    setTimeout(scaleThumb, 400);
+
+    const titles = slides.map(s => s.dataset.title || '');
+    const rawNotes = slides.map(s => {
+      const n = s.querySelector('.notes');
+      return n ? n.textContent.trim() : '';
+    });
+
+    function parseNotes(raw){
+      const copies = [];
+      raw = raw.replace(/^[ \t]*COPY:[ \t]*(.+)$/gim, function(_, txt){ copies.push(txt.trim()); return ''; });
+      raw = raw.replace(/\n{3,}/g, '\n\n').trim();
+      let doText = '', sayText = raw;
+      const m = raw.match(/^DO:\s*([\s\S]*?)\s*SAY:\s*/i);
+      if (m){ doText = m[1].trim(); sayText = raw.substring(m[0].length).trim(); }
+      else { const sm = raw.match(/^SAY:\s*/i); if (sm) sayText = raw.substring(sm[0].length).trim(); }
+      return { doText, sayText, copies };
+    }
+
+    function copyText(text, btn){
+      function flash(ok){
+        if (!btn) return;
+        const orig = btn.textContent;
+        btn.textContent = ok ? 'Copied' : 'Ctrl+C';
+        btn.classList.toggle('ok', ok);
+        setTimeout(function(){ btn.textContent = orig; btn.classList.remove('ok'); }, 1400);
+      }
+      function fallback(){
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta); flash(ok);
+        } catch(e){ flash(false); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ flash(true); }, fallback);
+      } else { fallback(); }
+    }
+
+    function renderCopies(list){
+      const box = document.getElementById('curCopy');
+      if (!box) return;
+      box.innerHTML = '';
+      if (!list || !list.length){ box.style.display = 'none'; return; }
+      box.style.display = '';
+      const label = document.createElement('div');
+      label.className = 'pc-label';
+      label.textContent = list.length > 1 ? 'Paste · ' + list.length : 'Paste';
+      box.appendChild(label);
+      list.forEach(function(text){
+        const chip = document.createElement('div');
+        chip.className = 'copy-chip';
+        const code = document.createElement('span');
+        code.className = 'cc-text'; code.textContent = text;
+        const btn = document.createElement('button');
+        btn.className = 'cc-btn'; btn.type = 'button'; btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){ copyText(text, btn); });
+        chip.appendChild(code); chip.appendChild(btn);
+        box.appendChild(chip);
+      });
+    }
+
+    function setBlock(prefix, i){
+      const t = titles[i] || '';
+      const { doText, sayText, copies } = parseNotes(rawNotes[i] || '');
+      document.getElementById(prefix + 'Title').textContent = t;
+      const doEl = document.getElementById(prefix + 'Do');
+      const sayEl = document.getElementById(prefix + 'Say');
+      if (doText){ doEl.textContent = doText; doEl.style.display = ''; } else { doEl.style.display = 'none'; }
+      sayEl.textContent = sayText || '';
+      if (prefix === 'cur') renderCopies(copies);
+    }
+
+    function render(i){
+      idx = i;
+      document.getElementById('presNow').textContent = (i + 1) + ' / ' + total;
+      document.getElementById('presTitle').textContent = titles[i] || '';
+      setBlock('cur', i);
+      const nx = i + 1 < total ? i + 1 : null;
+      if (nx !== null){
+        setBlock('nxt', nx);
+      } else {
+        document.getElementById('nxtTitle').textContent = 'End of deck';
+        document.getElementById('nxtDo').style.display = 'none';
+        document.getElementById('nxtSay').textContent = '';
+      }
+      pushThumbs(i);
+      scaleThumb();
+    }
+
+    let navSeq = 0;
+    function postNav(action){
+      // The deck window owns navigation (including the embedded-demo trap).
+      // Send the intent over both transports, each tagged with a unique id so
+      // the deck processes it once even though it arrives twice.
+      const id = (++navSeq) + '.' + Date.now();
+      try { bc && bc.postMessage({ type: 'nav', action, id }); } catch(e){}
+      try { localStorage.setItem(channelName + ':nav', JSON.stringify({ action, id, t: Date.now() })); } catch(e){}
+    }
+    window.postNav = postNav;
+
+    // ----- terminal-demo presenter takeover -----
+    const tdTakeover = document.getElementById('tdTakeover');
+    function tdEsc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    let tdActiveId = null, tdLatestPv = null;
+    function tdRenderPanel(pv){
+      if (!pv) return;
+      document.getElementById('tdtStep').textContent  = pv.step || '';
+      document.getElementById('tdtEst').textContent   = pv.est ? '\u00b7 ' + pv.est : '';
+      document.getElementById('tdtTitle').textContent = pv.title || '';
+      const ph = document.getElementById('tdtPhase');
+      ph.className = 'tdt-phase' + (pv.phase ? ' ' + pv.phase : '');
+      ph.textContent = pv.phase === 'arm' ? 'Armed \u00b7 next click types'
+        : pv.phase === 'typed' ? 'Typed \u00b7 next click fires'
+        : pv.phase === 'fire' ? 'Live \u00b7 animation' : '';
+      const askWrap = document.getElementById('tdtAskWrap');
+      if (pv.ask){ askWrap.style.display = ''; document.getElementById('tdtAsk').textContent = pv.ask; }
+      else askWrap.style.display = 'none';
+      const paras = (pv.say || '').split(/\n\n+/);
+      const ai = pv.phase === 'arm' ? 0 : pv.phase === 'typed' ? 1 : pv.phase === 'fire' ? 2 : -1;
+      document.getElementById('tdtSay').innerHTML = paras.map((p, i) =>
+        '<p class="' + (i === ai && pv.phase ? 'active ' + pv.phase : '') + '">' + tdEsc(p) + '</p>').join('');
+      const rail = document.getElementById('tdtRail'); rail.innerHTML = '';
+      (pv.rail || []).forEach(r => {
+        const s = document.createElement('span');
+        s.className = 'pvr' + (r.state === 'done' ? ' done' : r.state === 'now' ? ' now' : '');
+        s.textContent = r.label; rail.appendChild(s);
+      });
+    }
+    function tdSetActive(id){
+      tdActiveId = id || null;
+      if (tdTakeover) tdTakeover.classList.toggle('active', !!tdActiveId);
+      if (tdActiveId && tdLatestPv) tdRenderPanel(tdLatestPv);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); postNav('next'); }
+      else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); postNav('prev'); }
+      else if (e.key === 'Home') { postNav('first'); }
+      else if (e.key === 'End') { postNav('last'); }
+    });
+
+    // Clock
+    const startT = Date.now();
+    function updClock(){
+      const s = Math.floor((Date.now() - startT) / 1000);
+      const mm = String(Math.floor(s / 60)).padStart(2, '0');
+      const ss = String(s % 60).padStart(2, '0');
+      document.getElementById('presClock').textContent = mm + ':' + ss;
+    }
+    setInterval(updClock, 1000);
+
+    // Receive state + terminal-demo relays from the deck
+    if (bc) bc.onmessage = (e) => {
+      const d = e.data; if (!d) return;
+      if (d.type === 'state') { render(d.idx); return; }
+      if (d.type === 'td-active') { tdSetActive(d.demoId); return; }
+      if (d.type === 'td-pv') { tdLatestPv = d.pv; if (d.demoId === tdActiveId) tdRenderPanel(d.pv); return; }
+    };
+    window.addEventListener('storage', (e) => {
+      if (e.key === channelName + ':state' && e.newValue) {
+        try { render(JSON.parse(e.newValue).idx); } catch(_){}
+      }
+    });
+
+    // Resizable split between preview and notes (drag the divider)
+    (function(){
+      const root = document.querySelector('.pres-root');
+      const sp = document.getElementById('presSplit');
+      if (!root || !sp) return;
+      try { const sv = localStorage.getItem(channelName + ':split'); if (sv) root.style.setProperty('--pres-left-w', sv); } catch(e){}
+      let dragging = false;
+      sp.addEventListener('pointerdown', (e) => {
+        dragging = true; sp.classList.add('dragging');
+        try { sp.setPointerCapture(e.pointerId); } catch(_){}
+        e.preventDefault();
+      });
+      sp.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const r = root.getBoundingClientRect();
+        let pct = ((e.clientX - r.left) / r.width) * 100;
+        pct = Math.max(25, Math.min(75, pct));
+        root.style.setProperty('--pres-left-w', pct.toFixed(1) + '%');
+        scaleThumb();
+      });
+      function end(){
+        if (!dragging) return;
+        dragging = false; sp.classList.remove('dragging');
+        try { localStorage.setItem(channelName + ':split', root.style.getPropertyValue('--pres-left-w')); } catch(e){}
+        scaleThumb();
+      }
+      sp.addEventListener('pointerup', end);
+      sp.addEventListener('pointercancel', end);
+    })();
+
+    render(0);
+    return;
+  }
+
+  // ===================== Deck mode =====================
+  // The deck window owns ALL navigation, including the embedded terminal demo
+  // on DEMO_IDX. Both the deck's own keys and the presenter's nav intents funnel
+  // through navNext / navPrev so the demo trap behaves identically either way.
+  const tdDialog = document.getElementById('tdDialog');
+  const tdFrame  = document.getElementById('tdFrame');
+  let demoOpen = false;
+  // Load the demo iframe only in deck mode (never in thumb/presenter), so the
+  // presenter thumbnails don't each spin up their own terminal-demo copy.
+  if (tdFrame && tdFrame.dataset.src && !tdFrame.src) tdFrame.src = tdFrame.dataset.src;
+
+  function frameCmd(msg){ try { tdFrame && tdFrame.contentWindow.postMessage(msg, '*'); } catch(e){} }
+
+  function openDemo(){
+    if (demoOpen || !tdDialog) return;
+    demoOpen = true;
+    try { tdDialog.showModal(); } catch(_){ tdDialog.setAttribute('open',''); }
+    frameCmd({ type:'cmd', action:'reset' });   // fresh start + replay the slide-in
+    try { tdFrame.contentWindow.focus(); } catch(_){}
+    try { bc && bc.postMessage({ type:'td-active', demoId: DEMO_ID }); } catch(e){}
+  }
+  function closeDemo(){
+    if (!demoOpen) return;
+    demoOpen = false;
+    try { tdDialog.close(); } catch(_){ tdDialog.removeAttribute('open'); }
+    try { bc && bc.postMessage({ type:'td-active', demoId: null }); } catch(e){}
+    try { window.focus(); } catch(_){}
+  }
+
+  function navNext(){
+    if (idx === DEMO_IDX){
+      if (!demoOpen){ openDemo(); return; }   // first advance opens the terminal
+      frameCmd({ type:'cmd', action:'advance' }); // engine signals 'done' at the end
+      return;
+    }
+    show(idx + 1);
+  }
+  function navPrev(){
+    if (demoOpen){ frameCmd({ type:'cmd', action:'back' }); return; }
+    show(idx - 1);
+  }
+  function navTo(i){ if (demoOpen) closeDemo(); show(i); }
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); navNext(); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); navPrev(); }
+    else if (e.key === 'Home') { e.preventDefault(); navTo(0); }
+    else if (e.key === 'End') { e.preventDefault(); navTo(total - 1); }
+    else if (e.key === 'p' || e.key === 'P') { openPresenter(); }
+  });
+
+  // Messages from the embedded demo iframe: relay presenter payloads, react to
+  // end-of-demo and escape. 'done' carries dir so we move the deck the right way.
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || d.src !== 'terminal-demo') return;
+    if (d.evt === 'done'){
+      const back = d.dir === 'back';
+      closeDemo();
+      show(back ? Math.max(0, idx - 1) : Math.min(total - 1, idx + 1));
+      return;
+    }
+    if (d.evt === 'escape'){ closeDemo(); return; }
+    if (d.msg && demoOpen){
+      // mirror the engine's presenter payload to the deck's presenter window
+      if (d.msg.type === 'pv'){
+        try { bc && bc.postMessage({ type:'td-pv', demoId: d.demoId, pv: d.msg.pv }); } catch(_){}
+      }
+    }
+  });
+
+  function openPresenter(){
+    const url = location.pathname + '?presenter=notes' + location.hash;
+    const w = window.open(url, 'op-hour-presenter',
+      'popup=yes,resizable=yes,scrollbars=yes,width=1280,height=820,menubar=0,toolbar=0,location=0,status=0');
+    if (!w) {
+      document.getElementById('popup-blocked').style.display = 'block';
+      setTimeout(() => { document.getElementById('popup-blocked').style.display = 'none'; }, 5000);
+      return;
+    }
+    // Send current state (and demo-active, if mid-demo) once the notes window subscribes
+    setTimeout(() => {
+      try { bc && bc.postMessage({ type: 'state', idx }); } catch(e){}
+      try { localStorage.setItem(channelName + ':state', JSON.stringify({ idx, t: Date.now() })); } catch(e){}
+      if (demoOpen) { try { bc && bc.postMessage({ type:'td-active', demoId: DEMO_ID }); } catch(e){} }
+    }, 600);
+  }
+
+  // Deck mode receives nav INTENTS from the presenter window and owns the result.
+  // Each intent arrives over BOTH BroadcastChannel and localStorage, so dedup by
+  // id to avoid processing (and double-advancing) the same keypress twice.
+  let lastNavId = null;
+  function handleNavIntent(action, id){
+    if (id && id === lastNavId) return;
+    lastNavId = id || null;
+    if (action === 'next') navNext();
+    else if (action === 'prev') navPrev();
+    else if (action === 'first') navTo(0);
+    else if (action === 'last') navTo(total - 1);
+  }
+  if (bc) bc.onmessage = (e) => {
+    const d = e.data; if (!d) return;
+    if (d.type === 'nav'){ handleNavIntent(d.action, d.id); }
+  };
+  window.addEventListener('storage', (e) => {
+    if (e.key === channelName + ':nav' && e.newValue) {
+      try { const v = JSON.parse(e.newValue); handleNavIntent(v.action, v.id); } catch(_){}
+    }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
