@@ -462,7 +462,7 @@ window.DEMO_SPEC = {
     bootLines: [
       "Loaded env: .github/copilot-instructions.md",
       "Loaded context: agent-otto/ \u00b7 the bot in our chat all season",
-      "Tooling ready: azd \u00b7 Teams app sideload"
+      "Tooling ready: one-step deploy \u00b7 Teams app"
     ]
   },
   launchSlide: {
@@ -536,12 +536,12 @@ window.DEMO_SPEC = {
         }}
       ]},
     { title:"Deploy it, then test in Teams", est:"~ran last night",
-      ask:"Ship it. Run azd up to deploy Remy to Azure, then I'll sideload it into a Teams chat and ask it something.",
+      ask:"Ship it. Deploy Remy to Azure, then I'll add it to a Teams chat and ask it something.",
       lines:[
         {k:"mode", t:"Autopilot"},
-        {k:"tool", tag:"deploy", t:"azd up \u00b7 provision + container build (this takes minutes, so I ran it before the session)"},
+        {k:"tool", tag:"deploy", t:"deploy \u00b7 provisions Azure and builds the container (this takes minutes, so I ran it before the session)"},
         {k:"res",  t:"deployed \u00b7 https://remy.<app>.azurecontainerapps.io/api/messages"},
-        {k:"tool", tag:"teams", t:"sideloaded the app into the Northwind test chat"},
+        {k:"tool", tag:"teams", t:"added the app to the Northwind test chat"},
         {k:"tool", tag:"open",  t:"teams \u00b7 opening the chat"},
         {k:"card", kind:"doc", frame:"browser", data:{
           url:"https://teams.microsoft.com/chat/northwind-onboarding",
@@ -564,13 +564,13 @@ window.DEMO_SPEC = {
     { step:"Terminal", est:"", title:"Otto's repo, nothing else", ask:null,
       say:"Terminal over the slide. The only context here is agent-otto, the bot that's been in our chat for six weeks. That's the starting point. We're going to clone it and bend it into something new, live." },
     { step:"Boot", est:"", title:"copilot --allow-all", ask:"copilot --allow-all",
-      say:"Boot it like every other week. Same CLI you've watched all season. Point at the context line: it can see Otto's repo, and azd is wired up for the deploy.\n\nCommand's typed, nothing sent yet. One beat. Nothing exotic here, this is the same shell from episode one.\n\nFire it. Now move one, forking Otto." },
+      say:"Boot it like every other week. Same CLI you've watched all season. Point at the context line: it can see Otto's repo, and the deploy is wired up.\n\nCommand's typed, nothing sent yet. One beat. Nothing exotic here, this is the same shell from episode one.\n\nFire it. Now move one, forking Otto." },
     { step:"Move 1", est:"~40 s", title:"Fork Otto, make it Remy", ask:null,
       say:"Here's the reveal, and it's a quiet one. Otto is just a folder. I ask it to clone agent-otto into agent-remy and rewrite the persona.\n\nThe prompt is plain English: keep the same shape, but make it an onboarding helper for a made-up team, Northwind Partners. Not a course bot anymore.\n\nAnd there's the persona. One markdown file. That is the entire personality of the thing that's been answering you all season. Same voice rules, different job. Let the room sit with how small that file is." },
     { step:"Move 2", est:"~40 s", title:"Drop in the team's knowledge", ask:null,
       say:"Now the part that matters most for your team. The knowledge. I delete Otto's course files and drop in Northwind's onboarding stuff instead.\n\nAn FAQ, a handbook, a first-week checklist. Plain markdown. No code. This is your team's brain, the questions you answer twice a week, written down once.\n\nThree files, and Remy now knows a completely different world. That's the whole trick. Swap the markdown, get a different agent. Point this at your onboarding, your partner FAQ, whatever you keep re-explaining." },
     { step:"Move 3", est:"deployed earlier", title:"Deploy, then test in Teams", ask:null,
-      say:"Last move. Ship it. I ask it to run azd up, which provisions Azure and pushes the container.\n\nBe honest here: that step takes a few minutes and occasionally argues with you. So I ran it last night. I'm not going to gamble a live deploy in front of you. What you're seeing is the real result.\n\nAnd here it is in Teams. I ask Remy where the brand kit lives. It answers, straight from the handbook file I dropped in two minutes ago. A second agent, a different team, built from the same repo. Live, not faked." },
+      say:"Last move. Ship it. I ask it to deploy, which provisions Azure and pushes the container.\n\nBe honest here: that step takes a few minutes and occasionally argues with you. So I ran it last night. I'm not going to gamble a live deploy in front of you. What you're seeing is the real result.\n\nAnd here it is in Teams. I ask Remy where the brand kit lives. It answers, straight from the handbook file I dropped in two minutes ago. A second agent, a different team, built from the same repo. Live, not faked." },
     { step:"Switch", est:"", title:"Back to the deck", ask:null,
       say:"That's a fork, a persona, a knowledge swap, and a deploy. Built tonight from the bot you've used all season. One more press closes back to the deck. The point to land: nothing here needed an engineer. It needed a repo and an afternoon." },
     { step:"Ping", est:"", title:"It keeps working", ask:null,
