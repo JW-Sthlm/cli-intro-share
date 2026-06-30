@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Operator Lab · pick a job, try every surface</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0D1117; --bg-2:#010409; --panel:#161B22; --border:#30363D; --text:#E6EDF3; --muted:#A6B0BC; --purple:#8957E5; --green:#3FB950; --amber:#D29922; --pink:#F778BA; --teal:#39D2C0; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Mona Sans',system-ui,sans-serif;background:var(--bg-2);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:860px;margin:0 auto;padding:56px 24px 96px;}
+  .crumb{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin:0 0 24px;letter-spacing:.04em;}
+  .crumb a{color:var(--muted);text-decoration:none;}
+  .crumb a:hover{color:var(--teal);}
+  .tag{display:inline-block;background:rgba(57,210,192,.1);color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(57,210,192,.3);}
+  h1{font-size:46px;font-weight:900;letter-spacing:-.03em;margin:0 0 10px;line-height:1.04;}
+  h1 .accent{color:var(--teal);}
+  .sub{color:var(--muted);font-size:18px;margin:0 0 36px;max-width:60ch;line-height:1.55;}
+  .sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:44px 0 6px;}
+  .sec-lead{color:var(--muted);font-size:14.5px;margin:0 0 18px;line-height:1.6;max-width:64ch;}
+  h2{font-size:25px;font-weight:800;letter-spacing:-.02em;margin:4px 0 10px;}
+
+  /* compass */
+  .rungs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px;}
+  @media(max-width:680px){.rungs{grid-template-columns:1fr;}}
+  .rung-pill{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .rung-pill .n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px;}
+  .rung-pill strong{display:block;font-size:15px;color:var(--text);margin-bottom:3px;}
+  .rung-pill span{font-size:12.5px;color:var(--muted);line-height:1.45;}
+  .rung-pill .surf{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;display:block;}
+  .rung-pill .surf b{color:var(--text);font-weight:600;}
+
+  /* venn */
+  .venn-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 18px 6px;margin:8px 0 8px;}
+  .venn-card svg{width:100%;height:auto;display:block;max-width:560px;margin:0 auto;}
+  .venn-note{font-size:13px;color:var(--muted);text-align:center;margin:2px 0 12px;line-height:1.5;}
+
+  /* surfaces */
+  .surfaces{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px;}
+  @media(max-width:680px){.surfaces{grid-template-columns:1fr;}}
+  .surface{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;}
+  .surface .band{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;display:inline-block;padding:2px 7px;border-radius:4px;margin-bottom:8px;}
+  .band.ask{color:var(--teal);background:rgba(57,210,192,.1);border:1px solid rgba(57,210,192,.25);}
+  .band.hand{color:var(--purple);background:rgba(137,87,229,.12);border:1px solid rgba(137,87,229,.3);}
+  .band.leave{color:var(--amber);background:rgba(210,153,34,.12);border:1px solid rgba(210,153,34,.3);}
+  .surface h3{font-size:17px;font-weight:800;margin:0 0 5px;}
+  .surface p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;}
+  .surface .opt{position:absolute;top:16px;right:16px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--amber);background:rgba(210,153,34,.12);border:1px solid rgba(210,153,34,.35);padding:2px 7px;border-radius:4px;}
+  .surface.openclaw-note{grid-column:1/-1;background:linear-gradient(90deg,rgba(210,153,34,.06),transparent);border-left:3px solid var(--amber);}
+  .surface.openclaw-note p{color:#C9D1D9;}
+
+  /* use case picker */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:0 0 12px;}
+  @media(max-width:680px){.cards{grid-template-columns:1fr;}}
+  .uc{display:block;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px 22px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s,box-shadow .2s;}
+  .uc:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .uc .icon{font-size:24px;display:block;margin-bottom:10px;}
+  .uc h3{font-size:17px;font-weight:800;margin:0 0 5px;color:var(--text);}
+  .uc p{font-size:13.5px;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .uc .bands{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+  .uc .bands span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:2px 6px;border-radius:3px;}
+  .b-ask{color:var(--teal);background:rgba(57,210,192,.1);}
+  .b-hand{color:var(--purple);background:rgba(137,87,229,.12);}
+  .b-leave{color:var(--amber);background:rgba(210,153,34,.12);}
+  .uc .status{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;}
+  .uc.live{border-color:rgba(57,210,192,.4);background:linear-gradient(180deg,rgba(57,210,192,.07),rgba(57,210,192,.01));box-shadow:0 0 0 1px rgba(57,210,192,.25),0 0 26px -6px rgba(57,210,192,.4);}
+  .uc.live .status{color:var(--teal);}
+  .uc.soon{opacity:.72;cursor:default;}
+  .uc.soon:hover{transform:none;border-color:var(--border);box-shadow:none;}
+  .uc.soon .status{color:var(--muted);}
+
+  .who{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:0 0 12px;}
+  .who p{margin:0 0 8px;font-size:14px;color:var(--muted);line-height:1.6;}
+  .who .roles{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
+  .who .roles span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);background:var(--bg-2);border:1px solid var(--border);border-radius:5px;padding:4px 9px;}
+
+  .run{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px;}
+  @media(max-width:680px){.run{grid-template-columns:1fr;}}
+  .run .col{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+  .run .col h3{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin:0 0 8px;}
+  .run .col p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.6;}
+
+  .note{background:linear-gradient(180deg,rgba(57,210,192,.08),rgba(57,210,192,.02));border:1px solid rgba(57,210,192,.3);border-left:3px solid var(--teal);border-radius:10px;padding:16px 20px;margin:18px 0;font-size:14.5px;color:#C9D1D9;line-height:1.6;}
+  .note strong{color:var(--teal);}
+  .refrain{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-top:26px;font-style:italic;}
+  .refrain strong{color:var(--text);font-style:normal;}
+  .meta{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:20px;margin-top:30px;}
+  .meta strong{color:var(--text);}
+  hr.div{border:0;border-top:1px solid var(--border);margin:40px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../../">All resources</a> &nbsp;›&nbsp; <a href="../">Operator Hour</a> &nbsp;›&nbsp; The Lab</div>
+  <span class="tag">Prototype · hands-on lab</span>
+  <h1>The Operator <span class="accent">Lab</span></h1>
+  <p class="sub">You have Copilot in five places now. Which one do you open for which job? Pick a real task, run it across more than one surface, and feel the difference yourself. No watching me demo. You do the work, you find your door.</p>
+
+  <div class="note">
+    <strong>This is an early prototype.</strong> One use case is fully built so you can feel the shape. The rest land as the Lab grows, and the surface boundaries will firm up as Microsoft ships and tells us more. Try the live one, then tell me what's off.
+  </div>
+
+  <!-- COMPASS -->
+  <div class="sec-label">First, the compass</div>
+  <h2>How much do you want to be in the room?</h2>
+  <p class="sec-lead">Forget the product names for a second. Every AI surface sits somewhere on one simple question: how much do you stay in the room while it works? That's the whole map.</p>
+  <div class="rungs">
+    <div class="rung-pill">
+      <span class="n">1 · Ask</span>
+      <strong>You drive, you watch</strong>
+      <span>You ask, it answers, you're there the whole time. Quick help while you work.</span>
+      <span class="surf"><b>M365 Copilot</b>, GitHub Copilot App</span>
+    </div>
+    <div class="rung-pill">
+      <span class="n">2 · Hand off</span>
+      <strong>It drives, you check</strong>
+      <span>You brief it once, walk away, come back to work done. Multi-step jobs.</span>
+      <span class="surf"><b>CoWork</b>, Copilot CLI</span>
+    </div>
+    <div class="rung-pill">
+      <span class="n">3 · Leave it running</span>
+      <strong>It watches and acts</strong>
+      <span>It runs without you asking. Recurring triggers and monitoring.</span>
+      <span class="surf"><b>Scout</b></span>
+    </div>
+  </div>
+  <p class="sec-lead">As you move down, you get more power and pay a little more setup. Ask is open already. Leave it running takes more to wire up. That's the trade.</p>
+
+  <!-- VENN -->
+  <div class="sec-label">The honest part: they overlap</div>
+  <h2>Most jobs fit more than one door</h2>
+  <p class="sec-lead">Clean buckets would be a lie. A lot of work can be done in two or three surfaces, just differently. The skill isn't memorizing a grid. It's feeling which door fits the size of the job in front of you.</p>
+  <div class="venn-card">
+    <svg viewBox="0 0 560 380" role="img" aria-label="Venn diagram showing the three bands Ask, Hand off, and Leave it running overlapping, with most everyday jobs sitting in the overlap.">
+      <circle cx="200" cy="160" r="135" fill="rgba(57,210,192,.13)" stroke="rgba(57,210,192,.55)" stroke-width="1.5"/>
+      <circle cx="360" cy="160" r="135" fill="rgba(137,87,229,.13)" stroke="rgba(137,87,229,.55)" stroke-width="1.5"/>
+      <circle cx="280" cy="265" r="135" fill="rgba(210,153,34,.12)" stroke="rgba(210,153,34,.55)" stroke-width="1.5"/>
+      <text x="130" y="105" fill="#39D2C0" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" text-anchor="middle">Ask</text>
+      <text x="430" y="105" fill="#8957E5" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" text-anchor="middle">Hand off</text>
+      <text x="280" y="355" fill="#D29922" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" text-anchor="middle">Leave it running</text>
+      <text x="120" y="160" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">quick draft</text>
+      <text x="120" y="178" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">in-app answer</text>
+      <text x="440" y="160" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">deep research</text>
+      <text x="440" y="178" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">build a file</text>
+      <text x="280" y="310" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">auto-prep</text>
+      <text x="280" y="328" fill="#A6B0BC" font-family="Mona Sans, sans-serif" font-size="12" text-anchor="middle">on a trigger</text>
+      <text x="280" y="172" fill="#E6EDF3" font-family="Mona Sans, sans-serif" font-size="13" font-weight="700" text-anchor="middle">most</text>
+      <text x="280" y="190" fill="#E6EDF3" font-family="Mona Sans, sans-serif" font-size="13" font-weight="700" text-anchor="middle">everyday</text>
+      <text x="280" y="208" fill="#E6EDF3" font-family="Mona Sans, sans-serif" font-size="13" font-weight="700" text-anchor="middle">jobs</text>
+    </svg>
+  </div>
+  <p class="venn-note">Prep for a meeting sits right in the middle. You can Ask it, hand it off, or one day leave it running. The Lab lets you try each.</p>
+
+  <!-- SURFACES -->
+  <div class="sec-label">The five surfaces</div>
+  <h2>Same idea, different settings</h2>
+  <p class="sec-lead">Microsoft ships the same agent idea at different openness settings on purpose. Some are locked and safe, some are open and powerful. Here's the quick read.</p>
+  <div class="surfaces">
+    <div class="surface">
+      <span class="band ask">Ask</span>
+      <h3>M365 Copilot</h3>
+      <p>Inside Word, Teams, Outlook, Excel. Reach for it for fast jobs in an app you already have open. Zero setup.</p>
+    </div>
+    <div class="surface">
+      <span class="band ask">Ask · Hand off</span>
+      <h3>GitHub Copilot App</h3>
+      <p>The same kind of help on desktop and your phone. Good for repo-adjacent work and picking things up on the go.</p>
+    </div>
+    <div class="surface">
+      <span class="band hand">Hand off</span>
+      <h3>CoWork</h3>
+      <p>Hand off a multi-step job without a terminal, inside the Copilot you already have. The buttoned-up version of the CLI.</p>
+    </div>
+    <div class="surface">
+      <span class="band hand">Hand off · open</span>
+      <h3>Copilot CLI</h3>
+      <p>Build your own skills, run deep multi-tool jobs, work overnight. The open power end. A terminal and some setup.</p>
+    </div>
+    <div class="surface">
+      <span class="opt">Optional module</span>
+      <span class="band leave">Leave it running</span>
+      <h3>Scout</h3>
+      <p>Agents that watch and act unasked. Enterprise-locked and safe. Needs access, so partners without it can skip this track.</p>
+    </div>
+    <div class="surface openclaw-note">
+      <p><strong style="color:var(--amber);">Where Scout comes from.</strong> Scout is OpenClaw, the open-source agent project, made enterprise-ready. Same engine, guardrails on. You don't pick OpenClaw as a surface, it's the base underneath.</p>
+    </div>
+  </div>
+
+  <!-- PICK YOUR ADVENTURE -->
+  <hr class="div">
+  <div class="sec-label">Pick your adventure</div>
+  <h2>Choose a job. Run it your way.</h2>
+  <p class="sec-lead">Six jobs almost everyone in a partner role does every week. Each one runs on more than one surface. Start with the live one, then work down the list as tracks land.</p>
+  <div class="cards">
+    <a class="uc live" href="meeting-prep.html">
+      <span class="icon">📋</span>
+      <h3>Prep for a meeting</h3>
+      <p>Turn a pile of notes into a one-page brief and a follow-up. Run it on M365 Copilot, then on the CLI.</p>
+      <div class="bands"><span class="b-ask">Ask</span><span class="b-hand">Hand off</span></div>
+      <span class="status">● Live · 2 surfaces</span>
+    </a>
+    <div class="uc soon">
+      <span class="icon">✉️</span>
+      <h3>Draft a follow-up</h3>
+      <p>Rough notes into a clean, traceable email with owners and next steps, in under a minute.</p>
+      <div class="bands"><span class="b-ask">Ask</span><span class="b-hand">Hand off</span></div>
+      <span class="status">Coming soon</span>
+    </div>
+    <div class="uc soon">
+      <span class="icon">📚</span>
+      <h3>Summarize a long thing</h3>
+      <p>A 20-page program guide or release-note wall becomes the five things you actually need.</p>
+      <div class="bands"><span class="b-ask">Ask</span><span class="b-hand">Hand off</span></div>
+      <span class="status">Coming soon</span>
+    </div>
+    <div class="uc soon">
+      <span class="icon">🔎</span>
+      <h3>Research before you engage</h3>
+      <p>A company you're meeting, what they care about, and three smart questions. Web-grounded.</p>
+      <div class="bands"><span class="b-ask">Ask</span><span class="b-leave">Leave it running</span></div>
+      <span class="status">Coming soon</span>
+    </div>
+    <div class="uc soon">
+      <span class="icon">🧹</span>
+      <h3>Clean a messy export</h3>
+      <p>A raw CSV or report becomes a clean summary with the important rows flagged.</p>
+      <div class="bands"><span class="b-hand">Hand off</span><span class="b-leave">Leave it running</span></div>
+      <span class="status">Coming soon</span>
+    </div>
+    <div class="uc soon">
+      <span class="icon">🧱</span>
+      <h3>Build a reusable asset</h3>
+      <p>Rough notes into a battlecard, FAQ, or workshop guide the whole team can use.</p>
+      <div class="bands"><span class="b-hand">Hand off</span><span class="b-ask">Ask</span></div>
+      <span class="status">Coming soon</span>
+    </div>
+  </div>
+
+  <!-- WHO -->
+  <div class="sec-label">Who it's for</div>
+  <h2>If you do partner work, this is yours</h2>
+  <div class="who">
+    <p>The jobs are the same whether you're inside Microsoft or inside a partner. A QBR for one person is a pipeline call for another and a steering review for a third. Same prep, same chore, same fix. The use cases were drawn from real operator jobs across these roles:</p>
+    <div class="roles">
+      <span>PDM</span><span>GTM</span><span>PTS</span><span>PSA</span><span>Partner seller</span><span>Consultant</span><span>Alliance manager</span><span>Pre-sales</span><span>Practice lead</span><span>Partner marketing</span>
+    </div>
+  </div>
+
+  <!-- HOW TO RUN -->
+  <div class="sec-label">Two ways to run it</div>
+  <div class="run">
+    <div class="col">
+      <h3>Facilitated</h3>
+      <p>I open the room, we pick one job together, then I set you loose in the Lab and we regroup at the end to compare doors. Runs in 45 to 60 minutes for any audience.</p>
+    </div>
+    <div class="col">
+      <h3>On your own</h3>
+      <p>This page works without me. Pick a job, follow the steps, hit the walls, find your favorite. Come back any time and try another surface.</p>
+    </div>
+  </div>
+
+  <p class="refrain"><strong>Still not a developer.</strong> Just done picking the wrong tool and finding out halfway through.</p>
+
+  <div class="meta">
+    <p><strong>Part of:</strong> <a class="inline" href="../" style="color:var(--teal);text-decoration:none;">Operator Hour</a> · the hands-on companion to the series</p>
+    <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft</p>
+    <p><strong>Status:</strong> prototype · one use case live · more landing after summer</p>
+  </div>
+</div>
+</body>
+</html>
