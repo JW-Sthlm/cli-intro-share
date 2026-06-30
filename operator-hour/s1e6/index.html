@@ -54,74 +54,79 @@
 <body>
 <div class="wrap">
   <div class="crumb"><a href="../">← Operator Hour</a></div>
-  <span class="tag">S1 · Episode 6 · Tue Jun 30 2026 · 10:30 CET · season finale · preview</span>
+  <span class="tag">S1 · Episode 6 · Tue Jun 30 2026 · season finale · recap</span>
   <h1>The sidekick was an agent. <span class="accent">Now it's yours.</span></h1>
-  <p class="sub">All season, Otto answered your questions in the cohort chat. Today we open the hood. You see exactly how Otto is built, from persona to knowledge to deploy, then fork the repo and stand up your own agent for your team. The finale, and the on-ramp to Season 2.</p>
+  <p class="sub">For six weeks Otto answered your questions in the cohort chat. In the finale we opened the hood, showed exactly how Otto is built, then forked it live into a second agent with its own name and its own job. The repo is public now. Season 2 runs on whoever picks it up.</p>
 
-  <div class="section-label">What we'll cover</div>
-  <ol class="steps">
-    <li>
-      <strong>Otto, with the hood up</strong>
-      <span>Every @mention this season hit a Copilot-built agent I made with the same tools you've used for six weeks. No secret there. Today we open it all the way up: persona, knowledge, deploy.</span>
-    </li>
-    <li>
-      <strong>Otto's three moving parts</strong>
-      <span>A persona, a knowledge base, and a deploy. The knowledge is just the recap pages and transcripts you already watched. There is nothing exotic under here.</span>
-    </li>
-    <li>
-      <strong>Fork it, live</strong>
-      <span>We take the repo and stand up a second agent in front of you. Its own name, its own knowledge, its own Teams chat. No engineer in the room.</span>
-    </li>
-    <li>
-      <strong>Point it at your world</strong>
-      <span>Swap Otto's course knowledge for whatever your team keeps re-explaining. Same shell, your content. The agent learns your room instead of mine.</span>
-    </li>
-    <li>
-      <strong>Hand it to the community</strong>
-      <span>The repo goes public. Season 2 isn't hosted by me. It's run by whoever forks this and teaches their own room.</span>
-    </li>
-  </ol>
-
-  <div class="pull">
-    <span class="lbl">The shift</span>
-    For six weeks Otto might have looked like a feature someone at Microsoft switched on. It's simpler than that. It's a repo a non-coder can fork in an afternoon. The agent that ran the season is the same one you'll run for your team.
+  <div class="section-label">Recap</div>
+  <div class="lede">
+    <p>Every @mention this season hit a bot called Otto. No mystery about who built it. I did, with the same Copilot tools you have used for six weeks. So for the last episode we stopped talking about Otto and took it apart on screen.</p>
+    <p><strong>Otto is three things, and none of them are scary.</strong> A persona, written in plain text. A pile of knowledge, also plain text, the recap pages and transcripts you already watched. And a publish step that drops it into Teams. That is the whole animal. No model training, nothing exotic underneath.</p>
+    <p><strong>We built a second agent in front of the room.</strong> Cloned Otto's repo, rewrote the persona, and Remy was born: an onboarding sidekick for a made-up partner, Northwind. Out went Otto's course files, in went onboarding material, an FAQ, a first-week checklist. Same shell, different brain. One plain ask to deploy, a few minutes of waiting, and Remy was a live agent you could drop into a Teams chat.</p>
+    <div class="pull">
+      <span class="lbl">The line that stuck</span>
+      The agent only knows what you feed it. The persona is the voice. The knowledge files are the brain. Change the files and you have changed the agent.
+    </div>
+    <p><strong>No scary commands.</strong> The whole build ran on plain-English asks to the CLI. And if a terminal is not your thing, Copilot Studio and the M365 Agent Builder do the same job with buttons. Same idea, different door in.</p>
+    <p><strong>You own what it says.</strong> The agent answers from your files and nothing else, so the content is on you. Fact-check it. Keep it current. Add a line that says a bot wrote this and to double-check, a reminder for the reader and for you.</p>
+    <p><strong>What the room asked:</strong> do you need a template to start? (No. Otto was built from scratch out of plain text files. There is a starter kit if you want a head start, but a folder of text and one prompt is enough.) What if the deploy throws an error? (It happens. Read the message, hand it back to the agent, go again. That is the loop, not a failure.)</p>
+    <p><strong>The operator move:</strong> pick the thing your team keeps re-explaining and point an agent at it. The onboarding doc nobody finishes, the partner FAQ, the questions you answer twice a week. That folder is your agent's brain. Fork the repo, swap the files, give it a name.</p>
   </div>
 
-  <div class="section-label">Bring this</div>
+  <div class="section-label">Take-home this week</div>
   <div class="bring">
-    <h3>Bring the knowledge you'd point an agent at</h3>
-    <p>One body of stuff your team keeps re-explaining: an onboarding guide, a partner FAQ, last quarter's playbooks, the questions you are tired of answering twice. That becomes your agent's brain. Bring it as a folder, or just bring the questions.</p>
-    <p>Been here all season? Bring one thing Otto got wrong. We'll fix it live in the knowledge base and redeploy, so you see the whole loop close.</p>
+    <h3>Fork the repo and stand up your own agent</h3>
+    <p>Take one body of knowledge your team keeps repeating: an onboarding guide, a partner FAQ, last quarter's playbooks. Fork Otto's repo, rewrite the persona, drop your files in, deploy. The <a class="inline" href="kit.html">Finale Kit</a> has every prompt in order and in plain language. Block <strong>an afternoon</strong>.</p>
+    <p>Curious rather than committed? The repo is public. Open it, read it, break it. That counts too.</p>
   </div>
 
-  <div class="section-label">Format</div>
-  <p style="color:var(--muted);font-size:14px;margin:-4px 0 12px;"><strong style="color:var(--text);font-weight:600;">5 + 20 + 10 + 5.</strong> Five on the reveal. Twenty on the live fork: persona, knowledge, deploy, a second agent breathing in a chat. Ten on the AMA, Otto's last stand. Five on running your own room in Season 2.</p>
-
-  <div class="section-label">Useful before the session</div>
+  <div class="section-label">Resources from this episode</div>
   <div class="cards">
-    <a class="card" href="../s1e5/">
-      <span class="icon">📺</span>
-      <h2>E5 recap</h2>
-      <p>If you missed last week. Teach an agent your voice from your sent emails, then draft a WinWire that sounds like you. Good warm-up for building one that talks.</p>
+    <a class="card" href="https://microsofteur-my.sharepoint.com/personal/jwallquist_microsoft_com/Documents/Recordings/AI-first%20Operator%20Hour-20260630_083057UTC-Meeting%20Recording.mp4?web=1" target="_blank" rel="noopener">
+      <span class="icon">🎬</span>
+      <h2>Recording</h2>
+      <p>The full finale, Jun 30 2026. Microsoft sign-in required. Watch Otto taken apart, then Remy built and deployed live into a Teams chat.</p>
       <span class="card-tag teal">watch · 30 min</span>
+    </a>
+    <a class="card" href="kit.html">
+      <span class="icon">🧰</span>
+      <h2>Finale Kit</h2>
+      <p>Every prompt from the build, in order and in plain language: clone, rewrite the persona, swap the knowledge, deploy, add it to Teams. Plus what to change for your own team.</p>
+      <span class="card-tag teal">copy &amp; run · take-home kit</span>
+    </a>
+    <a class="card" href="https://github.com/JW-Sthlm/agent-otto" target="_blank" rel="noopener">
+      <span class="icon">🐙</span>
+      <h2>Otto's repo</h2>
+      <p>The actual agent that ran the season, public now. Fork it, rewrite the persona, point it at your knowledge, and you have your own.</p>
+      <span class="card-tag amber">fork it · public repo</span>
+    </a>
+  </div>
+
+  <div class="section-label">Season 1, that's a wrap</div>
+  <p style="color:var(--muted);font-size:15px;line-height:1.6;margin:-4px 0 16px;">Six weeks. Six moves. One agent you can now run yourself. Season 2 picks up after the summer, and it will not be hosted only by me. Whoever forks this and teaches their own room is running it. Ideas for what to cover next, maybe Cowork or Scout, maybe something I have not thought of? <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20Season%202%20idea">Send them my way</a>.</p>
+
+  <div class="section-label">Keep going</div>
+  <div class="cards">
+    <a class="card" href="../">
+      <span class="icon">📺</span>
+      <h2>The whole season</h2>
+      <p>All six episodes in one place. From your first use case to your own agent. Catch any you missed, recaps and recordings together.</p>
+      <span class="card-tag teal">watch · 6 recaps</span>
     </a>
     <a class="card" href="../../course/">
       <span class="icon">🎓</span>
       <h2>Self-service course</h2>
-      <p>Eight lessons, self-paced. The deeper track on the CLI itself. Useful if you want to keep going after the season ends.</p>
+      <p>Eight lessons, self-paced. The deeper track on the CLI itself, for whenever you want to keep going.</p>
       <span class="card-tag teal">self-paced</span>
     </a>
   </div>
 
-  <div class="section-label">Not on the calendar?</div>
-  <p style="color:var(--muted);font-size:14px;line-height:1.55;margin:-4px 0 12px;">Anyone at Microsoft is welcome. <a class="inline" href="https://teams.microsoft.com/l/team/19%3Ar5cJ0CKN1kn-T3gjeTALqlLO-4Emu6CUjbVLBNophHg1%40thread.tacv2/conversations?groupId=5c2280c6-aa1c-4480-954c-958a2949d50e&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47" target="_blank" rel="noopener">Join the cohort team</a> and post "add me", or <a class="inline" href="mailto:jwallquist@microsoft.com?subject=Operator%20Hour%20add%20me%20to%20the%20invite">email the host</a>. You'll be on the invite before Tuesday.</p>
-
-  <p class="refrain"><strong>Still not a developer.</strong> I built the sidekick that answered your questions, and now I'm handing you the keys to build your own.</p>
+  <p class="refrain"><strong>Still not a developer.</strong> I built the sidekick that answered your questions all season, and the same afternoon's work hands you one of your own.</p>
 
   <div class="meta">
     <p><strong>Episode:</strong> S1E6 · Jun 30 2026 · 30 min · EMEA EPS + GCPS · Season 1 finale</p>
     <p><strong>Host:</strong> Johan Wallquist · Partner Solution Architect, Microsoft · <a class="inline" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">LinkedIn</a></p>
-    <p><strong>Recap + recording:</strong> this page upgrades from preview to recap after the session. Same URL.</p>
+    <p><strong>Recap + recording:</strong> both live on this page.</p>
   </div>
 </div>
 </body>
